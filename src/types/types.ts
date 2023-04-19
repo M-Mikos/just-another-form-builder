@@ -1,17 +1,16 @@
 export type FormField = {
   id: string;
-  name: string;
+  title: string;
   required: boolean;
-  formElement: "input" | "textarea";
-  attributes: {
-    type?: null | "text" | "checkbox" | "radio" | "range";
-    value?: null | string | number;
-    min?: null | number;
-    max?: null | number;
-    step?: null | number;
-    rows?: null | number;
-  };
-  answers: (null | string | number)[];
+  fieldType:
+    | "short"
+    | "paragraph"
+    | "multiple_choice"
+    | "checkboxes"
+    | "linear_scale";
+  options?: string[];
+  attributes?: { [key: string]: null | string | number };
+  answers: (null | string | number | string[])[];
 };
 
 export type Form = {

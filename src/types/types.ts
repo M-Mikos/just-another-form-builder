@@ -10,7 +10,6 @@ export type FormField = {
     | "linear_scale";
   options?: string[];
   attributes?: { [key: string]: null | string | number };
-  answers: (null | string | number | string[])[];
 };
 
 export type Form = {
@@ -19,3 +18,5 @@ export type Form = {
   description: string;
   fields: FormField[];
 };
+
+export type Answer = (null | string | number | string[])[];

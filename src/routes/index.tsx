@@ -1,5 +1,8 @@
+// Functions & hooks
 import { createBrowserRouter } from "react-router-dom";
+import { loader as formLoader } from "../components/FormsList";
 
+// Pages
 import Root from "../pages/Root";
 import Forms from "../pages/Forms";
 import Form from "../pages/Form";
@@ -14,6 +17,7 @@ const router = createBrowserRouter([
       {
         path: "/",
         element: <Forms />,
+        loader: formLoader,
       },
       {
         path: "/:formId",

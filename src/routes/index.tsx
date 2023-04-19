@@ -16,15 +16,15 @@ const router = createBrowserRouter([
         element: <Forms />,
       },
       {
-        path: ":formId",
+        path: "/:formId",
         element: <Form />,
         children: [
           {
-            path: "edit",
+            path: "/:formId",
             element: <Edit />,
           },
           {
-            path: "answers",
+            path: "/:formId/answers",
             element: <Answers />,
           },
         ],

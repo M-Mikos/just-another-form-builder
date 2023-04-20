@@ -1,4 +1,11 @@
+// Functions & hooks
+import { get, ref } from "firebase/database";
+
+// Components
 import FormList from "../components/FormsList";
+
+// Data
+import { database } from "../../firebase";
 
 const Forms = () => {
   return (
@@ -10,3 +17,8 @@ const Forms = () => {
 };
 
 export default Forms;
+
+export const loader = async () => {
+  const data = await get(ref(database, "forms"));
+  return data.val();
+};

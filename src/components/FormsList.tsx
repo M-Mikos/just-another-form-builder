@@ -2,26 +2,22 @@
 import { Form } from "../types/types";
 
 // Functions & hooks
-import { get, ref } from "firebase/database";
 import { useLoaderData } from "react-router";
 
 // Components
 import FormListItem from "./FormListItem";
 
-// Data
-import { database } from "../../firebase";
-
 const FormList = () => {
-  const forms = useLoaderData<Form[]>();
-  console.log(forms);
+  const forms = useLoaderData() as { [key: string]: Form };
 
   return (
     <ul>
-      {forms.map((form) => (
+      {Object.entries(forms).map((form) => (
         <FormListItem
-          title={form.title}
-          description={form.description}
-          id={form.id}
+          key={form[1].id}
+          title={form[1].title}
+          description={form[1].description}
+          id={form[1].id}
         />
       ))}
     </ul>
@@ -29,8 +25,3 @@ const FormList = () => {
 };
 
 export default FormList;
-
-export const loader = async () => {
-  const data = await get(ref(database, "forms"));
-  return data.val();
-};

@@ -7,7 +7,7 @@ const FormNavigation = () => {
     <nav>
       <NavLink to={`/${formId}`}>Edit</NavLink>
       <NavLink to={`/${formId}/answers`}>Answers</NavLink>
-      <button>Get link</button>
+      <NavLink to={`/${formId}/fill`}>Fill</NavLink>
     </nav>
   );
 };

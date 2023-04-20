@@ -8,12 +8,11 @@ const FormListItem = (props: {
 }) => {
   return (
     <>
-      <Link to={`/${props.title}`}>
-        {" "}
+      <Link to={`/${props.id}`}>
         <h3>{props.title}</h3>{" "}
       </Link>
 
-      <span>{props.description}</span>
+      <div>{props.description}</div>
       <span>ID: {props.id}</span>
     </>
   );

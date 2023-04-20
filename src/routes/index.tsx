@@ -1,13 +1,15 @@
 // Functions & hooks
 import { createBrowserRouter } from "react-router-dom";
-import { loader as formLoader } from "../components/FormsList";
+import { loader as formsListLoader } from "../pages/Forms";
+import { loader as formLoader } from "../pages/Fill";
 
 // Pages
 import Root from "../pages/Root";
 import Forms from "../pages/Forms";
-import Form from "../pages/Form";
+import FormRoot from "../pages/FormRoot";
 import Edit from "../pages/Edit";
 import Answers from "../pages/Answers";
+import Fill from "../pages/Fill";
 
 const router = createBrowserRouter([
   {
@@ -17,11 +19,11 @@ const router = createBrowserRouter([
       {
         path: "/",
         element: <Forms />,
-        loader: formLoader,
+        loader: formsListLoader,
       },
       {
         path: "/:formId",
-        element: <Form />,
+        element: <FormRoot />,
         children: [
           {
             path: "/:formId",
@@ -32,6 +34,11 @@ const router = createBrowserRouter([
             element: <Answers />,
           },
         ],
+      },
+      {
+        path: "/:formId/fill",
+        element: <Fill />,
+        loader: formLoader,
       },
     ],
   },

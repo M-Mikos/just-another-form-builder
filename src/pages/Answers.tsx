@@ -1,5 +1,5 @@
-const Add = () => {
-  return <h2>Add</h2>;
+const Answers = () => {
+  return <h2>Answers</h2>;
 };
 
-export default Add;
+export default Answers;

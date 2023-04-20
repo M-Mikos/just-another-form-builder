@@ -19,6 +19,6 @@ const Forms = () => {
 export default Forms;
 
 export const loader = async () => {
-  const data = await get(ref(database, "forms"));
+  const data = await get(ref(database, "formsList"));
   return data.val();
 };

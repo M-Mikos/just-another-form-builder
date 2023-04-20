@@ -1,22 +1,26 @@
-export type FormField = {
+export type FormFieldType = {
   id: string;
   title: string;
   required: boolean;
   fieldType:
     | "short"
     | "paragraph"
-    | "multiple_choice"
+    | "multiple choice"
     | "checkboxes"
-    | "linear_scale";
+    | "linear scale";
   options?: string[];
   attributes?: { [key: string]: null | string | number };
 };
 
-export type Form = {
+export type FormListItemType = {
   id: string;
   title: string;
   description: string;
-  fields: FormField[];
+  tagColor: string;
 };
 
-export type Answer = (null | string | number | string[])[];
+export type FormType = FormListItemType & {
+  fields: FormFieldType[];
+};
+
+export type AnswerType = (null | string | number | string[])[];

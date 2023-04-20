@@ -1,5 +1,5 @@
 // Types
-import { Form } from "../types/types";
+import { FormListItemType } from "../../types/types";
 
 // Functions & hooks
 import { useLoaderData } from "react-router";
@@ -8,7 +8,7 @@ import { useLoaderData } from "react-router";
 import FormListItem from "./FormListItem";
 
 const FormList = () => {
-  const forms = useLoaderData() as { [key: string]: Form };
+  const forms = useLoaderData() as { [key: string]: FormListItemType };
 
   return (
     <ul>

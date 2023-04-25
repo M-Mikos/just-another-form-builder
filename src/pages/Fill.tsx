@@ -18,7 +18,7 @@ const Fill = () => {
 
 export default Fill;
 
-export const loader = async ({ params }: { params: { formId: string } }) => {
+export const loader = async ({ params }) => {
   const data = await get(ref(database, `formsDetails/${params.formId}`));
   return data.val();
 };

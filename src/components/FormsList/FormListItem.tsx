@@ -1,11 +1,17 @@
 // Router
-import { Link } from "react-router-dom";
+import { Link, useFetcher } from "react-router-dom";
 
 const FormListItem = (props: {
   title: string;
   description: string;
   id: string;
 }) => {
+  const fetcher = useFetcher();
+
+  const deleteFormHandler = (): void => {
+    fetcher.submit({ formId: props.id }, { method: "DELETE", action: `/` });
+  };
+
   return (
     <>
       <Link to={`/${props.id}`}>
@@ -14,6 +20,7 @@ const FormListItem = (props: {
 
       <div>{props.description}</div>
       <span>ID: {props.id}</span>
+      <button onClick={deleteFormHandler}>Delete</button>
     </>
   );
 };

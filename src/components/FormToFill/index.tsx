@@ -1,7 +1,6 @@
 // Functions & Hooks
-import React from "react";
 import { useLoaderData, useParams } from "react-router";
-import toPascalCase from "../../helpers.ts/toPascalCase";
+import toPascalCase from "../../helpers/toPascalCase";
 import { push, ref, set } from "firebase/database";
 
 // Types
@@ -19,15 +18,15 @@ const components: ComponentListType = {
 };
 
 const FormToFill = () => {
-  const data = useLoaderData() as FormType;
+  const { formFields } = useLoaderData();
   const params = useParams();
 
   return (
     <>
       <h3>Fields</h3>
-      {data.fields && (
+      {formFields && (
         <Form method="put" action={`/${params.formId}/fill`}>
-          {data.fields.map((field: FormFieldType) => {
+          {Object.values(formFields).map((field: FormFieldType) => {
             // Select component based on form field type
             const formattedFieldName =
               toPascalCase(field.fieldType) + "FillElement";

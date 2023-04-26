@@ -14,7 +14,7 @@ export type FormFieldType = {
   attributes?: { [key: string]: null | string | number };
 };
 
-export type FormListItemType = {
+export type FormType = {
   id: string;
   title: string;
   description?: string;
@@ -29,16 +29,14 @@ export type ComponentListType = { [key: string]: React.FC };
 
 export type AnswerType = { [key: string]: AnswerValueType };
 
-export type FormType = FormListItemType & {
-  fields?: FormFieldType[];
-};
-
 export type AnswerLoaderType = {
   formDetails: FormType;
-  answers: { [key: string]: AnswerType };
+  formFields: { [key: string]: FormFieldType };
+  formAnswers: { [key: string]: AnswerType };
 };
 export type AnswerComponentPropsType = {
   formDetails: FormType;
-  answers: { [key: string]: AnswerType };
+  formFields: { [key: string]: FormFieldType };
+  formAnswers: { [key: string]: AnswerType };
   components: ComponentListType;
 };

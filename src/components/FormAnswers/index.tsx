@@ -16,33 +16,33 @@ const components: ComponentListType = {
 };
 
 const FormAnswers = () => {
-  const [answersType, setAnswersType] = useState("fields");
-  const { formDetails, answers } = useLoaderData() as AnswerLoaderType;
+  const [answersMode, setAnswersMode] = useState("fields");
+  const { formDetails, formFields, formAnswers } = useLoaderData();
 
   const fieldsButtonHandler = () => {
-    setAnswersType("fields");
+    setAnswersMode("fields");
   };
   const formsButtonHandler = () => {
-    setAnswersType("forms");
+    setAnswersMode("forms");
   };
 
   return (
     <>
-      {answers && (
+      {formAnswers && (
         <>
           <button onClick={fieldsButtonHandler}>Fields</button>
           <button onClick={formsButtonHandler}>Forms</button>
-          {answersType === "fields" && (
+          {answersMode === "fields" && (
             <AnswersByField
-              formDetails={formDetails}
-              answers={answers}
+              formFields={formFields}
+              formAnswers={formAnswers}
               components={components}
             />
           )}
-          {answersType === "forms" && (
+          {answersMode === "forms" && (
             <AnswersByForm
-              formDetails={formDetails}
-              answers={answers}
+              formFields={formFields}
+              formAnswers={formAnswers}
               components={components}
             />
           )}

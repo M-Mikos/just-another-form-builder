@@ -5,6 +5,7 @@ import { loader as formLoader } from "../pages/Fill";
 import { loader as formAnswersLoader } from "../pages/Answers";
 import { action as formSubmitAction } from "../components/FormToFill";
 import { action as formEditAction } from "../components/FormEdit";
+import { action as formListAction } from "../components/FormsList";
 
 // Pages
 import Root from "../pages/Root";
@@ -23,6 +24,7 @@ const router = createBrowserRouter([
         path: "/",
         element: <Forms />,
         loader: formsListLoader,
+        action: formListAction,
       },
       {
         path: "/:formId",

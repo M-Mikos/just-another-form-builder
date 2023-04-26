@@ -17,7 +17,12 @@ const Answers = () => {
 export default Answers;
 
 export const loader = async ({ params }: { params: { formId: string } }) => {
-  const formDetails = await get(ref(database, `formsDetails/${params.formId}`));
-  const answers = await get(ref(database, `formsAnswers/${params.formId}`));
-  return { formDetails: formDetails.val(), answers: answers.val() };
+  const formDetails = await get(ref(database, `forms/${params.formId}`));
+  const formFields = await get(ref(database, `formsFields/${params.formId}`));
+  const formAnswers = await get(ref(database, `formsAnswers/${params.formId}`));
+  return {
+    formDetails: formDetails.val(),
+    formFields: formFields.val(),
+    formAnswers: formAnswers.val(),
+  };
 };

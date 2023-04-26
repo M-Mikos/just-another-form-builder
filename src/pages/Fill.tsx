@@ -19,6 +19,10 @@ const Fill = () => {
 export default Fill;
 
 export const loader = async ({ params }: { params: { formId: string } }) => {
-  const data = await get(ref(database, `formsDetails/${params.formId}`));
-  return data.val();
+  const formDetails = await get(ref(database, `forms/${params.formId}`));
+  const formFields = await get(ref(database, `formsFields/${params.formId}`));
+  return {
+    formDetails: formDetails.val(),
+    formFields: formFields.val(),
+  };
 };

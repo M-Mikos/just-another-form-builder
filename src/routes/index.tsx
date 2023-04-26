@@ -1,10 +1,10 @@
 // Functions & hooks
 import { createBrowserRouter } from "react-router-dom";
 import { loader as formsListLoader } from "../pages/Forms";
-import { loader as formToFillLoader } from "../pages/Fill";
+import { loader as formLoader } from "../pages/Fill";
 import { loader as formAnswersLoader } from "../pages/Answers";
-
 import { action as formSubmitAction } from "../components/FormToFill";
+import { action as formEditAction } from "../components/FormEdit";
 
 // Pages
 import Root from "../pages/Root";
@@ -31,6 +31,8 @@ const router = createBrowserRouter([
           {
             path: "/:formId",
             element: <Edit />,
+            loader: formLoader,
+            action: formEditAction,
           },
           {
             path: "/:formId/answers",
@@ -42,7 +44,7 @@ const router = createBrowserRouter([
       {
         path: "/:formId/fill",
         element: <Fill />,
-        loader: formToFillLoader,
+        loader: formLoader,
         action: formSubmitAction,
       },
     ],

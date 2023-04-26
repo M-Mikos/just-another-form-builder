@@ -1,11 +1,19 @@
+// Functions & Hooks
 import toPascalCase from "../../helpers.ts/toPascalCase";
 
-const AnswersByField = ({ formDetails, answers, components }) => {
+// Types
+import { AnswerComponentPropsType } from "../../types/types";
+
+const AnswersByField = ({
+  formDetails,
+  answers,
+  components,
+}: AnswerComponentPropsType) => {
   return (
     <>
       <h3>Answers - by field</h3>
 
-      {formDetails.fields.map((field) => {
+      {Object.values(formDetails.fields).map((field) => {
         // Get answers array
         const answersList = Object.values(answers).map(
           (fieldAnswers) => fieldAnswers[field.id]

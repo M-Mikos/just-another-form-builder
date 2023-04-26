@@ -16,7 +16,7 @@ const Answers = () => {
 
 export default Answers;
 
-export const loader = async ({ params }) => {
+export const loader = async ({ params }: { params: { formId: string } }) => {
   const formDetails = await get(ref(database, `formsDetails/${params.formId}`));
   const answers = await get(ref(database, `formsAnswers/${params.formId}`));
   return { formDetails: formDetails.val(), answers: answers.val() };

@@ -1,9 +1,18 @@
-const ShortAnswerElement = (props) => {
+// Types
+import { AnswerType } from "../../../types/types";
+
+const ShortAnswerElement = ({
+  title,
+  answers,
+}: {
+  title: string;
+  answers: AnswerType[];
+}) => {
   return (
     <div>
-      <p>{props.title}</p>
+      <p>{title}</p>
       <p>
-        {props.answers.map((answer) => {
+        {answers.map((answer) => {
           return <span>{answer}, </span>;
         })}
       </p>

@@ -1,6 +1,14 @@
+// Functions & Hooks
 import toPascalCase from "../../helpers.ts/toPascalCase";
 
-const AnswersByForm = ({ formDetails, answers, components }) => {
+// Types
+import { AnswerComponentPropsType } from "../../types/types";
+
+const AnswersByForm = ({
+  formDetails,
+  answers,
+  components,
+}: AnswerComponentPropsType) => {
   return (
     <>
       <h3>Answers - by form</h3>
@@ -11,7 +19,7 @@ const AnswersByForm = ({ formDetails, answers, components }) => {
             <h4>Form number {i + 1}</h4>
             {Object.entries(formAnswers).map((field) => {
               // Get current field details (by matching fieldId in answers to fieldId in from details)
-              const fieldDetails = formDetails.fields.filter(
+              const fieldDetails = Object.values(formDetails.fields).filter(
                 (fieldDetail) => fieldDetail.id === field[0]
               )[0];
 

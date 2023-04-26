@@ -5,7 +5,7 @@ import toPascalCase from "../../helpers.ts/toPascalCase";
 import { push, ref, set } from "firebase/database";
 
 // Types
-import { FormType, FormFieldType } from "../../types/types";
+import { FormType, FormFieldType, ComponentListType } from "../../types/types";
 
 // Components
 import ShortFillElement from "../Fields/Short/ShortFillElement";
@@ -14,7 +14,7 @@ import { Form } from "react-router-dom";
 // Data
 import { database } from "../../../firebase";
 
-const components: { [key: string]: React.FC } = {
+const components: ComponentListType = {
   ShortFillElement,
 };
 
@@ -25,25 +25,33 @@ const FormToFill = () => {
   return (
     <>
       <h3>Fields</h3>
-      <Form method="put" action={`/${params.formId}/fill`}>
-        {data.fields.map((field: FormFieldType) => {
-          // Select component based on form field type
-          const formattedFieldName =
-            toPascalCase(field.fieldType) + "FillElement";
+      {data.fields && (
+        <Form method="put" action={`/${params.formId}/fill`}>
+          {data.fields.map((field: FormFieldType) => {
+            // Select component based on form field type
+            const formattedFieldName =
+              toPascalCase(field.fieldType) + "FillElement";
 
-          const FieldComponentName = components[formattedFieldName];
+            const FieldComponentName = components[formattedFieldName];
 
-          return <FieldComponentName inputName={field.id} key={field.id} />;
-        })}
-        <button type="submit">Send</button>
-      </Form>
+            return <FieldComponentName inputName={field.id} key={field.id} />;
+          })}
+          <button type="submit">Send</button>
+        </Form>
+      )}
     </>
   );
 };
 
 export default FormToFill;
 
-export const action = async ({ params, request }) => {
+export const action = async ({
+  params,
+  request,
+}: {
+  params: { formId: string };
+  request: Request;
+}) => {
   try {
     // Get form data and format to object
     const formData = await request.formData();
@@ -61,10 +69,7 @@ export const action = async ({ params, request }) => {
     );
     console.log("Succes!");
     return { ok: true };
-  } catch (error) {
-    console.log(error.message);
-    return error;
-  }
+  } catch (error) {}
 
   return null;
 };

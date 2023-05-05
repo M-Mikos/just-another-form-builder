@@ -10,7 +10,7 @@ import { database } from "../../firebase";
 const Forms = () => {
   return (
     <>
-      <h2>Forms</h2>
+      <h2>Your forms</h2>
       <FormList />
     </>
   );

@@ -2,25 +2,22 @@
 import { get, push, ref, remove, set } from "firebase/database";
 import toPascalCase from "../../helpers/toPascalCase";
 import { useLoaderData, useParams } from "react-router";
-import { useFetcher } from "react-router-dom";
+import { Form, useFetcher } from "react-router-dom";
 import { useState } from "react";
 
 // Types
-import { ComponentListType, FormType } from "../../types/types";
+import { ComponentListType, FormLoaderType, FormType } from "../../types/types";
 
 // Components
 import FormHeader from "./FormHeader";
-import ShortEditElement from "../Fields/Short/ShortEditElement";
+import FieldEditWrapper from "./FieldEditWrapper";
+import Card from "../UI/Card";
 
 // Data
 import { database } from "../../../firebase";
 
-const components: ComponentListType = {
-  ShortEditElement,
-};
-
 const FormEdit = () => {
-  const { formDetails, formFields } = useLoaderData();
+  const { formDetails, formFields } = useLoaderData() as FormLoaderType;
   const params = useParams();
   const fetcher = useFetcher();
   const [currentlyEditedField, setCurrentlyEditedField] = useState();
@@ -35,16 +32,27 @@ const FormEdit = () => {
         title={formDetails.title}
         description={formDetails.description}
       />
-      {formFields &&
-        Object.values(formFields).map((field) => {
-          // Select component based on form field type
-          const formattedFieldName =
-            toPascalCase(field.fieldType) + "EditElement";
+      <ul className="flex flex-col gap-6">
+        {formFields &&
+          Object.values(formFields).map((field) => {
+            return (
+              <li>
+                <Card>
+                  <fetcher.Form method="PATCH" action={`/${params.formId}`}>
+                    <input
+                      name="fieldId"
+                      type="hidden"
+                      value={field.id}
+                    ></input>
+                    <FieldEditWrapper data={field} key={field.id} />
+                    <button type="submit">Save changes</button>
+                  </fetcher.Form>
+                </Card>
+              </li>
+            );
+          })}
+      </ul>
 
-          const FieldComponentName = components[formattedFieldName];
-
-          return <FieldComponentName data={field} key={field.id} />;
-        })}
       <button onClick={addFieldHandler}>Add</button>
     </>
   );
@@ -63,6 +71,8 @@ export const action = async ({
     // Get form data and format to object
     const formData = await request.formData();
     const formDataObj = Object.fromEntries(formData);
+
+    console.log("action Data", formData);
 
     // Select action method
     switch (request.method) {
@@ -105,7 +115,18 @@ export const action = async ({
         break;
 
       case "PATCH":
-        // Updating field
+        // Updateing field
+        set(
+          ref(database, `formsFields/${params.formId}/${formDataObj.fieldId}`),
+          {
+            fieldType: formDataObj.fieldType,
+            id: formDataObj.fieldId,
+            title: formDataObj.title,
+            ...(formDataObj.required
+              ? { required: true }
+              : { required: false }),
+          }
+        );
         break;
     }
 

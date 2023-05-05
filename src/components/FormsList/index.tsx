@@ -10,24 +10,28 @@ import FormListItem from "./FormListItem";
 import { push, ref, remove, set } from "firebase/database";
 import { database } from "../../../firebase";
 import AddNewForm from "./AddNewForm";
+import Card from "../UI/Card";
 
 const FormList = () => {
   const forms = useLoaderData() as { [key: string]: FormListItemType };
 
   return (
     <>
-      <ul>
+      <ul className="grid grid-cols-3 gap-6">
         {forms &&
           Object.entries(forms).map((form) => (
-            <FormListItem
-              key={form[1].id}
-              title={form[1].title}
-              description={form[1].description}
-              id={form[1].id}
-            />
+            <li key={form[1].id}>
+              <Card>
+                <FormListItem
+                  title={form[1].title}
+                  description={form[1].description}
+                  id={form[1].id}
+                />
+              </Card>
+            </li>
           ))}
       </ul>
-      <AddNewForm />
+      {/* <AddNewForm /> */}
       {/* <button onClick={addFormHandler}>Add new form</button> */}
     </>
   );

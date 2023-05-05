@@ -4,25 +4,36 @@ import toPascalCase from "../../helpers/toPascalCase";
 import { push, ref, set } from "firebase/database";
 
 // Types
-import { FormType, FormFieldType, ComponentListType } from "../../types/types";
+import {
+  FormFieldType,
+  ComponentListType,
+  FormLoaderType,
+} from "../../types/types";
 
 // Components
 import ShortFillElement from "../Fields/Short/ShortFillElement";
+import ParagraphFillElement from "../Fields/Paragraph/ParagraphFillElement";
 import { Form } from "react-router-dom";
+import FormHeader from "../FormEdit/FormHeader";
 
 // Data
 import { database } from "../../../firebase";
 
 const components: ComponentListType = {
   ShortFillElement,
+  ParagraphFillElement,
 };
 
 const FormToFill = () => {
-  const { formFields } = useLoaderData();
+  const { formFields } = useLoaderData() as FormLoaderType;
   const params = useParams();
 
   return (
     <>
+      <FormHeader
+        title={formDetails.title}
+        description={formDetails.description}
+      />
       <h3>Fields</h3>
       {formFields && (
         <Form method="put" action={`/${params.formId}/fill`}>

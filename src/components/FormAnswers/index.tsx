@@ -3,21 +3,24 @@ import { useState } from "react";
 import { useLoaderData } from "react-router";
 
 // Types
-import { AnswerLoaderType, ComponentListType } from "../../types/types";
+import { ComponentListType, FormLoaderType } from "../../types/types";
 
 // Components
 import AnswersByField from "./AnswersByField";
 import AnswersByForm from "./AnswersByForm";
 
 import ShortAnswerElement from "../Fields/Short/ShortAnswersElement";
+import ParagraphAnswerElement from "../Fields/Paragraph/ParagraphAnswersElement";
 
 const components: ComponentListType = {
   ShortAnswerElement,
+  ParagraphAnswerElement,
 };
 
 const FormAnswers = () => {
   const [answersMode, setAnswersMode] = useState("fields");
-  const { formDetails, formFields, formAnswers } = useLoaderData();
+  const { formDetails, formFields, formAnswers } =
+    useLoaderData() as FormLoaderType;
 
   const fieldsButtonHandler = () => {
     setAnswersMode("fields");

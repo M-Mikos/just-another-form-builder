@@ -8,7 +8,6 @@ import FormAnswers from "../components/FormAnswers";
 const Answers = () => {
   return (
     <>
-      <h2>Answers</h2>
       <FormAnswers />
     </>
   );

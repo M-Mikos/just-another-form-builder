@@ -3,6 +3,7 @@ import toPascalCase from "../../helpers/toPascalCase";
 
 // Types
 import { AnswerComponentPropsType } from "../../types/types";
+import Card from "../UI/Card";
 
 const AnswersByForm = ({
   formFields,
@@ -17,26 +18,31 @@ const AnswersByForm = ({
         return (
           <>
             <h4>Form number {i + 1}</h4>
-            {Object.entries(answers).map((field) => {
-              // Get current field details (by matching fieldId in answers to fieldId in from details)
-              const fieldDetails = Object.values(formFields).filter(
-                (fieldDetail) => fieldDetail.id === field[0]
-              )[0];
+            <ul className="flex flex-col gap-6">
+              {Object.entries(answers).map((field) => {
+                // Get current field details (by matching fieldId in answers to fieldId in from details)
+                const fieldDetails = Object.values(formFields).filter(
+                  (fieldDetail) => fieldDetail.id === field[0]
+                )[0];
 
-              // Select answer component according to field type
-              const FieldComponentName =
-                components[
-                  toPascalCase(fieldDetails.fieldType) + "AnswerElement"
-                ];
+                // Select answer component according to field type
+                const FieldComponentName =
+                  components[
+                    toPascalCase(fieldDetails.fieldType) + "AnswerElement"
+                  ];
 
-              return (
-                <FieldComponentName
-                  key={fieldDetails.id}
-                  title={fieldDetails.title}
-                  answers={[field[1]]}
-                />
-              );
-            })}
+                return (
+                  <li key={fieldDetails.id}>
+                    <Card>
+                      <FieldComponentName
+                        title={fieldDetails.title}
+                        answers={[field[1]]}
+                      />
+                    </Card>
+                  </li>
+                );
+              })}
+            </ul>
           </>
         );
       })}

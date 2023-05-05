@@ -3,6 +3,7 @@ import toPascalCase from "../../helpers/toPascalCase";
 
 // Types
 import { AnswerComponentPropsType } from "../../types/types";
+import Card from "../UI/Card";
 
 const AnswersByField = ({
   formFields,
@@ -12,25 +13,30 @@ const AnswersByField = ({
   return (
     <>
       <h3>Answers - by field</h3>
+      <ul className="flex flex-col gap-6">
+        {Object.values(formFields).map((field) => {
+          // Get answers array
+          const answersList = Object.values(formAnswers).map(
+            (fieldAnswers) => fieldAnswers[field.id]
+          );
 
-      {Object.values(formFields).map((field) => {
-        // Get answers array
-        const answersList = Object.values(formAnswers).map(
-          (fieldAnswers) => fieldAnswers[field.id]
-        );
+          // Select answer component according to field type
+          const FieldComponentName =
+            components[toPascalCase(field.fieldType) + "AnswerElement"];
 
-        // Select answer component according to field type
-        const FieldComponentName =
-          components[toPascalCase(field.fieldType) + "AnswerElement"];
-
-        return (
-          <FieldComponentName
-            key={field.id}
-            title={field.title}
-            answers={answersList}
-          />
-        );
-      })}
+          return (
+            <li>
+              <Card>
+                <FieldComponentName
+                  key={field.id}
+                  title={field.title}
+                  answers={answersList}
+                />
+              </Card>
+            </li>
+          );
+        })}
+      </ul>
     </>
   );
 };

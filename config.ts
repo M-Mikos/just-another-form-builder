@@ -2,9 +2,9 @@
 export const AVAILABLE_FIELDS_TYPES: string[] = [
   "short",
   "paragraph",
-  "multiple choice",
-  "checkboxes",
-  "linear scale",
+  // "multiple choice",
+  // "checkboxes",
+  // "linear scale",
 ];
 
 // App's Firebase configuration

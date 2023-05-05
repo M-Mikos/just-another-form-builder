@@ -10,7 +10,6 @@ import { database } from "../../firebase";
 const Fill = () => {
   return (
     <>
-      <h2>Fill</h2>
       <FormToFill />
     </>
   );

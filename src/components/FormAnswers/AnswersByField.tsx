@@ -26,13 +26,11 @@ const AnswersByField = ({
 
           return (
             <li>
-              <Card>
-                <FieldComponentName
-                  key={field.id}
-                  title={field.title}
-                  answers={answersList}
-                />
-              </Card>
+              <FieldComponentName
+                key={field.id}
+                title={field.title}
+                answers={answersList}
+              />
             </li>
           );
         })}

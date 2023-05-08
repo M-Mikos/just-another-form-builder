@@ -1,3 +1,13 @@
 @tailwind base;
 @tailwind components;
 @tailwind utilities;
+
+@layer components {
+  .card {
+    @apply overflow-hidden rounded-lg border-2 border-stone-300 bg-white;
+    box-shadow: 5px 5px theme("colors.stone.300");
+  }
+  h2 {
+    @apply mb-6 text-3xl font-semibold;
+  }
+}

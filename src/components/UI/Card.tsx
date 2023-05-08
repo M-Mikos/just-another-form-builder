@@ -4,7 +4,7 @@ interface PropsTypes {
 }
 
 const Card = (props: PropsTypes): JSX.Element => {
-  return <div className="rounded-lg bg-white p-6 shadow">{props.children}</div>;
+  return <div className="card">{props.children}</div>;
 };
 
 export default Card;

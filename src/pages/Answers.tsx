@@ -4,12 +4,13 @@ import { get, ref } from "firebase/database";
 // Data
 import { database } from "../../firebase";
 import FormAnswers from "../components/FormAnswers";
+import Card from "../components/UI/Card";
 
 const Answers = () => {
   return (
-    <>
+    <Card>
       <FormAnswers />
-    </>
+    </Card>
   );
 };
 

@@ -33,12 +33,10 @@ const AnswersByForm = ({
 
                 return (
                   <li key={fieldDetails.id}>
-                    <Card>
-                      <FieldComponentName
-                        title={fieldDetails.title}
-                        answers={[field[1]]}
-                      />
-                    </Card>
+                    <FieldComponentName
+                      title={fieldDetails.title}
+                      answers={[field[1]]}
+                    />
                   </li>
                 );
               })}

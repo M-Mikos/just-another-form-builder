@@ -53,19 +53,40 @@ const FieldEditWrapper = ({ data }) => {
 
   return (
     <>
-      <div>
-        <input name="required" type="checkbox" />
-        <label htmlFor="required">Required?</label>
-        <label htmlFor="fieldType">Field type:</label>
+      <div className="flex justify-between border-b-2 border-stone-300 px-6 py-3">
+        <label htmlFor="fieldType" className="text-stone-800">
+          Field type:{" "}
+          <select
+            className="ml-2 px-3 py-2"
+            onChange={changleFieldTypeHandler}
+            name="fieldType"
+          >
+            {AVAILABLE_FIELDS_TYPES.map((option) => (
+              <option value={toPascalCase(option)}>{option}</option>
+            ))}
+          </select>
+        </label>
+
+        <label className="relative inline-flex cursor-pointer items-center">
+          <input
+            name="required"
+            type="checkbox"
+            value=""
+            className="peer sr-only"
+          />
+          <div className="h-6 w-9 rounded-full bg-stone-300 after:absolute after:left-1 after:top-[9.5px] after:h-4 after:w-4 after:rounded-full after:border after:bg-white after:transition-all after:content-[''] peer-checked:bg-emerald-600 peer-checked:after:translate-x-3 peer-focus:ring-2 peer-focus:ring-emerald-200"></div>
+          <span className="ml-2 text-sm text-stone-800">Required?</span>
+        </label>
       </div>
-      <select onChange={changleFieldTypeHandler} name="fieldType">
-        {AVAILABLE_FIELDS_TYPES.map((option) => (
-          <option value={toPascalCase(option)}>{option}</option>
-        ))}
-      </select>
-      <input {...questionInputAttributes} />
-      <FieldComponentName />
-      <div>
+      <div className="p-6">
+        <input
+          className="-ml-2 px-2 py-1 text-2xl"
+          {...questionInputAttributes}
+        />
+        <FieldComponentName />
+      </div>
+
+      <div className="border-t-2 border-stone-300 px-6 py-3">
         <button onClick={moveUpHandler}>Up</button>
         <button onClick={moveDownHandler}>Down</button>
         <button onClick={deleteHandler}>Delete</button>

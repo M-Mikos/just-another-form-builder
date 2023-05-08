@@ -17,7 +17,7 @@ const FormList = () => {
 
   return (
     <>
-      <ul className="grid grid-cols-3 gap-6">
+      <ul className="grid grid-cols-2 gap-6">
         {forms &&
           Object.entries(forms).map((form) => (
             <li key={form[1].id}>

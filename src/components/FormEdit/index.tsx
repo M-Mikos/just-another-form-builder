@@ -51,9 +51,13 @@ const FormEdit = () => {
               </li>
             );
           })}
+        <button
+          className="w-fit border-2 border-stone-500 px-8 py-2 font-semibold tracking-wider text-stone-500"
+          onClick={addFieldHandler}
+        >
+          Add Field
+        </button>
       </ul>
-
-      <button onClick={addFieldHandler}>Add</button>
     </>
   );
 };

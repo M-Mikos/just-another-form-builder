@@ -6,8 +6,10 @@ const Root = () => {
   return (
     <>
       <Header />
-      <div className="container p-10">
-        <Outlet />
+      <div className="flex w-full justify-center p-10 ">
+        <div className="container max-w-3xl">
+          <Outlet />
+        </div>
       </div>
     </>
   );

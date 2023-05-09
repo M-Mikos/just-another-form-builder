@@ -1,17 +1,14 @@
 // Functions & Hooks
 import { get, ref } from "firebase/database";
 
+// Components
+import FormAnswers from "../components/FormAnswers";
+
 // Data
 import { database } from "../../firebase";
-import FormAnswers from "../components/FormAnswers";
-import Card from "../components/UI/Card";
 
 const Answers = () => {
-  return (
-    <Card>
-      <FormAnswers />
-    </Card>
-  );
+  return <FormAnswers />;
 };
 
 export default Answers;

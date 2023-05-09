@@ -1,12 +1,11 @@
 // Functions & Hooks
 import { get, push, ref, remove, set } from "firebase/database";
-import toPascalCase from "../../helpers/toPascalCase";
 import { useLoaderData, useParams } from "react-router";
-import { Form, useFetcher } from "react-router-dom";
+import { useFetcher } from "react-router-dom";
 import { useState } from "react";
 
 // Types
-import { ComponentListType, FormLoaderType, FormType } from "../../types/types";
+import { FormLoaderType } from "../../types/types";
 
 // Components
 import FormHeader from "./FormHeader";
@@ -28,15 +27,16 @@ const FormEdit = () => {
 
   return (
     <>
-      <FormHeader
-        title={formDetails.title}
-        description={formDetails.description}
-      />
+      <Card className="mb-6 p-6">
+        <h2>{formDetails.title}</h2>
+        <span>{formDetails.description}</span>
+      </Card>
+
       <ul className="flex flex-col gap-6">
         {formFields &&
           Object.values(formFields).map((field) => {
             return (
-              <li>
+              <li key={field.id}>
                 <Card>
                   <fetcher.Form method="PATCH" action={`/${params.formId}`}>
                     <input
@@ -44,7 +44,7 @@ const FormEdit = () => {
                       type="hidden"
                       value={field.id}
                     ></input>
-                    <FieldEditWrapper data={field} key={field.id} />
+                    <FieldEditWrapper data={field} />
                     <button type="submit">Save changes</button>
                   </fetcher.Form>
                 </Card>
@@ -76,7 +76,6 @@ export const action = async ({
     const formData = await request.formData();
     const formDataObj = Object.fromEntries(formData);
 
-    console.log("action Data", formData);
 
     // Select action method
     switch (request.method) {

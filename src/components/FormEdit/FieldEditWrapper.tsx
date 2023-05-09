@@ -1,5 +1,5 @@
 // Function & hooks
-import { Form, useFetcher, useParams } from "react-router-dom";
+import { useFetcher, useParams } from "react-router-dom";
 import { useState } from "react";
 import toPascalCase from "../../helpers/toPascalCase";
 
@@ -53,11 +53,11 @@ const FieldEditWrapper = ({ data }) => {
 
   return (
     <>
-      <div className="flex justify-between border-b-2 border-stone-300 px-6 py-3">
+      <div className="flex justify-between border-b-2 border-stone-300 px-6 py-4">
         <label htmlFor="fieldType" className="text-stone-800">
-          Field type:{" "}
+          Field type:
           <select
-            className="ml-2 px-3 py-2"
+            className="ml-3 px-3 py-2"
             onChange={changleFieldTypeHandler}
             name="fieldType"
           >
@@ -71,7 +71,7 @@ const FieldEditWrapper = ({ data }) => {
           <input
             name="required"
             type="checkbox"
-            value=""
+            value="true"
             className="peer sr-only"
           />
           <div className="h-6 w-9 rounded-full bg-stone-300 after:absolute after:left-1 after:top-[9.5px] after:h-4 after:w-4 after:rounded-full after:border after:bg-white after:transition-all after:content-[''] peer-checked:bg-emerald-600 peer-checked:after:translate-x-3 peer-focus:ring-2 peer-focus:ring-emerald-200"></div>
@@ -86,10 +86,15 @@ const FieldEditWrapper = ({ data }) => {
         <FieldComponentName />
       </div>
 
-      <div className="border-t-2 border-stone-300 px-6 py-3">
-        <button onClick={moveUpHandler}>Up</button>
-        <button onClick={moveDownHandler}>Down</button>
-        <button onClick={deleteHandler}>Delete</button>
+      <div className="flex justify-between border-t-2 border-stone-300 px-6 py-4 align-middle">
+        <div>
+          {/* <button onClick={moveUpHandler}>Up</button>
+          <button onClick={moveDownHandler}>Down</button> */}
+        </div>
+        <button className="flex " onClick={deleteHandler}>
+          <span className="material-symbols-outlined ">delete</span>
+          Delete
+        </button>
       </div>
     </>
   );

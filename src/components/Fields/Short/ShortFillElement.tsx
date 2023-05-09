@@ -1,10 +1,16 @@
 const ShortFillElement = (props: { inputName: string }) => {
   return (
     <div>
-      <h3>Label</h3>
-      <span>Required</span>
-      <input name={props.inputName} type="text"></input>
-      <span>Error message</span>
+      <input
+        placeholder="Your answer"
+        className="peer relative w-full border-b border-stone-400 px-4  py-2 text-sm  hover:bg-stone-100 
+        focus-visible:border-emerald-500 focus-visible:bg-stone-50 focus-visible:outline-none "
+        autoComplete="off"
+        name={props.inputName}
+        type="text"
+        {...(props.required && { required: "required" })}
+      />
+      <div className="invisible h-0.5 w-full bg-emerald-500 peer-focus-visible:visible" />
     </div>
   );
 };

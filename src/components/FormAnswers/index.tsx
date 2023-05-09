@@ -11,6 +11,7 @@ import AnswersByForm from "./AnswersByForm";
 
 import ShortAnswerElement from "../Fields/Short/ShortAnswersElement";
 import ParagraphAnswerElement from "../Fields/Paragraph/ParagraphAnswersElement";
+import Card from "../UI/Card";
 
 const components: ComponentListType = {
   ShortAnswerElement,
@@ -30,11 +31,22 @@ const FormAnswers = () => {
   };
 
   return (
-    <>
+    <div className="flex flex-col gap-6">
+      <Card>
+        <div className="p-6">
+          <h2>answers</h2>
+          <div>
+            {formAnswers && (
+              <div className="flex justify-center gap-4">
+                <button onClick={fieldsButtonHandler}>Fields</button>
+                <button onClick={formsButtonHandler}>Forms</button>
+              </div>
+            )}
+          </div>
+        </div>
+      </Card>
       {formAnswers && (
-        <>
-          <button onClick={fieldsButtonHandler}>Fields</button>
-          <button onClick={formsButtonHandler}>Forms</button>
+        <div className="flex flex-col gap-6">
           {answersMode === "fields" && (
             <AnswersByField
               formFields={formFields}
@@ -49,9 +61,9 @@ const FormAnswers = () => {
               components={components}
             />
           )}
-        </>
+        </div>
       )}
-    </>
+    </div>
   );
 };
 

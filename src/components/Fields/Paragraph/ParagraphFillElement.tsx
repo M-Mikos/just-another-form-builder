@@ -1,12 +1,9 @@
-const ShortFillElement = (props: { inputName: string }) => {
+const ParagraphFillElement = (props: { inputName: string }) => {
   return (
     <div>
-      <h3>Label</h3>
-      <span>Required</span>
-      <textarea name={props.inputName} rows="4" cols="50" />
-      <span>Error message</span>
+      <textarea name={props.inputName} rows={4} cols={50} />
     </div>
   );
 };
 
-export default ShortFillElement;
+export default ParagraphFillElement;

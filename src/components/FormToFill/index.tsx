@@ -1,51 +1,45 @@
 // Functions & Hooks
 import { useLoaderData, useParams } from "react-router";
-import toPascalCase from "../../helpers/toPascalCase";
 import { push, ref, set } from "firebase/database";
 
 // Types
-import {
-  FormFieldType,
-  ComponentListType,
-  FormLoaderType,
-} from "../../types/types";
+import { FormFieldType, FormLoaderType } from "../../types/types";
 
 // Components
-import ShortFillElement from "../Fields/Short/ShortFillElement";
-import ParagraphFillElement from "../Fields/Paragraph/ParagraphFillElement";
 import { Form } from "react-router-dom";
 import FormHeader from "../FormEdit/FormHeader";
+import Card from "../UI/Card";
 
 // Data
 import { database } from "../../../firebase";
-
-const components: ComponentListType = {
-  ShortFillElement,
-  ParagraphFillElement,
-};
+import FieldFillWrapper from "./FieldFillWrapper";
 
 const FormToFill = () => {
-  const { formFields } = useLoaderData() as FormLoaderType;
+  const { formDetails, formFields } = useLoaderData() as FormLoaderType;
   const params = useParams();
 
   return (
     <>
-      <FormHeader
-        title={formDetails.title}
-        description={formDetails.description}
-      />
-      <h3>Fields</h3>
+      <Card className="mb-6 p-6">
+        <FormHeader
+          title={formDetails.title}
+          description={formDetails.description}
+        />
+      </Card>
       {formFields && (
         <Form method="put" action={`/${params.formId}/fill`}>
-          {Object.values(formFields).map((field: FormFieldType) => {
-            // Select component based on form field type
-            const formattedFieldName =
-              toPascalCase(field.fieldType) + "FillElement";
+          <ul className="flex flex-col gap-6">
+            {Object.values(formFields).map((field: FormFieldType) => {
+              return (
+                <li key={field.id}>
+                  <Card className="p-6">
+                    <FieldFillWrapper data={field} />
+                  </Card>
+                </li>
+              );
+            })}
+          </ul>
 
-            const FieldComponentName = components[formattedFieldName];
-
-            return <FieldComponentName inputName={field.id} key={field.id} />;
-          })}
           <button type="submit">Send</button>
         </Form>
       )}

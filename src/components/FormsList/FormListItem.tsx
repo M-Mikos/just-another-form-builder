@@ -26,6 +26,7 @@ const FormListItem = (props: {
         <span className="text-xs">ID: {props.id}</span>
         <button className="p-2" onClick={deleteFormHandler}>
           Delete
+          
         </button>
       </div>
     </>

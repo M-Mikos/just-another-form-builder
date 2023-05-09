@@ -10,12 +10,11 @@ const ParagraphAnswerElement = ({
 }) => {
   return (
     <div>
-      <p>{title}</p>
-      <p>
+      <ul className="flex flex-col gap-2">
         {answers.map((answer) => {
-          return <span>{answer}, </span>;
+          return <li className="text-sm text-stone-700">{answer}</li>;
         })}
-      </p>
+      </ul>
     </div>
   );
 };

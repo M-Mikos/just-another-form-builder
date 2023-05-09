@@ -12,7 +12,7 @@ const AnswersByField = ({
 }: AnswerComponentPropsType) => {
   return (
     <>
-      <h3>Answers - by field</h3>
+      <h3 className="text-xl">Answers - by field</h3>
       <ul className="flex flex-col gap-6">
         {Object.values(formFields).map((field) => {
           // Get answers array
@@ -23,14 +23,19 @@ const AnswersByField = ({
           // Select answer component according to field type
           const FieldComponentName =
             components[toPascalCase(field.fieldType) + "AnswerElement"];
-
           return (
             <li>
-              <FieldComponentName
-                key={field.id}
-                title={field.title}
-                answers={answersList}
-              />
+              <Card>
+                <div className="p-6">
+                  <h4 className="mb-6  text-stone-800">{field.title}</h4>
+                  <FieldComponentName key={field.id} answers={answersList} />
+                  {answersList.length === 0 && (
+                    <span className="text-xs">
+                      This question has not yet been answered
+                    </span>
+                  )}
+                </div>
+              </Card>
             </li>
           );
         })}

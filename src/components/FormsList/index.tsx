@@ -30,7 +30,7 @@ const FormList = () => {
 
   return (
     <>
-      <ul className="mb-6 grid grid-cols-2 gap-6">
+      <ul className="mb-6 grid grid-cols-3 gap-6">
         {forms &&
           Object.entries(forms).map((form) => (
             <li key={form[1].id}>
@@ -75,18 +75,21 @@ export const action = async ({
     // Select action method
     switch (request.method) {
       case "POST":
-        // Adding new form
+        // Add new form
         // Get key for new form database entry
-        const newFormKey = push(ref(database, `forms`)).key;
-        const color =
-          // Set new form in database
-          set(ref(database, `forms/${newFormKey}`), {
-            description: formDataObj.formDescription,
-            id: newFormKey,
-            tagColor:
-              FORMS_COLORS[Math.floor(Math.random()) * FORMS_COLORS.length],
-            title: formDataObj.formTitle,
-          });
+        const newFormKey = push(ref(database, `forms`)).key as string;
+
+        // Pick random color
+        const color: string =
+          FORMS_COLORS[Math.floor(Math.random() * FORMS_COLORS.length)];
+
+        // Set new form in database
+        set(ref(database, `forms/${newFormKey}`), {
+          description: formDataObj.formDescription,
+          id: newFormKey,
+          tagColor: color,
+          title: formDataObj.formTitle,
+        });
         break;
       case "DELETE":
         // Deleting form detail

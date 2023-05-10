@@ -6,7 +6,7 @@ const FormNavigation = () => {
 
   const navLinkStyles = ({ isActive }: { isActive: boolean }): string => {
     return `px-2 py-2 text-sm text-stone-500 hover:bg-gray-200 ${
-      isActive && "font-bold text-stone-900 border-b-2 border-stone-800"
+      isActive && "font-bold text-sky-500 border-b-2 border-sky-500"
     }`;
   };
 

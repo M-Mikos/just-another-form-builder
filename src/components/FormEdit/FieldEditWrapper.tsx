@@ -54,10 +54,10 @@ const FieldEditWrapper = ({ data }) => {
   return (
     <>
       <div className="flex justify-between border-b-2 border-stone-300 px-6 py-4">
-        <label htmlFor="fieldType" className="text-stone-800">
+        <label htmlFor="fieldType" className="text-sm text-stone-800">
           Field type:
           <select
-            className="ml-3 px-3 py-2"
+            className="ml-3 bg-stone-100 px-3 py-2 hover:bg-stone-200"
             onChange={changleFieldTypeHandler}
             name="fieldType"
           >
@@ -74,7 +74,7 @@ const FieldEditWrapper = ({ data }) => {
             value="true"
             className="peer sr-only"
           />
-          <div className="h-6 w-9 rounded-full bg-stone-300 after:absolute after:left-1 after:top-[9.5px] after:h-4 after:w-4 after:rounded-full after:border after:bg-white after:transition-all after:content-[''] peer-checked:bg-emerald-600 peer-checked:after:translate-x-3 peer-focus:ring-2 peer-focus:ring-emerald-200"></div>
+          <div className="h-6 w-9 rounded-full bg-stone-300 after:absolute after:left-1 after:top-1/4 after:h-4 after:w-4 after:rounded-full after:border after:bg-white after:transition-all after:content-[''] peer-checked:bg-sky-600 peer-checked:after:translate-x-3 peer-focus:ring-2 peer-focus:ring-sky-200"></div>
           <span className="ml-2 text-sm text-stone-800">Required?</span>
         </label>
       </div>

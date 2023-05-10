@@ -12,13 +12,13 @@ function Modal(props: PropsTypes): JSX.Element {
   return (
     <>
       {ReactDOM.createPortal(
-        <div className="fixed left-0 top-0 z-10 flex h-full w-full items-center justify-center overflow-hidden">
+        <div className="fixed left-0 top-0 z-40 flex h-full w-full items-center justify-center overflow-hidden">
           <div
             onClick={props.toggleModal}
-            className="bg-transpare fixed left-0 top-0 z-10 h-full w-full overflow-hidden bg-black/80"
+            className="bg-transpare fixed left-0 top-0 z-40 h-full w-full overflow-hidden bg-black/80"
           ></div>
 
-          <div className="relative z-20 m-6 flex flex-col items-center justify-center gap-6 rounded-lg bg-white">
+          <div className="relative z-50 m-6 flex flex-col items-center justify-center gap-6 rounded-lg bg-white">
             <button
               onClick={props.toggleModal}
               className="btn--light m-2 mb-0 self-end p-0"

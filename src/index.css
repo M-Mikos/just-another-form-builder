@@ -13,7 +13,7 @@
   }
 
   .input-text__underline {
-    @apply invisible h-0.5 w-full bg-stone-600 peer-focus-visible:visible;
+    @apply invisible h-0.5 w-full bg-sky-600 peer-focus-visible:visible;
   }
 
   .btn--light {
@@ -21,7 +21,7 @@
   }
 
   .btn--strong {
-    @apply flex items-center justify-center gap-2 rounded-lg bg-stone-600 px-8 py-4 font-semibold text-white transition hover:-translate-y-1 hover:bg-stone-700;
+    @apply flex items-center justify-center gap-2 rounded-lg bg-sky-600 px-8 py-4 font-semibold text-white transition hover:-translate-y-1 hover:bg-sky-700;
     box-shadow: 5px 5px theme("colors.stone.300");
   }
 

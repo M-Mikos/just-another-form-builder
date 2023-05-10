@@ -10,13 +10,11 @@ const components: ComponentListType = {
   ParagraphFillElement,
 };
 
-const FieldFillWrapper = (props) => {
+const FieldFillWrapper = (props): JSX.Element => {
   // Select component based on form field type
   const formattedFieldName = toPascalCase(props.data.fieldType) + "FillElement";
 
   const FieldComponentName = components[formattedFieldName];
-
-  console.log(props);
 
   return (
     <>

@@ -14,7 +14,7 @@ import Card from "../UI/Card";
 import { database } from "../../../firebase";
 import FieldFillWrapper from "./FieldFillWrapper";
 
-const FormToFill = () => {
+const FormToFill = (): JSX.Element => {
   const { formDetails, formFields } = useLoaderData() as FormLoaderType;
   const params = useParams();
 
@@ -28,7 +28,7 @@ const FormToFill = () => {
       </Card>
       {formFields && (
         <Form method="put" action={`/${params.formId}/fill`}>
-          <ul className="flex flex-col gap-6">
+          <ul className="mb-6 flex flex-col gap-6">
             {Object.values(formFields).map((field: FormFieldType) => {
               return (
                 <li key={field.id}>
@@ -40,7 +40,9 @@ const FormToFill = () => {
             })}
           </ul>
 
-          <button type="submit">Send</button>
+          <button className="btn--strong" type="submit">
+            Send
+          </button>
         </Form>
       )}
     </>

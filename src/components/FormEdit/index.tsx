@@ -45,17 +45,17 @@ const FormEdit = () => {
                       value={field.id}
                     ></input>
                     <FieldEditWrapper data={field} />
-                    <button type="submit">Save changes</button>
+                    <button className="btn--light px-6" type="submit">
+                      Save changes
+                    </button>
                   </fetcher.Form>
                 </Card>
               </li>
             );
           })}
-        <button
-          className="w-fit border-2 border-stone-500 px-8 py-2 font-semibold tracking-wider text-stone-500"
-          onClick={addFieldHandler}
-        >
-          Add Field
+        <button className="btn--light text-base" onClick={addFieldHandler}>
+          <span className="material-symbols-outlined ">add_circle</span>
+          Add field
         </button>
       </ul>
     </>
@@ -75,7 +75,6 @@ export const action = async ({
     // Get form data and format to object
     const formData = await request.formData();
     const formDataObj = Object.fromEntries(formData);
-
 
     // Select action method
     switch (request.method) {

@@ -17,3 +17,16 @@ export const firebaseConfig = {
   messagingSenderId: "318952263654",
   appId: "1:318952263654:web:b0d647770c0c8dc265d027",
 };
+
+// Styles:
+export const FORMS_COLORS: string[] = [
+  "cyan",
+  "emerald",
+  "rose",
+  "violet",
+  "amber",
+  "slate",
+  "green",
+  "blue",
+  "orange",
+];

@@ -7,6 +7,24 @@
     @apply rounded-lg border-2 border-stone-300 bg-white;
     box-shadow: 5px 5px theme("colors.stone.300");
   }
+  .input-text {
+    @apply relative w-full border-b border-stone-400 px-4  py-2 text-sm  hover:bg-stone-100 
+    focus-visible:border-stone-500 focus-visible:bg-stone-50 focus-visible:outline-none;
+  }
+
+  .input-text__underline {
+    @apply invisible h-0.5 w-full bg-stone-600 peer-focus-visible:visible;
+  }
+
+  .btn--light {
+    @apply flex items-center justify-center gap-1 py-2  text-sm opacity-50 transition hover:opacity-100;
+  }
+
+  .btn--strong {
+    @apply flex items-center justify-center gap-2 rounded-lg bg-stone-600 px-8 py-4 font-semibold text-white transition hover:-translate-y-1 hover:bg-stone-700;
+    box-shadow: 5px 5px theme("colors.stone.300");
+  }
+
   h2 {
     @apply mb-6 text-3xl font-semibold;
   }

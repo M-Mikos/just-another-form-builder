@@ -4,6 +4,7 @@ import { FormListItemType } from "../../types/types";
 // Functions & hooks
 import { useLoaderData } from "react-router";
 import { useFetcher } from "react-router-dom";
+import { useState } from "react";
 
 // Components
 import FormListItem from "./FormListItem";
@@ -11,13 +12,25 @@ import { push, ref, remove, set } from "firebase/database";
 import { database } from "../../../firebase";
 import AddNewForm from "./AddNewForm";
 import Card from "../UI/Card";
+import Modal from "../UI/Modal";
+
+// Data
+import { FORMS_COLORS } from "../../../config";
 
 const FormList = () => {
   const forms = useLoaderData() as { [key: string]: FormListItemType };
+  const [isModal, setIsModal] = useState(false);
+
+  const toggleModalHandler = (): void => {
+    setIsModal((state: boolean): boolean => {
+      console.log("modal toggled", state);
+      return !state;
+    });
+  };
 
   return (
     <>
-      <ul className="grid grid-cols-2 gap-6">
+      <ul className="mb-6 grid grid-cols-2 gap-6">
         {forms &&
           Object.entries(forms).map((form) => (
             <li key={form[1].id}>
@@ -26,13 +39,21 @@ const FormList = () => {
                   title={form[1].title}
                   description={form[1].description}
                   id={form[1].id}
+                  tagColor={form[1].tagColor}
                 />
               </Card>
             </li>
           ))}
       </ul>
-      {/* <AddNewForm /> */}
-      {/* <button onClick={addFormHandler}>Add new form</button> */}
+
+      <button onClick={toggleModalHandler} className="btn--light text-base">
+        <span className="material-symbols-outlined ">add</span>Add new form
+      </button>
+      {isModal && (
+        <Modal toggleModal={toggleModalHandler}>
+          <AddNewForm toggleModal={toggleModalHandler} />
+        </Modal>
+      )}
     </>
   );
 };
@@ -57,14 +78,15 @@ export const action = async ({
         // Adding new form
         // Get key for new form database entry
         const newFormKey = push(ref(database, `forms`)).key;
-
-        // Set new form in database
-        set(ref(database, `forms/${newFormKey}`), {
-          description: formDataObj.formDescription,
-          id: newFormKey,
-          tagColor: "now that's the least important thing",
-          title: formDataObj.formTitle,
-        });
+        const color =
+          // Set new form in database
+          set(ref(database, `forms/${newFormKey}`), {
+            description: formDataObj.formDescription,
+            id: newFormKey,
+            tagColor:
+              FORMS_COLORS[Math.floor(Math.random()) * FORMS_COLORS.length],
+            title: formDataObj.formTitle,
+          });
         break;
       case "DELETE":
         // Deleting form detail

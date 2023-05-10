@@ -91,7 +91,7 @@ const FieldEditWrapper = ({ data }) => {
           {/* <button onClick={moveUpHandler}>Up</button>
           <button onClick={moveDownHandler}>Down</button> */}
         </div>
-        <button className="flex " onClick={deleteHandler}>
+        <button className="btn--light" onClick={deleteHandler}>
           <span className="material-symbols-outlined ">delete</span>
           Delete
         </button>

@@ -5,7 +5,11 @@ interface PropsTypes {
 }
 
 const Card = (props: PropsTypes): JSX.Element => {
-  return <div className={`card ${props.className}`}>{props.children}</div>;
+  return (
+    <div className={`card ${props.className ? props.className : ""}`}>
+      {props.children}
+    </div>
+  );
 };
 
 export default Card;

@@ -30,8 +30,8 @@ export type ComponentListType = { [key: string]: React.FC };
 export type AnswerType = { [key: string]: AnswerValueType };
 
 export type FormLoaderType = {
-  formDetails?: FormType;
-  formFields?: { [key: string]: FormFieldType };
+  formDetails: FormType;
+  formFields: { [key: string]: FormFieldType };
   formAnswers?: { [key: string]: AnswerType };
 };
 

@@ -11,32 +11,50 @@ import { FormLoaderType } from "../../types/types";
 import FormHeader from "./FormHeader";
 import FieldEditWrapper from "./FieldEditWrapper";
 import Card from "../UI/Card";
+import NoiseTexture from "../Decorative/NoiseTexture";
 
 // Data
 import { database } from "../../../firebase";
+import generateColorClass from "../../helpers/generateColorClass";
 
 const FormEdit = () => {
   const { formDetails, formFields } = useLoaderData() as FormLoaderType;
   const params = useParams();
   const fetcher = useFetcher();
-  const [currentlyEditedField, setCurrentlyEditedField] = useState();
+  const [currentlyEditedField, setCurrentlyEditedField] = useState("");
 
   const addFieldHandler = () => {
     fetcher.submit({}, { method: "POST", action: `/${params.formId}` });
   };
 
+  const setEditedFieldHandler = (id: string): void => {
+    console.log(id);
+    setCurrentlyEditedField(id);
+  };
+
   return (
     <>
-      <Card className="mb-6 p-6">
-        <h2>{formDetails.title}</h2>
-        <span>{formDetails.description}</span>
+      <Card
+        className={
+          "relative mb-6 p-6 " +
+          generateColorClass("gradient", formDetails.tagColor)
+        }
+      >
+        <NoiseTexture />
+        <FormHeader
+          title={formDetails.title}
+          description={formDetails.description}
+        />
       </Card>
 
       <ul className="flex flex-col gap-6">
         {formFields &&
           Object.values(formFields).map((field) => {
             return (
-              <li key={field.id}>
+              <li
+                key={field.id}
+                onClick={() => setEditedFieldHandler(field.id)}
+              >
                 <Card>
                   <fetcher.Form method="PATCH" action={`/${params.formId}`}>
                     <input
@@ -44,10 +62,11 @@ const FormEdit = () => {
                       type="hidden"
                       value={field.id}
                     ></input>
-                    <FieldEditWrapper data={field} />
-                    <button className="btn--light px-6" type="submit">
-                      Save changes
-                    </button>
+                    <FieldEditWrapper
+                      data={field}
+                      tagColor={formDetails.tagColor}
+                      isBeingEdited={currentlyEditedField === field.id}
+                    />
                   </fetcher.Form>
                 </Card>
               </li>

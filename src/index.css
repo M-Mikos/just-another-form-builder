@@ -5,7 +5,8 @@
 @layer components {
   .card {
     @apply rounded-lg border-2 border-stone-300 bg-white;
-    box-shadow: 5px 5px theme("colors.stone.300");
+    box-shadow: 5px 5px theme("colors.stone.300"),
+      2.5px 2.5px theme("colors.stone.300");
   }
   .input-text {
     @apply relative w-full border-b border-stone-400 px-4  py-2 text-sm  hover:bg-stone-100 
@@ -22,7 +23,8 @@
 
   .btn--strong {
     @apply flex items-center justify-center gap-2 rounded-lg bg-sky-600 px-8 py-4 font-semibold text-white transition hover:-translate-y-1 hover:bg-sky-700;
-    box-shadow: 5px 5px theme("colors.stone.300");
+    box-shadow: 5px 5px theme("colors.stone.300"),
+      2.5px 2.5px theme("colors.stone.300");
   }
 
   h2 {

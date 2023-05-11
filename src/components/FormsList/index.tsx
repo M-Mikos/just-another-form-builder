@@ -23,7 +23,6 @@ const FormList = () => {
 
   const toggleModalHandler = (): void => {
     setIsModal((state: boolean): boolean => {
-      console.log("modal toggled", state);
       return !state;
     });
   };
@@ -34,7 +33,7 @@ const FormList = () => {
         {forms &&
           Object.entries(forms).map((form) => (
             <li key={form[1].id}>
-              <Card>
+              <Card className="flex h-full flex-col">
                 <FormListItem
                   title={form[1].title}
                   description={form[1].description}

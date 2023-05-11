@@ -13,6 +13,8 @@ import Card from "../UI/Card";
 // Data
 import { database } from "../../../firebase";
 import FieldFillWrapper from "./FieldFillWrapper";
+import NoiseTexture from "../Decorative/NoiseTexture";
+import generateColorClass from "../../helpers/generateColorClass";
 
 const FormToFill = (): JSX.Element => {
   const { formDetails, formFields } = useLoaderData() as FormLoaderType;
@@ -20,11 +22,15 @@ const FormToFill = (): JSX.Element => {
 
   return (
     <>
-      <Card className="mb-6 p-6">
-        <FormHeader
-          title={formDetails.title}
-          description={formDetails.description}
-        />
+      <Card
+        className={
+          "relative mb-6 p-6 text-white " +
+          generateColorClass("gradient", formDetails.tagColor)
+        }
+      >
+        <NoiseTexture className="" />
+        <h2 className="relative z-20 text-5xl">{formDetails.title}</h2>
+        <p className="relative z-20">{formDetails.description}</p>
       </Card>
       {formFields && (
         <Form method="put" action={`/${params.formId}/fill`}>

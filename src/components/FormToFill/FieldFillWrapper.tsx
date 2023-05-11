@@ -18,7 +18,7 @@ const FieldFillWrapper = (props): JSX.Element => {
 
   return (
     <>
-      <h4 className="mb-3">
+      <h4 className="mb-3 text-lg">
         {props.data.title}
         {props.data.required && (
           <span className="group relative ml-1  cursor-help text-xl text-red-600">

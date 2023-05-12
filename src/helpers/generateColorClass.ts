@@ -2,7 +2,7 @@
 // Funcion can be extended to use shades and more prefixes and colors.
 
 const generateColorClass = (
-  prefix: "gradient" | "bg",
+  prefix: "gradient" | "before-bg" | "border",
   color: string
 ): string => {
   const gradientColor: { [key: string]: string } = {
@@ -17,7 +17,7 @@ const generateColorClass = (
     orange: "bg-gradient-to-t from-orange-500 to-orange-700",
   };
 
-  const bgColor: { [key: string]: string } = {
+  const beforeBgColor: { [key: string]: string } = {
     cyan: "before:bg-cyan-600",
     emerald: "before:bg-emerald-600",
     rose: "before:bg-rose-600",
@@ -29,8 +29,21 @@ const generateColorClass = (
     orange: "before:bg-orange-600",
   };
 
+  const borderColor: { [key: string]: string } = {
+    cyan: "border-cyan-600",
+    emerald: "border-emerald-600",
+    rose: "border-rose-600",
+    violet: "border-violet-600",
+    amber: "border-amber-600",
+    slate: "border-slate-600",
+    green: "border-green-600",
+    blue: "border-blue-600",
+    orange: "border-orange-600",
+  };
+
   if (prefix === "gradient") return gradientColor[color];
-  if (prefix === "bg") return bgColor[color];
+  if (prefix === "before-bg") return beforeBgColor[color];
+  if (prefix === "border") return borderColor[color];
   return "";
 };
 

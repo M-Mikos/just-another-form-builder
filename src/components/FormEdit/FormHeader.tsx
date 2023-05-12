@@ -1,5 +1,4 @@
 // Functions & Hooks
-import { useFetcher } from "react-router-dom";
 
 // TS Interfaces declaration
 interface PropsTypes {
@@ -8,7 +7,6 @@ interface PropsTypes {
 }
 
 const FormHeader = (props: PropsTypes): JSX.Element => {
-  const fetcher = useFetcher();
   return (
     <>
       <input

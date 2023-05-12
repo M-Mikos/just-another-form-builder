@@ -1,21 +1,19 @@
 // Functions & hooks
-import toPascalCase from "../../helpers/toPascalCase";
+import renderReactComponentByName from "../../helpers/renderReactComponentByName";
+import { FormFieldType } from "../../types/types";
 
 // Components
 import ParagraphFillElement from "../Fields/Paragraph/ParagraphFillElement";
 import ShortFillElement from "../Fields/Short/ShortFillElement";
 
-const components: ComponentListType = {
+const components: {
+  [key: string]: React.ComponentType<{ inputName: string; required: boolean }>;
+} = {
   ShortFillElement,
   ParagraphFillElement,
 };
 
-const FieldFillWrapper = (props): JSX.Element => {
-  // Select component based on form field type
-  const formattedFieldName = toPascalCase(props.data.fieldType) + "FillElement";
-
-  const FieldComponentName = components[formattedFieldName];
-
+const FieldFillWrapper = (props: { data: FormFieldType }): JSX.Element => {
   return (
     <>
       <h4 className="mb-3 text-lg">
@@ -30,10 +28,10 @@ const FieldFillWrapper = (props): JSX.Element => {
         )}
       </h4>
 
-      <FieldComponentName
-        inputName={props.data.id}
-        required={props.data.required}
-      />
+      {renderReactComponentByName(props.data.fieldType, "Fill", components, {
+        inputName: props.data.id,
+        required: props.data.required,
+      })}
     </>
   );
 };

@@ -1,13 +1,9 @@
 // Functions & Hooks
+import renderReactComponentByName from "../../helpers/renderReactComponentByName";
 import toPascalCase from "../../helpers/toPascalCase";
 
 // TS Types
-import {
-  AnswerType,
-  ComponentListType,
-  FormFieldType,
-  FormType,
-} from "../../types/types";
+import { AnswerType, FormFieldType, FormType } from "../../types/types";
 
 // Components
 import Card from "../UI/Card";
@@ -21,7 +17,7 @@ interface PropsTypes {
   formAnswers: {
     [key: string]: AnswerType;
   };
-  components: ComponentListType;
+  components: { [key: string]: React.ComponentType<{ answers: AnswerType[] }> };
 }
 
 const AnswersByForm = (props: PropsTypes) => {
@@ -41,18 +37,14 @@ const AnswersByForm = (props: PropsTypes) => {
                     (fieldDetail) => fieldDetail.id === field[0]
                   )[0];
 
-                  // Select answer component according to field type
-                  const FieldComponentName =
-                    props.components[
-                      toPascalCase(fieldDetails.fieldType) + "AnswerElement"
-                    ];
-
                   return (
                     <li key={fieldDetails.id}>
-                      <FieldComponentName
-                        title={fieldDetails.title}
-                        answers={[field[1]]}
-                      />
+                      {renderReactComponentByName(
+                        fieldDetails.fieldType,
+                        "Answer",
+                        props.components,
+                        { answers: [field[1]] }
+                      )}
                     </li>
                   );
                 })}

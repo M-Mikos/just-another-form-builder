@@ -12,18 +12,18 @@ const NoiseTexture = (props: { className?: string }): JSX.Element => {
       <filter id="noise">
         <feTurbulence
           type="fractalNoise"
-          numOctaves="3"
-          baseFrequency=".5"
+          numOctaves="2"
+          baseFrequency=".6"
           stitchTiles="stitch"
         ></feTurbulence>
 
         {/* Matrix for optional color convertion */}
         {/* <feColorMatrix
-              values="0 0 0 8 -3.5
+          values="0 0 0 8 -3.5
                       0 0 0 8 -3.5
                       0 0 0 8 -3.5
                       0 0 0 -1 1"
-            /> */}
+        /> */}
       </filter>
       <rect width="100%" height="100%" filter="url(#noise)"></rect>
     </svg>

@@ -1,5 +1,5 @@
 // TS Types
-import { AnswerType } from "../../../types/types";
+import { AnswerType, AnswerValueType } from "../../../types/types";
 
 const ShortAnswerElement = (props: { answers: AnswerType[] }): JSX.Element => {
   return (

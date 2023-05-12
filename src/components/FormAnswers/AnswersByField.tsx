@@ -1,13 +1,9 @@
 // Functions & Hooks
+import renderReactComponentByName from "../../helpers/renderReactComponentByName";
 import toPascalCase from "../../helpers/toPascalCase";
 
 // TS Types
-import {
-  AnswerType,
-  ComponentListType,
-  FormFieldType,
-  FormType,
-} from "../../types/types";
+import { AnswerType, FormFieldType, FormType } from "../../types/types";
 
 // Components
 import Card from "../UI/Card";
@@ -21,7 +17,9 @@ interface PropsTypes {
   formAnswers: {
     [key: string]: AnswerType;
   };
-  components: ComponentListType;
+  components: {
+    [key: string]: React.ComponentType<{ answers: AnswerType[] }>;
+  };
 }
 
 const AnswersByField = (props: PropsTypes): JSX.Element => {
@@ -35,15 +33,17 @@ const AnswersByField = (props: PropsTypes): JSX.Element => {
             (fieldAnswers) => fieldAnswers[field.id]
           );
 
-          // Select answer component according to field type
-          const FieldComponentName =
-            props.components[toPascalCase(field.fieldType) + "AnswerElement"];
           return (
-            <li>
+            <li key={field.id}>
               <Card>
                 <div className="p-6">
                   <h4 className="mb-6  text-stone-800">{field.title}</h4>
-                  <FieldComponentName key={field.id} answers={answersList} />
+                  {renderReactComponentByName(
+                    field.fieldType,
+                    "Answer",
+                    props.components,
+                    { answers: answersList }
+                  )}
                   {answersList.length === 0 && (
                     <span className="text-xs">
                       This question has not yet been answered

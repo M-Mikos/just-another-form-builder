@@ -1,9 +1,8 @@
 // Types
-import { FormListItemType } from "../../types/types";
+import { FormType } from "../../types/types";
 
 // Functions & hooks
-import { useLoaderData } from "react-router";
-import { useFetcher } from "react-router-dom";
+import { ActionFunction, useLoaderData } from "react-router";
 import { useState } from "react";
 
 // Components
@@ -18,7 +17,7 @@ import Modal from "../UI/Modal";
 import { FORMS_COLORS } from "../../../config";
 
 const FormList = () => {
-  const forms = useLoaderData() as { [key: string]: FormListItemType };
+  const forms = useLoaderData() as { [key: string]: FormType };
   const [isModal, setIsModal] = useState(false);
 
   const toggleModalHandler = (): void => {
@@ -33,10 +32,10 @@ const FormList = () => {
         {forms &&
           Object.entries(forms).map((form) => (
             <li key={form[1].id}>
-              <Card className="flex h-full flex-col">
+              <Card className="flex h-full flex-col ">
                 <FormListItem
                   title={form[1].title}
-                  description={form[1].description}
+                  description={form[1].description ? form[1].description : ""}
                   id={form[1].id}
                   tagColor={form[1].tagColor}
                 />
@@ -59,13 +58,7 @@ const FormList = () => {
 
 export default FormList;
 
-export const action = async ({
-  params,
-  request,
-}: {
-  params: { formId: string };
-  request: Request;
-}) => {
+export const action: ActionFunction = async ({ params, request }) => {
   try {
     // Get form data and format to object
     const formData = await request.formData();

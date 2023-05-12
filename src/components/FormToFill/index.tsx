@@ -1,20 +1,19 @@
 // Functions & Hooks
-import { useLoaderData, useParams } from "react-router";
+import { ActionFunction, useLoaderData, useParams } from "react-router";
 import { push, ref, set } from "firebase/database";
+import generateColorClass from "../../helpers/generateColorClass";
 
 // Types
 import { FormFieldType, FormLoaderType } from "../../types/types";
 
 // Components
 import { Form } from "react-router-dom";
-import FormHeader from "../FormEdit/FormHeader";
 import Card from "../UI/Card";
+import FieldFillWrapper from "./FieldFillWrapper";
+import NoiseTexture from "../Decorative/NoiseTexture";
 
 // Data
 import { database } from "../../../firebase";
-import FieldFillWrapper from "./FieldFillWrapper";
-import NoiseTexture from "../Decorative/NoiseTexture";
-import generateColorClass from "../../helpers/generateColorClass";
 
 const FormToFill = (): JSX.Element => {
   const { formDetails, formFields } = useLoaderData() as FormLoaderType;
@@ -57,22 +56,15 @@ const FormToFill = (): JSX.Element => {
 
 export default FormToFill;
 
-export const action = async ({
-  params,
-  request,
-}: {
-  params: { formId: string };
-  request: Request;
-}) => {
+export const action: ActionFunction = async ({ params, request }) => {
   try {
     // Get form data and format to object
     const formData = await request.formData();
     const formDataObj = Object.fromEntries(formData);
 
     // Get key for database entry
-    const newAnswerKey = push(
-      ref(database, "formsAnswers/" + params.formId)
-    ).key;
+    const newAnswerKey = push(ref(database, "formsAnswers/" + params.formId))
+      .key as string;
 
     // Set new answer in database
     set(

@@ -4,7 +4,7 @@ import { useLoaderData } from "react-router";
 import generateColorClass from "../../helpers/generateColorClass";
 
 // TS Types
-import { FormLoaderType } from "../../types/types";
+import { AnswerType, FormLoaderType } from "../../types/types";
 
 // Components
 import AnswersByField from "./AnswersByField";
@@ -14,7 +14,9 @@ import ParagraphAnswerElement from "../Fields/Paragraph/ParagraphAnswersElement"
 import Card from "../UI/Card";
 import NoiseTexture from "../Decorative/NoiseTexture";
 
-const components: { [key: string]: React.ComponentType } = {
+const components: {
+  [key: string]: React.ComponentType<{ answers: AnswerType[] }>;
+} = {
   ShortAnswerElement,
   ParagraphAnswerElement,
 };
@@ -71,6 +73,7 @@ const FormAnswers = (): JSX.Element => {
         <div className="flex flex-col gap-6">
           {answersMode === "fields" && (
             <AnswersByField
+              formDetails={formDetails}
               formFields={formFields}
               formAnswers={formAnswers}
               components={components}
@@ -78,6 +81,7 @@ const FormAnswers = (): JSX.Element => {
           )}
           {answersMode === "forms" && (
             <AnswersByForm
+              formDetails={formDetails}
               formFields={formFields}
               formAnswers={formAnswers}
               components={components}

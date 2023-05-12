@@ -4,16 +4,17 @@ import { get, ref } from "firebase/database";
 // Components
 import FormAnswers from "../components/FormAnswers";
 
-// Data
+// Data & config
 import { database } from "../../firebase";
+import { LoaderFunction } from "react-router";
 
-const Answers = () => {
+const Answers = (): JSX.Element => {
   return <FormAnswers />;
 };
 
 export default Answers;
 
-export const loader = async ({ params }: { params: { formId: string } }) => {
+export const loader: LoaderFunction = async ({ params }) => {
   const formDetails = await get(ref(database, `forms/${params.formId}`));
   const formFields = await get(ref(database, `formsFields/${params.formId}`));
   const formAnswers = await get(ref(database, `formsAnswers/${params.formId}`));

@@ -4,7 +4,8 @@ import toPascalCase from "./toPascalCase";
 const renderReactComponentByName = (
   fieldType: string,
   mode: "Edit" | "Fill" | "Answer",
-  components: { [key: string]: React.ComponentType }
+  components: { [key: string]: React.ComponentType<any> },
+  componentProps: { [key: string]: any } = {}
 ) => {
   // Select component constructor based on form field type
   const formattedFieldName: string = toPascalCase(fieldType) + mode + "Element";
@@ -14,7 +15,7 @@ const renderReactComponentByName = (
   const renderFieldComponent = (
     FieldComponent: React.ComponentType
   ): JSX.Element => {
-    return <FieldComponent />;
+    return <FieldComponent {...componentProps} />;
   };
 
   return renderFieldComponent(FieldComponent);

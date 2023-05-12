@@ -1,6 +1,7 @@
+// Components
 import FormEdit from "../components/FormEdit";
 
-const Edit = () => {
+const Edit = (): JSX.Element => {
   return (
     <>
       <FormEdit />

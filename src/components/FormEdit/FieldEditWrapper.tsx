@@ -16,7 +16,9 @@ import { AVAILABLE_FIELDS_TYPES } from "../../../config";
 import generateColorClass from "../../helpers/generateColorClass";
 import renderReactComponentByName from "../../helpers/renderReactComponentByName";
 
-const components: { [key: string]: React.ComponentType } = {
+const components: {
+  [key: string]: React.ComponentType;
+} = {
   ShortEditElement,
   ParagraphEditElement,
 };
@@ -95,7 +97,7 @@ const FieldEditWrapper = (props: {
       <div
         className={
           "relative transition duration-300 before:absolute before:-z-10  before:block before:h-full before:w-2 before:rounded-l before:transition-all before:duration-300 before:content-[''] " +
-          generateColorClass("bg", props.tagColor) +
+          generateColorClass("before-bg", props.tagColor) +
           (props.isBeingEdited ? " before:-left-2" : " before:left-1")
         }
       >

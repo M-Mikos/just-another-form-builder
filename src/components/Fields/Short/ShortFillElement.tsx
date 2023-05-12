@@ -10,7 +10,7 @@ const ShortFillElement = (props: {
         autoComplete="off"
         name={props.inputName}
         type="text"
-        {...(props.required && { required: "required" })}
+        {...(props.required && { required: true })}
       />
       <div className="input-text__underline" />
     </div>

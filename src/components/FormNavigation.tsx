@@ -1,8 +1,8 @@
 // Router
 import { NavLink, useParams } from "react-router-dom";
 
-const FormNavigation = () => {
-  const { formId } = useParams();
+const FormNavigation = (): JSX.Element => {
+  const { formId } = useParams() as { formId: string };
 
   const navLinkStyles = ({ isActive }: { isActive: boolean }): string => {
     return `px-2 py-2 text-sm text-stone-900 hover:bg-gray-200 opacity-80 ${

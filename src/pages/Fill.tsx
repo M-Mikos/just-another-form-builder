@@ -4,10 +4,11 @@ import { get, ref } from "firebase/database";
 // Components
 import FormToFill from "../components/FormToFill";
 
-// Data
+// Data &config
 import { database } from "../../firebase";
+import { LoaderFunction } from "react-router";
 
-const Fill = () => {
+const Fill = (): JSX.Element => {
   return (
     <>
       <FormToFill />
@@ -17,7 +18,7 @@ const Fill = () => {
 
 export default Fill;
 
-export const loader = async ({ params }: { params: { formId: string } }) => {
+export const loader: LoaderFunction = async ({ params }) => {
   const formDetails = await get(ref(database, `forms/${params.formId}`));
   const formFields = await get(ref(database, `formsFields/${params.formId}`));
   return {

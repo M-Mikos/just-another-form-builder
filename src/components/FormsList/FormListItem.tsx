@@ -9,12 +9,15 @@ import NoiseTexture from "../Decorative/NoiseTexture";
 import { DESCRIPTION_EXCERPT_LENGHT } from "../../../config";
 import useModalConfirmation from "../../hooks/useModalConfirmation";
 
-const FormListItem = (props: {
+// TS Interfaces declaration
+interface PropsTypes {
   title: string;
   description: string;
   id: string;
   tagColor: string;
-}): JSX.Element => {
+}
+
+const FormListItem = (props: PropsTypes): JSX.Element => {
   const fetcher = useFetcher();
 
   const deleteFormHandler = (): void => {

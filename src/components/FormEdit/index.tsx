@@ -1,6 +1,6 @@
 // Functions & Hooks
 import { get, push, ref, remove, set } from "firebase/database";
-import { useLoaderData, useParams } from "react-router";
+import { ActionFunction, useLoaderData, useParams } from "react-router";
 import { useFetcher } from "react-router-dom";
 import { useState } from "react";
 
@@ -82,13 +82,7 @@ const FormEdit = (): JSX.Element => {
 
 export default FormEdit;
 
-export const action = async ({
-  params,
-  request,
-}: {
-  params: { formId: string };
-  request: Request;
-}) => {
+export const action: ActionFunction = async ({ params, request }) => {
   try {
     // Get form data and format to object
     const formData = await request.formData();

@@ -5,6 +5,10 @@ import generateColorClass from "../../helpers/generateColorClass";
 // Components
 import NoiseTexture from "../Decorative/NoiseTexture";
 
+// Data & config
+import { DESCRIPTION_EXCERPT_LENGHT } from "../../../config";
+import useModalConfirmation from "../../hooks/useModalConfirmation";
+
 const FormListItem = (props: {
   title: string;
   description: string;
@@ -17,13 +21,22 @@ const FormListItem = (props: {
     fetcher.submit({ formId: props.id }, { method: "DELETE", action: `/` });
   };
 
+  const {
+    isConfirmationModal,
+    toggleConfirmationModal,
+    confirmationModalElement,
+  } = useModalConfirmation(
+    deleteFormHandler,
+    "Are you sure?",
+    "If you delete this form, you will also lost all its answers"
+  );
+
   return (
     <>
       <Link to={`/${props.id}`}>
         <div
           className={
-            "relative flex h-40 items-center justify-center overflow-hidden rounded-t-[6px]" +
-            " " +
+            "relative flex h-40 items-center justify-center overflow-hidden rounded-t-[6px] " +
             generateColorClass("gradient", props.tagColor)
           }
         >
@@ -41,8 +54,10 @@ const FormListItem = (props: {
             </h3>
           </Link>
           <p className="text-xs text-stone-400">
-            {props.description.slice(0, 80) +
-              (props.description.length > 80 ? "..." : "")}
+            {props.description.slice(0, DESCRIPTION_EXCERPT_LENGHT) +
+              (props.description.length > DESCRIPTION_EXCERPT_LENGHT
+                ? "..."
+                : "")}
           </p>
         </div>
 
@@ -51,13 +66,14 @@ const FormListItem = (props: {
             more_vert
           </span>
           <div className="flex w-0 items-center gap-6 transition-all duration-300 group-hover:w-20 ">
-            <button className="btn--light" onClick={deleteFormHandler}>
+            <button className="btn--light" onClick={toggleConfirmationModal}>
               <span className="material-symbols-outlined ">delete</span>
               Remove
             </button>
           </div>
         </div>
       </div>
+      {isConfirmationModal && confirmationModalElement}
     </>
   );
 };

@@ -3,32 +3,32 @@ import { useState } from "react";
 import { useLoaderData } from "react-router";
 import generateColorClass from "../../helpers/generateColorClass";
 
-// Types
-import { ComponentListType, FormLoaderType } from "../../types/types";
+// TS Types
+import { FormLoaderType } from "../../types/types";
 
 // Components
 import AnswersByField from "./AnswersByField";
 import AnswersByForm from "./AnswersByForm";
-
 import ShortAnswerElement from "../Fields/Short/ShortAnswersElement";
 import ParagraphAnswerElement from "../Fields/Paragraph/ParagraphAnswersElement";
 import Card from "../UI/Card";
 import NoiseTexture from "../Decorative/NoiseTexture";
 
-const components: ComponentListType = {
+const components: { [key: string]: React.ComponentType } = {
   ShortAnswerElement,
   ParagraphAnswerElement,
 };
 
-const FormAnswers = () => {
-  const [answersMode, setAnswersMode] = useState("fields");
+const FormAnswers = (): JSX.Element => {
+  const [answersMode, setAnswersMode] = useState<string>("fields");
+
   const { formDetails, formFields, formAnswers } =
     useLoaderData() as FormLoaderType;
 
-  const fieldsButtonHandler = () => {
+  const fieldsButtonHandler = (): void => {
     setAnswersMode("fields");
   };
-  const formsButtonHandler = () => {
+  const formsButtonHandler = (): void => {
     setAnswersMode("forms");
   };
 

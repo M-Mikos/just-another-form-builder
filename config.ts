@@ -7,6 +7,9 @@ export const AVAILABLE_FIELDS_TYPES: string[] = [
   // "linear scale",
 ];
 
+// UI:
+export const DESCRIPTION_EXCERPT_LENGHT: number = 60;
+
 // App's Firebase configuration
 export const firebaseConfig = {
   apiKey: "AIzaSyBkfPrO9d_hAgG3wyybeP9kp6fSPQqhR70",

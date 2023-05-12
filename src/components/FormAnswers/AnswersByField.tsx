@@ -1,28 +1,43 @@
 // Functions & Hooks
 import toPascalCase from "../../helpers/toPascalCase";
 
-// Types
-import { AnswerComponentPropsType } from "../../types/types";
+// TS Types
+import {
+  AnswerType,
+  ComponentListType,
+  FormFieldType,
+  FormType,
+} from "../../types/types";
+
+// Components
 import Card from "../UI/Card";
 
-const AnswersByField = ({
-  formFields,
-  formAnswers,
-  components,
-}: AnswerComponentPropsType) => {
+// TS Interfaces declaration
+interface PropsTypes {
+  formDetails: FormType;
+  formFields: {
+    [key: string]: FormFieldType;
+  };
+  formAnswers: {
+    [key: string]: AnswerType;
+  };
+  components: ComponentListType;
+}
+
+const AnswersByField = (props: PropsTypes): JSX.Element => {
   return (
     <>
       <h3 className="text-xl">Answers - by field</h3>
       <ul className="flex flex-col gap-6">
-        {Object.values(formFields).map((field) => {
+        {Object.values(props.formFields).map((field) => {
           // Get answers array
-          const answersList = Object.values(formAnswers).map(
+          const answersList = Object.values(props.formAnswers).map(
             (fieldAnswers) => fieldAnswers[field.id]
           );
 
           // Select answer component according to field type
           const FieldComponentName =
-            components[toPascalCase(field.fieldType) + "AnswerElement"];
+            props.components[toPascalCase(field.fieldType) + "AnswerElement"];
           return (
             <li>
               <Card>

@@ -1,4 +1,7 @@
-const ShortFillElement = (props: { inputName: string; required: boolean }) => {
+const ShortFillElement = (props: {
+  inputName: string;
+  required: boolean;
+}): JSX.Element => {
   return (
     <div>
       <input

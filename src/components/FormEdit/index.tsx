@@ -17,18 +17,17 @@ import NoiseTexture from "../Decorative/NoiseTexture";
 import { database } from "../../../firebase";
 import generateColorClass from "../../helpers/generateColorClass";
 
-const FormEdit = () => {
+const FormEdit = (): JSX.Element => {
   const { formDetails, formFields } = useLoaderData() as FormLoaderType;
-  const params = useParams();
+  const params = useParams<{ [key: string]: string }>();
   const fetcher = useFetcher();
-  const [currentlyEditedField, setCurrentlyEditedField] = useState("");
+  const [currentlyEditedField, setCurrentlyEditedField] = useState<string>("");
 
-  const addFieldHandler = () => {
+  const addFieldHandler = (): void => {
     fetcher.submit({}, { method: "POST", action: `/${params.formId}` });
   };
 
   const setEditedFieldHandler = (id: string): void => {
-    console.log(id);
     setCurrentlyEditedField(id);
   };
 
@@ -102,7 +101,7 @@ export const action = async ({
         // Get key for new field database entry
         const newFieldKey = push(
           ref(database, `formsFields/${params.formId}/fields`)
-        ).key;
+        ).key as string;
 
         // Set new default field in database
         set(ref(database, `formsFields/${params.formId}/${newFieldKey}`), {

@@ -1,9 +1,12 @@
+// This component returns a generated svg texture which is used as a background overlay
+
 const NoiseTexture = (props: { className?: string }): JSX.Element => {
   return (
     <svg
       id="turbulence"
       className={
-        "absolute left-0 top-0  h-full w-full opacity-30 " + props.className
+        "absolute left-0 top-0  h-full w-full opacity-50 mix-blend-overlay " +
+        props.className
       }
     >
       <filter id="noise">

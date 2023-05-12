@@ -1,17 +1,13 @@
-// Types
+// TS Types
 import { AnswerType } from "../../../types/types";
 
-const ParagraphAnswerElement = ({
-  title,
-  answers,
-}: {
-  title: string;
+const ParagraphAnswerElement = (props: {
   answers: AnswerType[];
-}) => {
+}): JSX.Element => {
   return (
     <div>
       <ul className="flex flex-col gap-2">
-        {answers.map((answer) => {
+        {props.answers.map((answer) => {
           return <li className="text-sm text-stone-700">{answer}</li>;
         })}
       </ul>

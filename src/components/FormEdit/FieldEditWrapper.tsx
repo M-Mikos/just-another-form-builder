@@ -3,30 +3,32 @@ import { useFetcher, useParams } from "react-router-dom";
 import { useState } from "react";
 import toPascalCase from "../../helpers/toPascalCase";
 
+// TS types
+import { FormFieldType } from "../../types/types";
+import React from "react";
+
 //  Components
 import ShortEditElement from "../Fields/Short/ShortEditElement";
 import ParagraphEditElement from "../Fields/Paragraph/ParagraphEditElement";
 
-// Data
+// Data & config
 import { AVAILABLE_FIELDS_TYPES } from "../../../config";
 import generateColorClass from "../../helpers/generateColorClass";
+import renderReactComponentByName from "../../helpers/renderReactComponentByName";
 
-const components: ComponentListType = {
+const components: { [key: string]: React.ComponentType } = {
   ShortEditElement,
   ParagraphEditElement,
 };
 
-const FieldEditWrapper = ({
-  data,
-  isBeingEdited,
-  tagColor,
-}: {
+const FieldEditWrapper = (props: {
+  data: FormFieldType;
   isBeingEdited: boolean;
   tagColor: string;
 }) => {
   const fetcher = useFetcher();
   const params = useParams();
-  const [fieldType, setFieldType] = useState(data.fieldType);
+  const [fieldType, setFieldType] = useState<string>(props.data.fieldType);
 
   const moveUpHandler = () => {};
 
@@ -34,7 +36,7 @@ const FieldEditWrapper = ({
 
   const deleteHandler = () => {
     fetcher.submit(
-      { fieldId: data.id },
+      { fieldId: props.data.id },
       {
         method: "delete",
         action: `/${params.formId}`,
@@ -42,36 +44,28 @@ const FieldEditWrapper = ({
     );
   };
 
-  const changleFieldTypeHandler = (event) => {
+  const changleFieldTypeHandler = (
+    event: React.ChangeEvent<HTMLSelectElement>
+  ) => {
     setFieldType(event.target.value);
   };
-
-  // Select component based on form field type
-
-  const formattedFieldName = toPascalCase(fieldType) + "EditElement";
-
-  const FieldComponentName = components[formattedFieldName];
 
   const questionInputAttributes = {
     name: "title",
     type: "text",
     autoComplete: "off",
-    ...(data.title && { defaultValue: data.title }),
-    ...(!data.title && { placeholder: "Write question..." }),
+    ...(props.data.title && { defaultValue: props.data.title }),
+    ...(!props.data.title && { placeholder: "Write question..." }),
   };
 
   return (
-    <div
-      className={
-        "relative transition duration-300 before:absolute before:-z-10  before:block before:h-full before:w-2 before:rounded before:transition-all before:duration-300 before:content-[''] " +
-        generateColorClass("bg", tagColor) +
-        (isBeingEdited ? " before:-left-4" : " before:left-1")
-      }
-    >
+    <div>
       <div
         className={
           "flex items-center justify-between overflow-hidden border-b-2  px-6 transition-all duration-500 " +
-          (isBeingEdited ? "h-16 border-stone-300 " : "h-0 border-transparent ")
+          (props.isBeingEdited
+            ? "h-16 border-stone-300 "
+            : "h-0 border-transparent ")
         }
       >
         <label htmlFor="fieldType" className="text-sm text-stone-800">
@@ -98,19 +92,29 @@ const FieldEditWrapper = ({
           <span className="ml-2 text-sm text-stone-800">Required?</span>
         </label>
       </div>
-      <div className="-left-5 p-6 ">
-        <input
-          className="input-text peer -ml-2 border-b-0 px-2 py-1 text-2xl"
-          {...questionInputAttributes}
-        />
-        <div className="input-text__underline -ml-2" />
-        <FieldComponentName />
+      <div
+        className={
+          "relative transition duration-300 before:absolute before:-z-10  before:block before:h-full before:w-2 before:rounded-l before:transition-all before:duration-300 before:content-[''] " +
+          generateColorClass("bg", props.tagColor) +
+          (props.isBeingEdited ? " before:-left-2" : " before:left-1")
+        }
+      >
+        <div className="-left-5 p-6 ">
+          <input
+            className="input-text peer -ml-2 border-b-0 px-2 py-1 text-2xl"
+            {...questionInputAttributes}
+          />
+          <div className="input-text__underline -ml-2" />
+          {renderReactComponentByName(fieldType, "Edit", components)}
+        </div>
       </div>
 
       <div
         className={
           "flex justify-between overflow-hidden border-t-2  px-6 align-middle transition-all duration-500 " +
-          (isBeingEdited ? "h-16 border-stone-300 " : "h-0 border-transparent ")
+          (props.isBeingEdited
+            ? "h-16 border-stone-300 "
+            : "h-0 border-transparent ")
         }
       >
         <div>

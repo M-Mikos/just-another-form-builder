@@ -130,6 +130,7 @@ const FieldEditWrapper = (props: {
             type="checkbox"
             value="true"
             className="peer sr-only"
+            {...(props.data.required && { checked: true })}
           />
           <div className="h-6 w-9 rounded-full bg-stone-300 after:absolute after:left-1 after:top-1 after:h-4 after:w-4 after:rounded-full after:border after:bg-white after:transition-all after:content-[''] peer-checked:bg-sky-600 peer-checked:after:translate-x-3 peer-focus:ring-2 peer-focus:ring-sky-200"></div>
           <span className="ml-2 text-sm text-stone-800">Required?</span>

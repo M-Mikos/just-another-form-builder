@@ -1,8 +1,8 @@
 // Functions & Hooks
 import { get, push, ref, remove, set } from "firebase/database";
 import { ActionFunction, useLoaderData, useParams } from "react-router";
-import { useFetcher } from "react-router-dom";
-import { useState } from "react";
+import { useFetcher, useSubmit } from "react-router-dom";
+import { useEffect, useState } from "react";
 
 // Types
 import { FormLoaderType } from "../../types/types";
@@ -16,6 +16,11 @@ import NoiseTexture from "../Decorative/NoiseTexture";
 // Data
 import { database } from "../../../firebase";
 import generateColorClass from "../../helpers/generateColorClass";
+
+// TODO:
+// - action on delete field
+// - action on page leave
+// - action on idle (timeout set in config - 3s?)
 
 const FormEdit = (): JSX.Element => {
   const { formDetails, formFields } = useLoaderData() as FormLoaderType;
@@ -49,24 +54,18 @@ const FormEdit = (): JSX.Element => {
       <ul className="flex flex-col gap-6">
         {formFields &&
           Object.values(formFields).map((field) => {
+            console.log(field.id);
             return (
               <li
                 key={field.id}
                 onClick={() => setEditedFieldHandler(field.id)}
               >
                 <Card>
-                  <fetcher.Form method="PATCH" action={`/${params.formId}`}>
-                    <input
-                      name="fieldId"
-                      type="hidden"
-                      value={field.id}
-                    ></input>
-                    <FieldEditWrapper
-                      data={field}
-                      tagColor={formDetails.tagColor}
-                      isBeingEdited={currentlyEditedField === field.id}
-                    />
-                  </fetcher.Form>
+                  <FieldEditWrapper
+                    data={field}
+                    tagColor={formDetails.tagColor}
+                    isBeingEdited={currentlyEditedField === field.id}
+                  />
                 </Card>
               </li>
             );
@@ -106,11 +105,6 @@ export const action: ActionFunction = async ({ params, request }) => {
         });
         break;
       case "DELETE":
-        // Deleting form field
-        remove(
-          ref(database, `formsFields/${params.formId}/${formDataObj.fieldId}`)
-        );
-
         // Deleting field answers in each form answers set
 
         const answers = await get(
@@ -119,6 +113,7 @@ export const action: ActionFunction = async ({ params, request }) => {
 
         answers.forEach((child) => {
           const answersSetId: string = child.ref._path.pieces_.slice(-1)[0];
+
           remove(
             ref(
               database,
@@ -126,10 +121,18 @@ export const action: ActionFunction = async ({ params, request }) => {
             )
           );
         });
+
+        // Deleting form field
+        remove(
+          ref(database, `formsFields/${params.formId}/${formDataObj.fieldId}`)
+        );
+
         break;
 
       case "PATCH":
         // Updateing field
+        console.log(params.formId, formDataObj.fieldId);
+
         set(
           ref(database, `formsFields/${params.formId}/${formDataObj.fieldId}`),
           {

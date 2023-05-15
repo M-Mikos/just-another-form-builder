@@ -1,9 +1,7 @@
-// Types
-import { FormType } from "../../types/types";
-
 // Functions & hooks
-import { ActionFunction, useLoaderData } from "react-router";
+import { ActionFunction, redirect, useLoaderData } from "react-router";
 import { useState } from "react";
+import generateColorClass from "../../helpers/generateColorClass";
 
 // Components
 import FormListItem from "./FormListItem";
@@ -13,7 +11,10 @@ import AddNewForm from "./AddNewForm";
 import Card from "../UI/Card";
 import Modal from "../UI/Modal";
 
-// Data
+// Types
+import { FormType } from "../../types/types";
+
+// Data & config
 import { FORMS_COLORS } from "../../../config";
 
 const FormList = () => {
@@ -32,7 +33,12 @@ const FormList = () => {
         {forms &&
           Object.entries(forms).map((form) => (
             <li key={form[1].id}>
-              <Card className="flex h-full flex-col ">
+              <Card
+                className={
+                  "flex h-full flex-col " +
+                  generateColorClass("hover-border", form[1].tagColor)
+                }
+              >
                 <FormListItem
                   title={form[1].title}
                   description={form[1].description ? form[1].description : ""}
@@ -82,6 +88,10 @@ export const action: ActionFunction = async ({ params, request }) => {
           tagColor: color,
           title: formDataObj.formTitle,
         });
+
+        // Redirect to new form
+        return redirect(`/${newFormKey}`);
+
         break;
       case "DELETE":
         // Deleting form detail

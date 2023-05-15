@@ -1,7 +1,10 @@
 // Function & hooks
-import { useFetcher, useParams } from "react-router-dom";
-import { useState } from "react";
+import { useFetcher, useParams, useSubmit } from "react-router-dom";
+import { useEffect, useRef, useState } from "react";
 import toPascalCase from "../../helpers/toPascalCase";
+import useModalConfirmation from "../../hooks/useModalConfirmation";
+import generateColorClass from "../../helpers/generateColorClass";
+import renderReactComponentByName from "../../helpers/renderReactComponentByName";
 
 // TS types
 import { FormFieldType } from "../../types/types";
@@ -13,8 +16,6 @@ import ParagraphEditElement from "../Fields/Paragraph/ParagraphEditElement";
 
 // Data & config
 import { AVAILABLE_FIELDS_TYPES } from "../../../config";
-import generateColorClass from "../../helpers/generateColorClass";
-import renderReactComponentByName from "../../helpers/renderReactComponentByName";
 
 const components: {
   [key: string]: React.ComponentType;
@@ -31,20 +32,33 @@ const FieldEditWrapper = (props: {
   const fetcher = useFetcher();
   const params = useParams();
   const [fieldType, setFieldType] = useState<string>(props.data.fieldType);
+  const [formChangeObserver, setFormChangeObserver] = useState<boolean>(false);
+  const formElement = useRef();
+  const initialRender = useRef(true);
 
   const moveUpHandler = () => {};
 
   const moveDownHandler = () => {};
 
-  const deleteHandler = () => {
+  const deleteHandler = (): void => {
     fetcher.submit(
       { fieldId: props.data.id },
       {
-        method: "delete",
+        method: "DELETE",
         action: `/${params.formId}`,
       }
     );
   };
+
+  const {
+    isConfirmationModal,
+    toggleConfirmationModal,
+    confirmationModalElement,
+  } = useModalConfirmation(
+    deleteHandler,
+    "Are you sure?",
+    "If you delete this field, you will also delete all its existing answers."
+  );
 
   const changleFieldTypeHandler = (
     event: React.ChangeEvent<HTMLSelectElement>
@@ -52,16 +66,41 @@ const FieldEditWrapper = (props: {
     setFieldType(event.target.value);
   };
 
+  const saveOnChangeHandler = (): void => {
+    setFormChangeObserver((state: boolean): boolean => {
+      return !state;
+    });
+  };
+
+  useEffect(() => {
+    if (initialRender.current) {
+      initialRender.current = false;
+    } else {
+      const submitForm = setTimeout(() => {
+        const data = new FormData(formElement.current);
+        fetcher.submit(data, { method: "PATCH", action: `/${params.formId}` });
+      }, 2000);
+      return () => clearTimeout(submitForm);
+    }
+  }, [formChangeObserver]);
+
   const questionInputAttributes = {
     name: "title",
     type: "text",
     autoComplete: "off",
     ...(props.data.title && { defaultValue: props.data.title }),
-    ...(!props.data.title && { placeholder: "Write question..." }),
+    placeholder: "Write question...",
+    required: true,
   };
 
   return (
-    <div>
+    <fetcher.Form
+      method="PATCH"
+      action={`/${params.formId}`}
+      onChange={saveOnChangeHandler}
+      ref={formElement}
+    >
+      <input name="fieldId" type="hidden" value={props.data.id}></input>
       <div
         className={
           "flex items-center justify-between overflow-hidden border-b-2  px-6 transition-all duration-500 " +
@@ -78,7 +117,9 @@ const FieldEditWrapper = (props: {
             name="fieldType"
           >
             {AVAILABLE_FIELDS_TYPES.map((option) => (
-              <option value={toPascalCase(option)}>{option}</option>
+              <option key={option} value={toPascalCase(option)}>
+                {option}
+              </option>
             ))}
           </select>
         </label>
@@ -123,12 +164,13 @@ const FieldEditWrapper = (props: {
           {/* <button onClick={moveUpHandler}>Up</button>
           <button onClick={moveDownHandler}>Down</button> */}
         </div>
-        <button className="btn--light" onClick={deleteHandler}>
+        <button className="btn--light" onClick={toggleConfirmationModal}>
           <span className="material-symbols-outlined ">delete</span>
           Delete
         </button>
       </div>
-    </div>
+      {isConfirmationModal && confirmationModalElement}
+    </fetcher.Form>
   );
 };
 

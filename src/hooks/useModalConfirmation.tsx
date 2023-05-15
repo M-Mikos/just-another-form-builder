@@ -1,6 +1,9 @@
 // Functions & hooks
 import { useState } from "react";
 
+// Components
+import Modal from "../components/UI/Modal";
+
 // TS Interfaces declaration
 interface ReturnedObjectType {
   confirmationModalElement: JSX.Element;
@@ -8,13 +11,18 @@ interface ReturnedObjectType {
   toggleConfirmationModal: () => void;
 }
 
-// Components
-import Modal from "../components/UI/Modal";
+/**
+ * This hook calls callback function after confirmation in modal window.
+ *
+ * @param callback function called after pressing "confirm" button.
+ * @param question main question shown in modal.
+ * @param message additional message shown below question.
+ */
 
 const useModalConfirmation = (
   callback: Function,
-  message: string,
-  details: string
+  question: string,
+  message: string
 ): ReturnedObjectType => {
   const [isConfirmationModal, setIsConfirmationModal] =
     useState<boolean>(false);
@@ -36,8 +44,8 @@ const useModalConfirmation = (
         <div className="flex gap-6">
           <span className="material-symbols-outlined text-4xl">error</span>
           <div>
-            <h3 className="line text-lg leading-10">{message}</h3>
-            <span className="text-sm text-stone-500">{details}</span>
+            <h3 className="line text-lg leading-10">{question}</h3>
+            <span className="text-sm text-stone-500">{message}</span>
             <div className="mt-3 flex gap-3">
               <button
                 className="btn--strong px-4 py-2 text-sm"

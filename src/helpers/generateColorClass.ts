@@ -1,8 +1,8 @@
-// As tailwind doesn't support dynamically generated classes, static class names must be detectable (https://tailwindcss.com/docs/content-configuration#dynamic-class-names). This function is needed to get full, hard-coded class named based on given color name and prefix.
+// As tailwind doesn't support dynamically generated classes, static class names must be detectable (https://tailwindcss.com/docs/content-configuration#dynamic-class-names). This function can be used to get full, hard-coded classes names based on given color name and prefix.
 // Funcion can be extended to use shades and more prefixes and colors.
 
 const generateColorClass = (
-  prefix: "gradient" | "before-bg" | "border",
+  prefix: "gradient" | "before-bg" | "hover-border",
   color: string
 ): string => {
   const gradientColor: { [key: string]: string } = {
@@ -29,21 +29,21 @@ const generateColorClass = (
     orange: "before:bg-orange-600",
   };
 
-  const borderColor: { [key: string]: string } = {
-    cyan: "border-cyan-600",
-    emerald: "border-emerald-600",
-    rose: "border-rose-600",
-    violet: "border-violet-600",
-    amber: "border-amber-600",
-    slate: "border-slate-600",
-    green: "border-green-600",
-    blue: "border-blue-600",
-    orange: "border-orange-600",
+  const hoverBorderColor: { [key: string]: string } = {
+    cyan: "hover:border-cyan-600",
+    emerald: "hover:border-emerald-600",
+    rose: "hover:border-rose-600",
+    violet: "hover:border-violet-600",
+    amber: "hover:border-amber-600",
+    slate: "hover:border-slate-600",
+    green: "hover:border-green-600",
+    blue: "hover:border-blue-600",
+    orange: "hover:border-orange-600",
   };
 
   if (prefix === "gradient") return gradientColor[color];
   if (prefix === "before-bg") return beforeBgColor[color];
-  if (prefix === "border") return borderColor[color];
+  if (prefix === "hover-border") return hoverBorderColor[color];
   return "";
 };
 

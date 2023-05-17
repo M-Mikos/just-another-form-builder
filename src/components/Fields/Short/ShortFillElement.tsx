@@ -1,6 +1,7 @@
 const ShortFillElement = (props: {
   inputName: string;
   required: boolean;
+  validateOnEventHandler: () => {};
 }): JSX.Element => {
   return (
     <div>
@@ -10,7 +11,11 @@ const ShortFillElement = (props: {
         autoComplete="off"
         name={props.inputName}
         type="text"
-        {...(props.required && { required: true })}
+        {...(props.required && {
+          required: true,
+          onChange: props.validateOnEventHandler,
+          onBlur: props.validateOnEventHandler,
+        })}
       />
       <div className="input-text__underline" />
     </div>

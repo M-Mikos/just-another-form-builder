@@ -37,9 +37,7 @@ const FormToFill = (): JSX.Element => {
             {Object.values(formFields).map((field: FormFieldType) => {
               return (
                 <li key={field.id}>
-                  <Card className="p-6">
-                    <FieldFillWrapper data={field} />
-                  </Card>
+                  <FieldFillWrapper data={field} />
                 </li>
               );
             })}

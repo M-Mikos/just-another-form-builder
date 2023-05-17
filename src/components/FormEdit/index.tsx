@@ -22,6 +22,9 @@ const FormEdit = (): JSX.Element => {
   const params = useParams<{ [key: string]: string }>();
   const fetcher = useFetcher();
   const [currentlyEditedField, setCurrentlyEditedField] = useState<string>("");
+  const [currentColor, setCurrentColor] = useState<string>(
+    formDetails.tagColor
+  );
 
   const addFieldHandler = (): void => {
     fetcher.submit({}, { method: "POST", action: `/${params.formId}` });
@@ -35,8 +38,7 @@ const FormEdit = (): JSX.Element => {
     <>
       <Card
         className={
-          "relative mb-6 p-6 " +
-          generateColorClass("gradient", formDetails.tagColor)
+          "relative mb-6 p-6 " + generateColorClass("gradient", currentColor)
         }
       >
         <NoiseTexture />
@@ -44,7 +46,8 @@ const FormEdit = (): JSX.Element => {
           title={formDetails.title}
           description={formDetails.description}
           id={formDetails.id}
-          tagColor={formDetails.tagColor}
+          tagColor={currentColor}
+          changeColor={setCurrentColor}
         />
       </Card>
 
@@ -59,7 +62,7 @@ const FormEdit = (): JSX.Element => {
                 <Card>
                   <FieldEditWrapper
                     data={field}
-                    tagColor={formDetails.tagColor}
+                    tagColor={currentColor}
                     isBeingEdited={currentlyEditedField === field.id}
                   />
                 </Card>

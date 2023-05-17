@@ -24,13 +24,13 @@ export const FORM_AUTOSAVE_DEBOUNCE_TIME = 1500;
 
 // Styles:
 export const FORMS_COLORS: string[] = [
-  "cyan",
-  "emerald",
+  "slate",
+  "amber",
+  "orange",
   "rose",
   "violet",
-  "amber",
-  "slate",
-  "green",
   "blue",
-  "orange",
+  "cyan",
+  "emerald",
+  "green",
 ];

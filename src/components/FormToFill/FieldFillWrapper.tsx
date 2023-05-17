@@ -1,21 +1,40 @@
 // Functions & hooks
+import { useState } from "react";
 import renderReactComponentByName from "../../helpers/renderReactComponentByName";
-import { FormFieldType } from "../../types/types";
+import { FormFieldType, AnswerValueType } from "../../types/types";
 
 // Components
 import ParagraphFillElement from "../Fields/Paragraph/ParagraphFillElement";
 import ShortFillElement from "../Fields/Short/ShortFillElement";
+import Card from "../UI/Card";
 
 const components: {
-  [key: string]: React.ComponentType<{ inputName: string; required: boolean }>;
+  [key: string]: React.ComponentType<{
+    inputName: string;
+    required: boolean;
+    validateOnEventHandler: () => {};
+  }>;
 } = {
   ShortFillElement,
   ParagraphFillElement,
 };
 
 const FieldFillWrapper = (props: { data: FormFieldType }): JSX.Element => {
+  // State for validation of required elements
+  const [isError, setIsError] = useState<boolean>(false);
+
+  const validateOnEventHandler = (
+    event: React.ChangeEvent<
+      HTMLInputElement | HTMLTextAreaElement | HTMLSelectElement
+    >
+  ): void => {
+    props.data.required && !event.target.value
+      ? setIsError(true)
+      : setIsError(false);
+  };
+
   return (
-    <>
+    <Card className={"p-6" + (isError ? " border-red-500 " : "")}>
       <h4 className="mb-3 text-lg">
         {props.data.title}
         {props.data.required && (
@@ -29,10 +48,18 @@ const FieldFillWrapper = (props: { data: FormFieldType }): JSX.Element => {
       </h4>
 
       {renderReactComponentByName(props.data.fieldType, "Fill", components, {
-        inputName: props.data.id,
-        required: props.data.required,
+        name: props.data.id,
+        ...(props.data.required && { required: true }),
+        ...(props.data.required && { validateOnEventHandler }),
       })}
-    </>
+
+      {isError && (
+        <div className="flex items-center gap-4 pt-4 text-sm text-red-500">
+          <span className="material-symbols-outlined">error</span>This field is
+          equired.
+        </div>
+      )}
+    </Card>
   );
 };
 

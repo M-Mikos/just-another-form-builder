@@ -1,6 +1,6 @@
 // Functions & Hooks
 
-import { useRef, useState } from "react";
+import { ChangeEvent, useRef, useState } from "react";
 import { useFetcher } from "react-router-dom";
 import useFormSaveOnChange from "../../hooks/useFormSaveOnChange";
 import generateColorClass from "../../helpers/generateColorClass";
@@ -14,6 +14,7 @@ interface PropsTypes {
   description?: string;
   id: string;
   tagColor: string;
+  changeColor: (color: string) => void;
 }
 
 const FormHeader = (props: PropsTypes): JSX.Element => {
@@ -27,6 +28,14 @@ const FormHeader = (props: PropsTypes): JSX.Element => {
       return !state;
     });
   };
+
+  const changeColorHandler = (
+    event: React.ChangeEvent<HTMLInputElement>
+  ): void => {
+    props.changeColor(event.target.value);
+    toggleColorOptions();
+  };
+
   return (
     <fetcher.Form onChange={saveOnChangeHandler} ref={formElement}>
       <input name="formId" type="hidden" value={props.id}></input>
@@ -47,14 +56,17 @@ const FormHeader = (props: PropsTypes): JSX.Element => {
         placeholder="Type form description here..."
         {...(props.description && { defaultValue: props.description })}
       />
-      <button className="btn--light relative" onClick={toggleColorOptions}>
-        Change color
-      </button>
-      {isColorOptions && (
-        <div className="relative flex gap-2">
+      <div className="inline-flex justify-end gap-2">
+        <div
+          className={
+            "relative inline-flex items-center gap-2 rounded bg-white px-4 py-3" +
+            (isColorOptions ? "" : " invisible")
+          }
+          onChange={changeColorHandler}
+        >
           {FORMS_COLORS.map((option: string): JSX.Element => {
             return (
-              <div key={option}>
+              <label className="cursor-pointer" key={option}>
                 <input
                   className="peer sr-only"
                   type="radio"
@@ -69,11 +81,18 @@ const FormHeader = (props: PropsTypes): JSX.Element => {
                     generateColorClass("bg", option)
                   }
                 />
-              </div>
+              </label>
             );
           })}
         </div>
-      )}
+        <button
+          className="btn--light relative text-white"
+          onClick={toggleColorOptions}
+        >
+          <span className="material-symbols-outlined">brush</span>
+          Color
+        </button>
+      </div>
     </fetcher.Form>
   );
 };

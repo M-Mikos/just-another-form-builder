@@ -92,7 +92,15 @@ export const action: ActionFunction = async ({ params, request }) => {
         // Redirect to new form
         return redirect(`/${newFormKey}`);
 
+      case "PATCH":
+        set(ref(database, `forms/${formDataObj.formId}`), {
+          id: formDataObj.formId,
+          title: formDataObj.formTitle,
+          description: formDataObj.formDescription,
+          tagColor: formDataObj.tagColor,
+        });
         break;
+
       case "DELETE":
         // Deleting form detail
         remove(ref(database, `forms/${formDataObj.formId}`));

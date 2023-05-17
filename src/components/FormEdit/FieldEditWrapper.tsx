@@ -16,6 +16,7 @@ import ParagraphEditElement from "../Fields/Paragraph/ParagraphEditElement";
 
 // Data & config
 import { AVAILABLE_FIELDS_TYPES } from "../../../config";
+import useFormSaveOnChange from "../../hooks/useFormSaveOnChange";
 
 const components: {
   [key: string]: React.ComponentType;
@@ -32,9 +33,11 @@ const FieldEditWrapper = (props: {
   const fetcher = useFetcher();
   const params = useParams();
   const [fieldType, setFieldType] = useState<string>(props.data.fieldType);
-  const [formChangeObserver, setFormChangeObserver] = useState<boolean>(false);
-  const formElement = useRef();
-  const initialRender = useRef(true);
+  const formElement = useRef() as React.MutableRefObject<HTMLFormElement>;
+  const saveOnChangeHandler = useFormSaveOnChange(
+    formElement,
+    `/${params.formId}`
+  );
 
   const moveUpHandler = () => {};
 
@@ -66,44 +69,12 @@ const FieldEditWrapper = (props: {
     setFieldType(event.target.value);
   };
 
-  const saveOnChangeHandler = (): void => {
-    setFormChangeObserver((state: boolean): boolean => {
-      return !state;
-    });
-  };
-
-  useEffect(() => {
-    if (initialRender.current) {
-      initialRender.current = false;
-    } else {
-      const submitForm = setTimeout(() => {
-        const data = new FormData(formElement.current);
-        fetcher.submit(data, { method: "PATCH", action: `/${params.formId}` });
-      }, 2000);
-      return () => clearTimeout(submitForm);
-    }
-  }, [formChangeObserver]);
-
-  const questionInputAttributes = {
-    name: "title",
-    type: "text",
-    autoComplete: "off",
-    ...(props.data.title && { defaultValue: props.data.title }),
-    placeholder: "Write question...",
-    required: true,
-  };
-
   return (
-    <fetcher.Form
-      method="PATCH"
-      action={`/${params.formId}`}
-      onChange={saveOnChangeHandler}
-      ref={formElement}
-    >
+    <fetcher.Form onChange={saveOnChangeHandler} ref={formElement}>
       <input name="fieldId" type="hidden" value={props.data.id}></input>
       <div
         className={
-          "flex items-center justify-between overflow-hidden border-b-2  px-6 transition-all duration-500 " +
+          "flex items-center justify-between overflow-hidden border-b-2 border-dotted  px-6 transition-all duration-500 " +
           (props.isBeingEdited
             ? "h-16 border-stone-300 "
             : "h-0 border-transparent ")
@@ -130,7 +101,7 @@ const FieldEditWrapper = (props: {
             type="checkbox"
             value="true"
             className="peer sr-only"
-            {...(props.data.required && { checked: true })}
+            {...(props.data.required && { defaultChecked: true })}
           />
           <div className="h-6 w-9 rounded-full bg-stone-300 after:absolute after:left-1 after:top-1 after:h-4 after:w-4 after:rounded-full after:border after:bg-white after:transition-all after:content-[''] peer-checked:bg-sky-600 peer-checked:after:translate-x-3 peer-focus:ring-2 peer-focus:ring-sky-200"></div>
           <span className="ml-2 text-sm text-stone-800">Required?</span>
@@ -146,7 +117,12 @@ const FieldEditWrapper = (props: {
         <div className="-left-5 p-6 ">
           <input
             className="input-text peer -ml-2 border-b-0 px-2 py-1 text-2xl"
-            {...questionInputAttributes}
+            name="title"
+            type="text"
+            autoComplete="off"
+            {...(props.data.title && { defaultValue: props.data.title })}
+            placeholder="Write question..."
+            required={true}
           />
           <div className="input-text__underline -ml-2" />
           {renderReactComponentByName(fieldType, "Edit", components)}
@@ -155,7 +131,7 @@ const FieldEditWrapper = (props: {
 
       <div
         className={
-          "flex justify-between overflow-hidden border-t-2  px-6 align-middle transition-all duration-500 " +
+          "flex justify-between overflow-hidden border-t-2 border-dotted  px-6 align-middle transition-all duration-500 " +
           (props.isBeingEdited
             ? "h-16 border-stone-300 "
             : "h-0 border-transparent ")

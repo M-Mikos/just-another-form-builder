@@ -1,8 +1,8 @@
 // Functions & Hooks
 import { get, push, ref, remove, set } from "firebase/database";
 import { ActionFunction, useLoaderData, useParams } from "react-router";
-import { useFetcher, useSubmit } from "react-router-dom";
-import { useEffect, useState } from "react";
+import { useFetcher } from "react-router-dom";
+import { useState } from "react";
 
 // Types
 import { FormLoaderType } from "../../types/types";
@@ -16,11 +16,6 @@ import NoiseTexture from "../Decorative/NoiseTexture";
 // Data
 import { database } from "../../../firebase";
 import generateColorClass from "../../helpers/generateColorClass";
-
-// TODO:
-// - action on delete field
-// - action on page leave
-// - action on idle (timeout set in config - 3s?)
 
 const FormEdit = (): JSX.Element => {
   const { formDetails, formFields } = useLoaderData() as FormLoaderType;
@@ -48,13 +43,14 @@ const FormEdit = (): JSX.Element => {
         <FormHeader
           title={formDetails.title}
           description={formDetails.description}
+          id={formDetails.id}
+          tagColor={formDetails.tagColor}
         />
       </Card>
 
       <ul className="flex flex-col gap-6">
         {formFields &&
           Object.values(formFields).map((field) => {
-            console.log(field.id);
             return (
               <li
                 key={field.id}
@@ -131,7 +127,6 @@ export const action: ActionFunction = async ({ params, request }) => {
 
       case "PATCH":
         // Updateing field
-        console.log(params.formId, formDataObj.fieldId);
 
         set(
           ref(database, `formsFields/${params.formId}/${formDataObj.fieldId}`),

@@ -1,8 +1,14 @@
 // As tailwind doesn't support dynamically generated classes, static class names must be detectable (https://tailwindcss.com/docs/content-configuration#dynamic-class-names). This function can be used to get full, hard-coded classes names based on given color name and prefix.
 // Funcion can be extended to use shades and more prefixes and colors.
 
+/**
+ *
+ * @param prefix Tailwind utility class prefix
+ * @param color one of hardcoded Tailwind color names
+ */
+
 const generateColorClass = (
-  prefix: "gradient" | "before-bg" | "hover-border",
+  prefix: "gradient" | "bg" | "before-bg" | "hover-border",
   color: string
 ): string => {
   const gradientColor: { [key: string]: string } = {
@@ -15,6 +21,18 @@ const generateColorClass = (
     green: "bg-gradient-to-t from-green-500 to-green-700",
     blue: "bg-gradient-to-t from-blue-500 to-blue-700",
     orange: "bg-gradient-to-t from-orange-500 to-orange-700",
+  };
+
+  const bgColor: { [key: string]: string } = {
+    cyan: "bg-cyan-500",
+    emerald: "bg-emerald-500",
+    rose: "bg-rose-500",
+    violet: "bg-violet-500",
+    amber: "bg-amber-500",
+    slate: "bg-slate-500",
+    green: "bg-green-500",
+    blue: "bg-blue-500",
+    orange: "bg-orange-500",
   };
 
   const beforeBgColor: { [key: string]: string } = {
@@ -44,6 +62,7 @@ const generateColorClass = (
   if (prefix === "gradient") return gradientColor[color];
   if (prefix === "before-bg") return beforeBgColor[color];
   if (prefix === "hover-border") return hoverBorderColor[color];
+  if (prefix === "bg") return bgColor[color];
   return "";
 };
 

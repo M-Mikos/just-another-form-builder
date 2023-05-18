@@ -1,7 +1,7 @@
 // Functions & hooks
 import { useState } from "react";
 import renderReactComponentByName from "../../helpers/renderReactComponentByName";
-import { FormFieldType, AnswerValueType } from "../../types/types";
+import { FormFieldType } from "../../types/types";
 
 // Components
 import ParagraphFillElement from "../Fields/Paragraph/ParagraphFillElement";
@@ -34,7 +34,7 @@ const FieldFillWrapper = (props: { data: FormFieldType }): JSX.Element => {
   };
 
   return (
-    <Card className={"p-6" + (isError ? " border-red-500 " : "")}>
+    <Card className={"p-6 pb-1" + (isError ? " border-red-500 " : "")}>
       <h4 className="mb-3 text-lg">
         {props.data.title}
         {props.data.required && (
@@ -49,16 +49,20 @@ const FieldFillWrapper = (props: { data: FormFieldType }): JSX.Element => {
 
       {renderReactComponentByName(props.data.fieldType, "Fill", components, {
         name: props.data.id,
-        ...(props.data.required && { required: true }),
-        ...(props.data.required && { validateOnEventHandler }),
+        ...(props.data.required && {
+          required: true,
+          onChange: validateOnEventHandler,
+          onBlur: validateOnEventHandler,
+        }),
       })}
-
-      {isError && (
-        <div className="flex items-center gap-4 pt-4 text-sm text-red-500">
-          <span className="material-symbols-outlined">error</span>This field is
-          equired.
-        </div>
-      )}
+      <div className="h-9">
+        {isError && (
+          <div className="flex h-full items-center gap-2 text-sm text-red-500">
+            <span className="material-symbols-outlined">error</span>This field
+            is equired.
+          </div>
+        )}
+      </div>
     </Card>
   );
 };

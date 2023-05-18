@@ -11,11 +11,11 @@ export const firebaseConfig = {
 
 // Avaliable fields:
 export const AVAILABLE_FIELDS_TYPES: string[] = [
-  "short",
-  "paragraph",
-  // "multiple choice",
-  // "checkboxes",
-  // "linear scale",
+  "Short",
+  "Paragraph",
+  // "Multiple choice",
+  "Single choice",
+  // "Linear scale",
 ];
 
 // UI:

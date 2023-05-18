@@ -1,6 +1,6 @@
 // Function & hooks
 import { useFetcher, useParams, useSubmit } from "react-router-dom";
-import { useEffect, useRef, useState } from "react";
+import { useRef, useState } from "react";
 import toPascalCase from "../../helpers/toPascalCase";
 import useModalConfirmation from "../../hooks/useModalConfirmation";
 import generateColorClass from "../../helpers/generateColorClass";
@@ -13,6 +13,7 @@ import React from "react";
 //  Components
 import ShortEditElement from "../Fields/Short/ShortEditElement";
 import ParagraphEditElement from "../Fields/Paragraph/ParagraphEditElement";
+import SingleChoiceEditElement from "../Fields/SingleChoice/SingleChoiceEditElement";
 
 // Data & config
 import { AVAILABLE_FIELDS_TYPES } from "../../../config";
@@ -23,6 +24,7 @@ const components: {
 } = {
   ShortEditElement,
   ParagraphEditElement,
+  SingleChoiceEditElement,
 };
 
 const FieldEditWrapper = (props: {
@@ -68,6 +70,8 @@ const FieldEditWrapper = (props: {
   ) => {
     setFieldType(event.target.value);
   };
+
+  console.log("przed renderem", fieldType);
 
   return (
     <fetcher.Form onChange={saveOnChangeHandler} ref={formElement}>
@@ -125,6 +129,7 @@ const FieldEditWrapper = (props: {
             required={true}
           />
           <div className="input-text__underline -ml-2" />
+
           {renderReactComponentByName(fieldType, "Edit", components)}
         </div>
       </div>

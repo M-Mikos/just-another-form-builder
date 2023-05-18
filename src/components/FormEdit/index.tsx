@@ -97,7 +97,7 @@ export const action: ActionFunction = async ({ params, request }) => {
 
         // Set new default field in database
         set(ref(database, `formsFields/${params.formId}/${newFieldKey}`), {
-          fieldType: "short",
+          fieldType: "Short",
           id: newFieldKey,
           required: false,
           title: "Question",

@@ -14,10 +14,12 @@ import NoiseTexture from "../Decorative/NoiseTexture";
 
 // Data
 import { database } from "../../../firebase";
+import { useState } from "react";
 
 const FormToFill = (): JSX.Element => {
   const { formDetails, formFields } = useLoaderData() as FormLoaderType;
   const params = useParams();
+  const [isFormValid, setIsFormValid] = useState<boolean>(true);
 
   return (
     <>

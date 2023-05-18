@@ -21,7 +21,6 @@ const renderReactComponentByName = (
 
   // Select component constructor based on form field type
   const FieldComponent: React.ComponentType = components[formattedFieldName];
-  console.log(formattedFieldName, components);
 
   // Rendering function for proper types of dynamically choosen react component. Type of property is constructor of react component, not its instace (with type JSX.Element). More details: https://stackoverflow.com/questions/31815633/what-does-the-error-jsx-element-type-does-not-have-any-construct-or-call
   const renderFieldComponent = (

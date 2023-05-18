@@ -71,8 +71,6 @@ const FieldEditWrapper = (props: {
     setFieldType(event.target.value);
   };
 
-  console.log("przed renderem", fieldType);
-
   return (
     <fetcher.Form onChange={saveOnChangeHandler} ref={formElement}>
       <input name="fieldId" type="hidden" value={props.data.id}></input>

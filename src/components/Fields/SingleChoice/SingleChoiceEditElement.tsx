@@ -2,27 +2,43 @@ import { useState } from "react";
 
 const SingleChoiceEditElement = (): JSX.Element => {
   const [options, setOptions] = useState<string[]>(["Option 1"]);
-  const [isAnotherEnabled, setIsAnotherEnabled] = useState<boolean>(false);
+  const [isAnotherAnswerEnabled, setIsAnotherAnswerEnabled] =
+    useState<boolean>(false);
 
   const addOptionHandler = (): void => {
     setOptions((state) => {
-      return state.concat(`Option ${state.length + 1}`);
+      let optionNumber = 1;
+
+      // Loop iterates to prevent default option name repetition
+      while (options.includes(`Option ${optionNumber}`)) {
+        optionNumber++;
+      }
+
+      return state.concat(`Option ${optionNumber}`);
     });
   };
 
-  const toggleAnother = (): void => {
-    setIsAnotherEnabled((state) => {
+  const deleteOptionHandler = (option: string): void => {
+    setOptions((state) => {
+      return state.filter((item) => item !== option);
+    });
+  };
+
+  const toggleAnotherAnswer = (): void => {
+    setIsAnotherAnswerEnabled((state) => {
       return !state;
     });
   };
 
-  const onInputChange = (event, option) => {
+  const onInputChangeHandler = (event, option: string): void => {
     if (options.includes(event.target.value))
       console.log("wyświetl komunikat (nie może być tak samo)");
   };
 
-  const onInputBlur = (event, option) => {
-    if (event.target.value === "" || options.includes(event.target.value)) {
+  const onInputBlurHandler = (event, option: string): void => {
+    console.log("blur");
+    if (event.target.value === "") {
+      console.log("źle");
       return;
     }
     setOptions((state) => {
@@ -35,49 +51,60 @@ const SingleChoiceEditElement = (): JSX.Element => {
 
   return (
     <>
-      <ul>
-        {options.map((option) => {
-          return (
-            <div className="flex gap-2" key={option}>
-              <input
-                className="input-text"
-                defaultValue={option}
-                onChange={(event) => {
-                  onInputChange(event, option);
-                }}
-                onBlur={(event) => {
-                  onInputBlur(event, option);
-                }}
-              />
-              {options.length > 1 && (
-                <button className="btn--light">
-                  <span className="material-symbols-outlined">close</span>
-                </button>
-              )}
+      <div className="-ml-2 mb-4">
+        <ul>
+          {options.map((option) => {
+            return (
+              <div className="flex h-10 gap-2" key={option}>
+                <input
+                  className="input-text border-b-0"
+                  defaultValue={option}
+                  onChange={(event) => {
+                    onInputChangeHandler(event, option);
+                  }}
+                  onBlur={(event) => {
+                    onInputBlurHandler(event, option);
+                  }}
+                />
+                {options.length > 1 && (
+                  <button
+                    className="btn--light"
+                    onClick={() => {
+                      deleteOptionHandler(option);
+                    }}
+                  >
+                    <span className="material-symbols-outlined">close</span>
+                  </button>
+                )}
+              </div>
+            );
+          })}
+        </ul>
+        {isAnotherAnswerEnabled && (
+          <div className="flex gap-2">
+            <div className="input-text pointer-events-none text-stone-400 hover:bg-white">
+              Another answer...
             </div>
-          );
-        })}
-      </ul>
-      {isAnotherEnabled && (
-        <div className="flex gap-2">
-          <div className="input-text pointer-events-none text-stone-400 hover:bg-white">
-            Another answer...
-          </div>
 
-          <button className="btn--light" onClick={toggleAnother}>
-            <span className="material-symbols-outlined">close</span>
-          </button>
-        </div>
-      )}
-      <div>
-        <button className="btn--light" onClick={addOptionHandler}>
+            <button className="btn--light" onClick={toggleAnotherAnswer}>
+              <span className="material-symbols-outlined">close</span>
+            </button>
+          </div>
+        )}
+      </div>
+
+      <div className="flex items-center gap-4 text-sm text-stone-500">
+        <button className="btn--light text-sky-700" onClick={addOptionHandler}>
           Add next option
         </button>
-        {!isAnotherEnabled && (
+        {!isAnotherAnswerEnabled && (
           <>
             <span> or </span>
-            <button className="btn--light" onClick={toggleAnother}>
-              Add "another"
+            <button
+              className="btn--light text-sky-700"
+              onClick={toggleAnotherAnswer}
+            >
+              Add "Another answer..."
             </button>
           </>
         )}

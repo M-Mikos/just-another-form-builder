@@ -1,4 +1,5 @@
 import { useState } from "react";
+import Option from "./Option";
 
 const SingleChoiceEditElement = (): JSX.Element => {
   const [options, setOptions] = useState<string[]>(["Option 1"]);
@@ -18,34 +19,9 @@ const SingleChoiceEditElement = (): JSX.Element => {
     });
   };
 
-  const deleteOptionHandler = (option: string): void => {
-    setOptions((state) => {
-      return state.filter((item) => item !== option);
-    });
-  };
-
   const toggleAnotherAnswer = (): void => {
     setIsAnotherAnswerEnabled((state) => {
       return !state;
-    });
-  };
-
-  const onInputChangeHandler = (event, option: string): void => {
-    if (options.includes(event.target.value))
-      console.log("wyświetl komunikat (nie może być tak samo)");
-  };
-
-  const onInputBlurHandler = (event, option: string): void => {
-    console.log("blur");
-    if (event.target.value === "") {
-      console.log("źle");
-      return;
-    }
-    setOptions((state) => {
-      const i = options.indexOf(option);
-      const newState = [...state];
-      newState[i] = event.target.value;
-      return newState;
     });
   };
 
@@ -55,28 +31,12 @@ const SingleChoiceEditElement = (): JSX.Element => {
         <ul>
           {options.map((option) => {
             return (
-              <div className="flex h-10 gap-2" key={option}>
-                <input
-                  className="input-text border-b-0"
-                  defaultValue={option}
-                  onChange={(event) => {
-                    onInputChangeHandler(event, option);
-                  }}
-                  onBlur={(event) => {
-                    onInputBlurHandler(event, option);
-                  }}
-                />
-                {options.length > 1 && (
-                  <button
-                    className="btn--light"
-                    onClick={() => {
-                      deleteOptionHandler(option);
-                    }}
-                  >
-                    <span className="material-symbols-outlined">close</span>
-                  </button>
-                )}
-              </div>
+              <Option
+                key={option}
+                option={option}
+                allOptions={options}
+                setOptions={setOptions}
+              />
             );
           })}
         </ul>

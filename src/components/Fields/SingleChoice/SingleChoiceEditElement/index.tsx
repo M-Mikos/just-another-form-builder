@@ -27,8 +27,13 @@ const SingleChoiceEditElement = (): JSX.Element => {
 
   return (
     <>
-      <div className="-ml-2 mb-4">
-        <ul>
+      <input
+        name="attributes"
+        type="hidden"
+        value={JSON.stringify({ options, isAnotherAnswerEnabled })}
+      ></input>
+      <div className="my-2 -ml-2">
+        <ul className="flex flex-col gap-1">
           {options.map((option) => {
             return (
               <Option
@@ -41,7 +46,7 @@ const SingleChoiceEditElement = (): JSX.Element => {
           })}
         </ul>
         {isAnotherAnswerEnabled && (
-          <div className="flex gap-2">
+          <div className="mt-2 flex gap-2">
             <div className="input-text pointer-events-none text-stone-400 hover:bg-white">
               Another answer...
             </div>

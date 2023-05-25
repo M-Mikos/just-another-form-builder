@@ -1,15 +1,19 @@
+// Functions & hooks
 import { useRef, useState } from "react";
 
 const Option = (props) => {
   const inputValue = useRef();
+  const [isRepetition, setIsRepetition] = useState<boolean>(false);
   const anotherOptions: string[] = props.allOptions.filter(
     (option: string) => option !== props.option
   );
-  const [isRepetition, setIsRepetition] = useState<boolean>(true);
+
+  const inputType = "SingleChoice";
 
   const onInputChangeHandler = (event, option: string): void => {
-    if (anotherOptions.includes(event.target.value.trim()))
-      console.log("wyświetl komunikat (nie może być tak samo)");
+    anotherOptions.includes(event.target.value.trim())
+      ? setIsRepetition(true)
+      : setIsRepetition(false);
   };
 
   const onInputBlurHandler = (event, option: string): void => {
@@ -22,6 +26,7 @@ const Option = (props) => {
     // Prevent save in case of option name repetition
     if (anotherOptions.includes(event.target.value.trim())) {
       inputValue.current.value = option;
+      setIsRepetition(false);
       return;
     }
 
@@ -40,29 +45,45 @@ const Option = (props) => {
   };
 
   return (
-    <div className="flex h-10 gap-2" key={props.option}>
-      <input
-        className={
-          "input-text border-b-0" + (isRepetition && " border-red-500")
-        }
-        defaultValue={props.option}
-        onChange={(event) => {
-          onInputChangeHandler(event, props.option);
-        }}
-        onBlur={(event) => {
-          onInputBlurHandler(event, props.option);
-        }}
-        ref={inputValue}
-      />
-      {props.allOptions.length > 1 && (
-        <button
-          className="btn--light"
-          onClick={() => {
-            deleteOptionHandler(props.option);
+    <div>
+      <div className=" flex h-10 items-center gap-1" key={props.option}>
+        <div
+          className={
+            "ml-2 h-4 w-4 border-2 border-stone-300" +
+            (inputType === "SingleChoice" ? " rounded-full" : "") +
+            (inputType === "MultipleChoice" ? " rounded-sm" : "")
+          }
+        />
+        <input
+          className={
+            "input-text border-b-2 border-transparent pl-2  " +
+            (isRepetition && " focus-visible:border-red-500")
+          }
+          defaultValue={props.option}
+          onChange={(event) => {
+            onInputChangeHandler(event, props.option);
           }}
-        >
-          <span className="material-symbols-outlined">close</span>
-        </button>
+          onBlur={(event) => {
+            onInputBlurHandler(event, props.option);
+          }}
+          ref={inputValue}
+        />
+        {props.allOptions.length > 1 && (
+          <button
+            className="btn--light"
+            onClick={() => {
+              deleteOptionHandler(props.option);
+            }}
+          >
+            <span className="material-symbols-outlined">close</span>
+          </button>
+        )}
+      </div>
+      {isRepetition && (
+        <div className="my-2 flex items-center gap-2 text-sm text-red-500">
+          <span className="material-symbols-outlined text-[22px]">warning</span>
+          <span>Option name cannot be repeated</span>
+        </div>
       )}
     </div>
   );

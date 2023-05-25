@@ -140,6 +140,9 @@ export const action: ActionFunction = async ({ params, request }) => {
             ...(formDataObj.required
               ? { required: true }
               : { required: false }),
+            ...(formDataObj.attributes && {
+              attributes: formDataObj.attributes,
+            }),
           }
         );
         break;

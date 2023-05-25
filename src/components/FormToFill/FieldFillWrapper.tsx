@@ -6,6 +6,7 @@ import { FormFieldType } from "../../types/types";
 // Components
 import ParagraphFillElement from "../Fields/Paragraph/ParagraphFillElement";
 import ShortFillElement from "../Fields/Short/ShortFillElement";
+import SingleChoiceFillElement from "../Fields/SingleChoice/SingleChoiceFillElement";
 import Card from "../UI/Card";
 
 const components: {
@@ -17,6 +18,7 @@ const components: {
 } = {
   ShortFillElement,
   ParagraphFillElement,
+  SingleChoiceFillElement,
 };
 
 const FieldFillWrapper = (props: { data: FormFieldType }): JSX.Element => {
@@ -49,6 +51,9 @@ const FieldFillWrapper = (props: { data: FormFieldType }): JSX.Element => {
 
       {renderReactComponentByName(props.data.fieldType, "Fill", components, {
         name: props.data.id,
+        ...(props.data.attributes && {
+          attributes: JSON.parse(props.data.attributes),
+        }),
         ...(props.data.required && {
           required: true,
           onChange: validateOnEventHandler,

@@ -1,6 +1,6 @@
 // Functions & Hooks
 
-import { ChangeEvent, useRef, useState } from "react";
+import { useRef, useState } from "react";
 import { useFetcher } from "react-router-dom";
 import useFormSaveOnChange from "../../hooks/useFormSaveOnChange";
 import generateColorClass from "../../helpers/generateColorClass";

@@ -1,22 +1,36 @@
 // Functions & hooks
 import { useRef, useState } from "react";
 
-const Option = (props) => {
-  const inputValue = useRef();
+// TS Interfaces declaration
+interface PropsTypes {
+  option: string;
+  allOptions: string[];
+  setOptions: React.Dispatch<React.SetStateAction<string[]>>;
+  inputType: "SingleChoice" | "MultipleChoice";
+}
+
+const Option = (props: PropsTypes): JSX.Element => {
+  const inputValue = useRef() as React.MutableRefObject<HTMLInputElement>;
+
   const [isRepetition, setIsRepetition] = useState<boolean>(false);
+
   const anotherOptions: string[] = props.allOptions.filter(
     (option: string) => option !== props.option
   );
 
-  const inputType = "SingleChoice";
-
-  const onInputChangeHandler = (event, option: string): void => {
+  const onInputChangeHandler = (
+    event: React.ChangeEvent<HTMLInputElement>,
+    option: string
+  ): void => {
     anotherOptions.includes(event.target.value.trim())
       ? setIsRepetition(true)
       : setIsRepetition(false);
   };
 
-  const onInputBlurHandler = (event, option: string): void => {
+  const onInputBlurHandler = (
+    event: React.FocusEvent<HTMLInputElement>,
+    option: string
+  ): void => {
     // Prevent save in case of empty option name
     if (event.target.value.trim() === "") {
       inputValue.current.value = option;
@@ -49,9 +63,9 @@ const Option = (props) => {
       <div className=" flex h-10 items-center gap-1" key={props.option}>
         <div
           className={
-            "ml-2 h-4 w-4 border-2 border-stone-300" +
-            (inputType === "SingleChoice" ? " rounded-full" : "") +
-            (inputType === "MultipleChoice" ? " rounded-sm" : "")
+            "ml-2 h-4 w-4 flex-[0_0_16px] border-2 border-stone-300" +
+            (props.inputType === "SingleChoice" ? " rounded-full" : "") +
+            (props.inputType === "MultipleChoice" ? " rounded-sm" : "")
           }
         />
         <input

@@ -13,9 +13,9 @@ export const firebaseConfig = {
 export const AVAILABLE_FIELDS_TYPES: string[] = [
   "Short",
   "Paragraph",
-  // "Multiple choice",
+  "Multiple choice",
   "Single choice",
-  // "Linear scale",
+  "Linear scale",
 ];
 
 // UI:

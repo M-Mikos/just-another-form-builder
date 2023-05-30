@@ -10,8 +10,8 @@ export type FormFieldType = {
     | "multiple choice"
     | "checkboxes"
     | "linear scale";
-  options?: string[];
-  attributes?: { [key: string]: null | string | number };
+  // Attributes should be saved in JSON format
+  attributes?: string;
 };
 
 export type FormType = {

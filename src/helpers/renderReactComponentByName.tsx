@@ -7,7 +7,7 @@
  * @param fieldType - form element type from available component types.
  * @param mode - component version for editing, filling, or displaying answer
  * @param components - list of form elemenst (react component types)
- * @param componentProps - props for form element component
+ * @param componentProps - props for rendered element component
  */
 
 const renderReactComponentByName = (
@@ -16,6 +16,7 @@ const renderReactComponentByName = (
   components: { [key: string]: React.ComponentType<any> },
   componentProps: { [key: string]: any } = {}
 ) => {
+  console.log("render", componentProps);
   // Create properly formatted component name
   const formattedFieldName: string = fieldType + mode + "Element";
 

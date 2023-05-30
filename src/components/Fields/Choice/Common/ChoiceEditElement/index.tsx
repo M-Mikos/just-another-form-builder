@@ -1,16 +1,30 @@
+// Functions & hooks
 import { useState } from "react";
+
+// Components
 import Option from "./Option";
 
-const SingleChoiceEditElement = (): JSX.Element => {
-  const [options, setOptions] = useState<string[]>(["Option 1"]);
-  const [isAnotherAnswerEnabled, setIsAnotherAnswerEnabled] =
-    useState<boolean>(false);
+// TS Interfaces declaration
+interface PropsTypes {
+  inputType: "SingleChoice" | "MultipleChoice";
+  attributes: { options: string[]; isAnotherAnswerEnabled: boolean };
+}
+
+const ChoiceEditElement = (props: PropsTypes): JSX.Element => {
+  const [options, setOptions] = useState<string[]>(
+    props.attributes?.options ? props.attributes.options : ["Option 1"]
+  );
+  const [isAnotherAnswerEnabled, setIsAnotherAnswerEnabled] = useState<boolean>(
+    props.attributes?.isAnotherAnswerEnabled
+      ? props.attributes.isAnotherAnswerEnabled
+      : false
+  );
 
   const addOptionHandler = (): void => {
     setOptions((state) => {
       let optionNumber = 1;
 
-      // Loop iterates to prevent default option name repetition
+      // Loop generates name suffix to prevent default option name repetition
       while (options.includes(`Option ${optionNumber}`)) {
         optionNumber++;
       }
@@ -41,6 +55,7 @@ const SingleChoiceEditElement = (): JSX.Element => {
                 option={option}
                 allOptions={options}
                 setOptions={setOptions}
+                inputType={props.inputType}
               />
             );
           })}
@@ -78,4 +93,4 @@ const SingleChoiceEditElement = (): JSX.Element => {
   );
 };
 
-export default SingleChoiceEditElement;
+export default ChoiceEditElement;

@@ -13,7 +13,9 @@ import React from "react";
 //  Components
 import ShortEditElement from "../Fields/Short/ShortEditElement";
 import ParagraphEditElement from "../Fields/Paragraph/ParagraphEditElement";
-import SingleChoiceEditElement from "../Fields/SingleChoice/SingleChoiceEditElement";
+import LinearScaleEditElement from "../Fields/LinearScale/LinearScaleEditElement";
+import SingleChoiceEditElement from "../Fields/Choice/SingleChoice/SingleChoiceEditElement";
+import MultipleChoiceEditElement from "../Fields/Choice/MultipleChoice/MultipleChoiceEditElement";
 
 // Data & config
 import { AVAILABLE_FIELDS_TYPES } from "../../../config";
@@ -25,6 +27,8 @@ const components: {
   ShortEditElement,
   ParagraphEditElement,
   SingleChoiceEditElement,
+  MultipleChoiceEditElement,
+  LinearScaleEditElement
 };
 
 const FieldEditWrapper = (props: {
@@ -90,7 +94,11 @@ const FieldEditWrapper = (props: {
             name="fieldType"
           >
             {AVAILABLE_FIELDS_TYPES.map((option) => (
-              <option key={option} value={toPascalCase(option)}>
+              <option
+                key={option}
+                value={toPascalCase(option)}
+                selected={props.data.fieldType === toPascalCase(option)}
+              >
                 {option}
               </option>
             ))}
@@ -128,7 +136,11 @@ const FieldEditWrapper = (props: {
           />
           <div className="input-text__underline -ml-2" />
 
-          {renderReactComponentByName(fieldType, "Edit", components)}
+          {renderReactComponentByName(fieldType, "Edit", components, {
+            ...(props.data.attributes && {
+              attributes: JSON.parse(props.data.attributes),
+            }),
+          })}
         </div>
       </div>
 

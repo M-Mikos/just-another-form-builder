@@ -6,7 +6,9 @@ import { FormFieldType } from "../../types/types";
 // Components
 import ParagraphFillElement from "../Fields/Paragraph/ParagraphFillElement";
 import ShortFillElement from "../Fields/Short/ShortFillElement";
-import SingleChoiceFillElement from "../Fields/SingleChoice/SingleChoiceFillElement";
+import LinearScaleFillElement from "../Fields/LinearScale/LinearScaleFillElement";
+import SingleChoiceFillElement from "../Fields/Choice/SingleChoice/SingleChoiceFillElement";
+import MultipleChoiceFillElement from "../Fields/Choice/MultipleChoice/MultipleChoiceFillElement";
 import Card from "../UI/Card";
 
 const components: {
@@ -19,6 +21,8 @@ const components: {
   ShortFillElement,
   ParagraphFillElement,
   SingleChoiceFillElement,
+  MultipleChoiceFillElement,
+  LinearScaleFillElement,
 };
 
 const FieldFillWrapper = (props: { data: FormFieldType }): JSX.Element => {

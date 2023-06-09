@@ -19,6 +19,7 @@ export type FormType = {
   title: string;
   description?: string;
   tagColor: string;
+  fieldsOrder: string[];
 };
 
 export type AnswerValueType = string | number | string[];

@@ -19,8 +19,7 @@ const Option = (props: PropsTypes): JSX.Element => {
   );
 
   const onInputChangeHandler = (
-    event: React.ChangeEvent<HTMLInputElement>,
-    option: string
+    event: React.ChangeEvent<HTMLInputElement>
   ): void => {
     anotherOptions.includes(event.target.value.trim())
       ? setIsRepetition(true)
@@ -75,7 +74,7 @@ const Option = (props: PropsTypes): JSX.Element => {
           }
           defaultValue={props.option}
           onChange={(event) => {
-            onInputChangeHandler(event, props.option);
+            onInputChangeHandler(event);
           }}
           onBlur={(event) => {
             onInputBlurHandler(event, props.option);

@@ -87,6 +87,7 @@ export const action: ActionFunction = async ({ params, request }) => {
           id: newFormKey,
           tagColor: color,
           title: formDataObj.formTitle,
+          fields: [],
         });
 
         // Redirect to new form

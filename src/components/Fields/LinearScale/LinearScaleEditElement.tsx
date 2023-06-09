@@ -64,71 +64,75 @@ const LinearScaleEditElement = (props: PropsTypes): JSX.Element => {
 
       {/* Fields below are excluded from direct form submission by removing input names. Data obtained from this inputs is controlled by React state. On submit, it is passed to server as JSON via hidden input above*/}
       <div className="my-2 flex flex-col items-start gap-4 text-sm">
-        <div>
-          <select
-            className=" bg-stone-100 px-3 py-2 hover:bg-stone-200"
-            onChange={minValueChangeHandler}
-            value={minValue}
-          >
-            <option value={0}>0</option>
-            <option value={1}>1</option>
-          </select>
-          <span className="mx-4">-</span>
-          <select
-            className=" bg-stone-100 px-3 py-2 hover:bg-stone-200"
-            onChange={maxValueChangeHandler}
-            value={maxValue}
-          >
-            {[2, 3, 4, 5, 6, 7, 8, 9, 10].map(
-              (number: number): JSX.Element => (
-                <option key={number} value={number}>
-                  {number}
-                </option>
-              )
-            )}
-          </select>
-        </div>
-        <div>
-          <div className="flex items-center gap-2">
-            <div className="w-5 text-stone-500">{minValue}</div>
-            <input
-              className="input-text border-b-2 border-transparent"
-              id="minValueLabel"
-              placeholder="Label (optional)"
-              onChange={minValueLabelChangeHandler}
-              value={minValueLabel}
-            />
+        <div className="flex w-full flex-col items-start justify-between gap-4 sm:flex-row">
+          <div>
+            <select
+              className=" bg-stone-100 px-3 py-2 hover:bg-stone-200"
+              onChange={minValueChangeHandler}
+              value={minValue}
+            >
+              <option value={0}>0</option>
+              <option value={1}>1</option>
+            </select>
+            <span className="mx-4">-</span>
+            <select
+              className=" bg-stone-100 px-3 py-2 hover:bg-stone-200"
+              onChange={maxValueChangeHandler}
+              value={maxValue}
+            >
+              {[2, 3, 4, 5, 6, 7, 8, 9, 10].map(
+                (number: number): JSX.Element => (
+                  <option key={number} value={number}>
+                    {number}
+                  </option>
+                )
+              )}
+            </select>
           </div>
-          <div className="flex items-center gap-2">
-            <div className="w-5 text-stone-500">{maxValue}</div>
-            <input
-              className="input-text border-b-2 border-transparent"
-              placeholder="Label (optional)"
-              onChange={maxValueLabelChangeHandler}
-              id="maxValueLabel"
-              value={maxValueLabel}
-            />
+          <div className="flex flex-col items-start gap-4 sm:flex-row">
+            <div className="flex items-center gap-2">
+              <div className="w-5 text-stone-500">{minValue}</div>
+              <input
+                className="input-text w-32 border-b-2 border-transparent"
+                id="minValueLabel"
+                placeholder="Label (optional)"
+                onChange={minValueLabelChangeHandler}
+                value={minValueLabel}
+              />
+            </div>
+            <div className="flex items-center gap-2">
+              <div className="w-5 text-stone-500">{maxValue}</div>
+              <input
+                className="input-text w-32 border-b-2 border-transparent"
+                placeholder="Label (optional)"
+                onChange={maxValueLabelChangeHandler}
+                id="maxValueLabel"
+                value={maxValueLabel}
+              />
+            </div>
           </div>
         </div>
-        <div className="flex w-full justify-between gap-2">
+        <div></div>
+
+        <div className="flex w-full flex-col items-start justify-between gap-2 sm:flex-row sm:items-center">
+          <div className="w-20 break-words text-[12px] text-stone-400 sm:text-right">
+            {minValueLabel}
+          </div>
           {[...Array(Number(maxValue) - Number(minValue) + 1).keys()].map(
             (_, i) => {
               return (
-                <>
-                  <div key={i} className="flex flex-col items-center gap-2">
-                    <span className="text-[12px] text-stone-400">
-                      {i + Number(minValue)}
-                    </span>
-                    <div className="h-4 w-4  rounded-full border-2 border-stone-300" />
-                  </div>
-                </>
+                <div key={i} className=" flex items-center gap-2 sm:flex-col">
+                  <div className="pointer-events-none h-4 w-4  rounded-full border-2 border-stone-300" />
+                  <span className="pointer-events-none text-[12px] text-stone-400">
+                    {i + Number(minValue)}
+                  </span>
+                </div>
               );
             }
           )}
-        </div>
-        <div className="flex w-full justify-between text-[12px] text-stone-400">
-          <div>{minValueLabel}</div>
-          <div>{maxValueLabel}</div>
+          <div className="w-20 break-words text-[12px] text-stone-400">
+            {maxValueLabel}
+          </div>
         </div>
       </div>
     </>

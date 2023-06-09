@@ -16,7 +16,6 @@ const renderReactComponentByName = (
   components: { [key: string]: React.ComponentType<any> },
   componentProps: { [key: string]: any } = {}
 ) => {
-  console.log("render", componentProps);
   // Create properly formatted component name
   const formattedFieldName: string = fieldType + mode + "Element";
 

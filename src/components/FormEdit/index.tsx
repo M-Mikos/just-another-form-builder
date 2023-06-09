@@ -1,5 +1,5 @@
 // Functions & Hooks
-import { get, push, ref, remove, set } from "firebase/database";
+import { get, push, ref, remove, set, update } from "firebase/database";
 import { ActionFunction, useLoaderData, useParams } from "react-router";
 import { useFetcher } from "react-router-dom";
 import { useState } from "react";
@@ -86,9 +86,11 @@ export const action: ActionFunction = async ({ params, request }) => {
     const formData = await request.formData();
     const formDataObj = Object.fromEntries(formData);
 
+    console.log(formDataObj);
+
     // Select action method
     switch (request.method) {
-      case "POST":
+      case "POST": {
         // Adding new field
         // Get key for new field database entry
         const newFieldKey = push(
@@ -102,8 +104,27 @@ export const action: ActionFunction = async ({ params, request }) => {
           required: false,
           title: "Question",
         });
+
+        // Add new field id to fields order array
+
+        const fieldsOrderSnapshot = await get(
+          ref(database, `forms/${params.formId}/fieldsOrder`)
+        );
+
+        let fieldsOrderArr: string[] = [];
+
+        if (fieldsOrderSnapshot.exists()) {
+          fieldsOrderArr = [...fieldsOrderSnapshot.val()];
+          fieldsOrderArr.push(newFieldKey);
+        } else fieldsOrderArr = [newFieldKey];
+
+        update(ref(database), {
+          [`forms/${params.formId}/fieldsOrder`]: fieldsOrderArr,
+        });
+
         break;
-      case "DELETE":
+      }
+      case "DELETE": {
         // Deleting field answers in each form answers set
 
         const answers = await get(
@@ -111,7 +132,7 @@ export const action: ActionFunction = async ({ params, request }) => {
         );
 
         answers.forEach((child) => {
-          const answersSetId: string = child.ref._path.pieces_.slice(-1)[0];
+          const answersSetId: string = child.val().slice(-1)[0];
 
           remove(
             ref(
@@ -121,15 +142,30 @@ export const action: ActionFunction = async ({ params, request }) => {
           );
         });
 
+        // Deleting field id in fields order array
+
+        const fieldsOrderSnapshot = await get(
+          ref(database, `forms/${params.formId}/fieldsOrder`)
+        );
+
+        let fieldsOrderArr: string[] = fieldsOrderSnapshot
+          .val()
+          .filter((id: string) => id !== formDataObj.fieldId);
+
+        update(ref(database), {
+          [`forms/${params.formId}/fieldsOrder`]: fieldsOrderArr,
+        });
+
         // Deleting form field
         remove(
           ref(database, `formsFields/${params.formId}/${formDataObj.fieldId}`)
         );
 
         break;
+      }
 
-      case "PATCH":
-        // Updateing field
+      case "PATCH": {
+        // Updating field
 
         set(
           ref(database, `formsFields/${params.formId}/${formDataObj.fieldId}`),
@@ -146,6 +182,7 @@ export const action: ActionFunction = async ({ params, request }) => {
           }
         );
         break;
+      }
     }
 
     console.log("Succes!");
@@ -153,6 +190,5 @@ export const action: ActionFunction = async ({ params, request }) => {
   } catch (error) {
     console.error(error);
   }
-
   return null;
 };

@@ -28,7 +28,7 @@ const components: {
   ParagraphEditElement,
   SingleChoiceEditElement,
   MultipleChoiceEditElement,
-  LinearScaleEditElement
+  LinearScaleEditElement,
 };
 
 const FieldEditWrapper = (props: {
@@ -45,9 +45,9 @@ const FieldEditWrapper = (props: {
     `/${params.formId}`
   );
 
-  const moveUpHandler = () => {};
+  const moveUpHandler = (): void => {};
 
-  const moveDownHandler = () => {};
+  const moveDownHandler = (): void => {};
 
   const deleteHandler = (): void => {
     fetcher.submit(
@@ -80,32 +80,29 @@ const FieldEditWrapper = (props: {
       <input name="fieldId" type="hidden" value={props.data.id}></input>
       <div
         className={
-          "flex items-center justify-between overflow-hidden border-b-2 border-dotted  px-6 transition-all duration-500 " +
+          "flex h-32 flex-col items-start justify-between overflow-hidden border-b-2 border-dotted px-6 py-4 transition-all duration-500  sm:flex-row sm:items-center sm:py-0 " +
           (props.isBeingEdited
-            ? "h-16 border-stone-300 "
+            ? "border-stone-300 sm:h-16 "
             : "h-0 border-transparent ")
         }
       >
         <label htmlFor="fieldType" className="text-sm text-stone-800">
           Field type:
           <select
-            className="ml-3 bg-stone-100 px-3 py-2 hover:bg-stone-200"
+            className="bg-stone-100 px-3 py-2 hover:bg-stone-200 sm:ml-3"
             onChange={changleFieldTypeHandler}
             name="fieldType"
+            defaultValue={props.data.fieldType}
           >
             {AVAILABLE_FIELDS_TYPES.map((option) => (
-              <option
-                key={option}
-                value={toPascalCase(option)}
-                selected={props.data.fieldType === toPascalCase(option)}
-              >
+              <option key={option} value={toPascalCase(option)}>
                 {option}
               </option>
             ))}
           </select>
         </label>
 
-        <label className="relative inline-flex cursor-pointer items-center">
+        <label className="relative inline-flex cursor-pointer items-center ">
           <input
             name="required"
             type="checkbox"
@@ -126,7 +123,7 @@ const FieldEditWrapper = (props: {
       >
         <div className="-left-5 p-6 ">
           <input
-            className="input-text peer -ml-2 border-b-0 px-2 py-1 text-2xl"
+            className="input-text peer border-b-0 px-2 py-1 text-2xl sm:-ml-2"
             name="title"
             type="text"
             autoComplete="off"
@@ -134,7 +131,7 @@ const FieldEditWrapper = (props: {
             placeholder="Write question..."
             required={true}
           />
-          <div className="input-text__underline -ml-2" />
+          <div className="input-text__underline sm:-ml-2" />
 
           {renderReactComponentByName(fieldType, "Edit", components, {
             ...(props.data.attributes && {
@@ -152,12 +149,16 @@ const FieldEditWrapper = (props: {
             : "h-0 border-transparent ")
         }
       >
-        <div>
-          {/* <button onClick={moveUpHandler}>Up</button>
-          <button onClick={moveDownHandler}>Down</button> */}
+        <div className="flex ">
+          <button className="btn--light" onClick={moveUpHandler}>
+            <span className="material-symbols-outlined">expand_less</span>
+          </button>
+          <button className="btn--light" onClick={moveDownHandler}>
+            <span className="material-symbols-outlined ">expand_more</span>
+          </button>
         </div>
         <button className="btn--light" onClick={toggleConfirmationModal}>
-          <span className="material-symbols-outlined ">delete</span>
+          <span className="material-symbols-outlined">delete</span>
           Delete
         </button>
       </div>

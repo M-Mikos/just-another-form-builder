@@ -65,20 +65,24 @@ const ChoiceFillElement = (props: PropsTypes): JSX.Element => {
       <fieldset>
         {props.attributes.options.map((option: string) => {
           return (
-            <div key={option} className="mb-2 flex gap-3 text-sm">
+            <label
+              key={option}
+              className="mb-2 flex items-center gap-3 text-sm"
+            >
               <input
+                className="h-4 w-4"
                 type={inputElementType}
                 id={option}
                 value={option}
                 onChange={changeHandler}
                 checked={selectedAnswers.includes(option)}
               />
-              <label htmlFor={option}>{option}</label>
-            </div>
+              {option}
+            </label>
           );
         })}
         {props.attributes.isAnotherAnswerEnabled && (
-          <div key="anotherAnswer" className="mb-2 flex gap-3 text-sm">
+          <label key="anotherAnswer" className="mb-2 flex gap-3 text-sm">
             <input
               type={inputElementType}
               id="Another answer"
@@ -88,8 +92,8 @@ const ChoiceFillElement = (props: PropsTypes): JSX.Element => {
                 value: anotherAnswerValue,
               })}
             />
-            <label htmlFor="Another answer">Another answer</label>
-          </div>
+            Another answer
+          </label>
         )}
         {selectedAnswers.includes("Another answer") && (
           <input

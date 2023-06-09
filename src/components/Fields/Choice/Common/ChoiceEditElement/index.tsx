@@ -73,12 +73,12 @@ const ChoiceEditElement = (props: PropsTypes): JSX.Element => {
         )}
       </div>
 
-      <div className="flex items-center gap-4 text-sm text-stone-500">
+      <div className="flex flex-col items-start gap-4 text-sm text-stone-500 sm:flex-row">
         <button className="btn--light text-sky-700" onClick={addOptionHandler}>
           Add next option
         </button>
         {!isAnotherAnswerEnabled && (
-          <>
+          <div className="flex items-center gap-4">
             <span> or </span>
             <button
               className="btn--light text-sky-700"
@@ -86,7 +86,7 @@ const ChoiceEditElement = (props: PropsTypes): JSX.Element => {
             >
               Add "Another answer..."
             </button>
-          </>
+          </div>
         )}
       </div>
     </>

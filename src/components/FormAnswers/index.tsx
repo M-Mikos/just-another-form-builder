@@ -76,7 +76,6 @@ const FormAnswers = (): JSX.Element => {
               formDetails={formDetails}
               formFields={formFields}
               formAnswers={formAnswers}
-              components={components}
             />
           )}
           {answersMode === "forms" && (
@@ -84,7 +83,6 @@ const FormAnswers = (): JSX.Element => {
               formDetails={formDetails}
               formFields={formFields}
               formAnswers={formAnswers}
-              components={components}
             />
           )}
         </div>

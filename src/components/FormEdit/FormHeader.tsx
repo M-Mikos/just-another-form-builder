@@ -38,7 +38,7 @@ const FormHeader = (props: PropsTypes): JSX.Element => {
 
   return (
     <fetcher.Form onChange={saveOnChangeHandler} ref={formElement}>
-      <input name="formId" type="hidden" value={props.id}></input>
+      <input name="formId" type="hidden" value={props.id} />
       <input
         name="formTitle"
         className="input-text peer relative -ml-3 border-b-0 bg-transparent text-3xl font-bold  text-white placeholder-stone-200 hover:bg-stone-100/20 focus-visible:bg-stone-100/10"
@@ -71,7 +71,6 @@ const FormHeader = (props: PropsTypes): JSX.Element => {
                   className="peer sr-only"
                   type="radio"
                   id={option}
-                  name="tagColor"
                   value={option}
                   {...(props.tagColor === option && { defaultChecked: true })}
                 />

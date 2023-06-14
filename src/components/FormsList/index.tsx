@@ -5,7 +5,7 @@ import generateColorClass from "../../helpers/generateColorClass";
 
 // Components
 import FormListItem from "./FormListItem";
-import { push, ref, remove, set } from "firebase/database";
+import { push, ref, remove, set, update } from "firebase/database";
 import { database } from "../../../firebase";
 import AddNewForm from "./AddNewForm";
 import Card from "../UI/Card";
@@ -64,11 +64,12 @@ const FormList = () => {
 
 export default FormList;
 
-export const action: ActionFunction = async ({ params, request }) => {
+export const action: ActionFunction = async ({ request }) => {
   try {
     // Get form data and format to object
     const formData = await request.formData();
     const formDataObj = Object.fromEntries(formData);
+    console.log(formData);
 
     // Select action method
     switch (request.method) {
@@ -87,15 +88,13 @@ export const action: ActionFunction = async ({ params, request }) => {
           id: newFormKey,
           tagColor: color,
           title: formDataObj.formTitle,
-          fields: [],
         });
 
         // Redirect to new form
         return redirect(`/${newFormKey}`);
 
       case "PATCH":
-        set(ref(database, `forms/${formDataObj.formId}`), {
-          id: formDataObj.formId,
+        update(ref(database, `forms/${formDataObj.formId}`), {
           title: formDataObj.formTitle,
           description: formDataObj.formDescription,
           tagColor: formDataObj.tagColor,

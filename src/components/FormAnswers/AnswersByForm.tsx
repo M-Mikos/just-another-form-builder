@@ -17,7 +17,6 @@ interface PropsTypes {
   formAnswers: {
     [key: string]: AnswerType;
   };
-  components: { [key: string]: React.ComponentType<{ answers: AnswerType[] }> };
 }
 
 const AnswersByForm = (props: PropsTypes) => {

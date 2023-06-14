@@ -4,7 +4,7 @@ import { push, ref, set } from "firebase/database";
 import generateColorClass from "../../helpers/generateColorClass";
 
 // Types
-import { FormFieldType, FormLoaderType } from "../../types/types";
+import { FormLoaderType } from "../../types/types";
 
 // Components
 import { Form } from "react-router-dom";
@@ -30,19 +30,20 @@ const FormToFill = (): JSX.Element => {
         }
       >
         <NoiseTexture className="" />
-        <h2 className="relative z-20 text-5xl">{formDetails.title}</h2>
+        <h2 className="relative z-20 text-3xl">{formDetails.title}</h2>
         <p className="relative z-20">{formDetails.description}</p>
       </Card>
       {formFields && (
         <Form method="put" action={`/${params.formId}/fill`}>
           <ul className="mb-6 flex flex-col gap-6">
-            {Object.values(formFields).map((field: FormFieldType) => {
-              return (
-                <li key={field.id}>
-                  <FieldFillWrapper data={field} />
-                </li>
-              );
-            })}
+            {formDetails.fieldsOrder &&
+              formDetails.fieldsOrder.map((fieldId: string) => {
+                return (
+                  <li key={fieldId}>
+                    <FieldFillWrapper data={formFields[fieldId]} />
+                  </li>
+                );
+              })}
           </ul>
 
           <button className="btn--strong" type="submit">

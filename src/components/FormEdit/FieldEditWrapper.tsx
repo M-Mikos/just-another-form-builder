@@ -1,4 +1,5 @@
 // Function & hooks
+import React from "react";
 import { useFetcher, useParams } from "react-router-dom";
 import { useRef, useState } from "react";
 import toPascalCase from "../../helpers/toPascalCase";
@@ -8,7 +9,6 @@ import renderReactComponentByName from "../../helpers/renderReactComponentByName
 
 // TS types
 import { FormFieldType } from "../../types/types";
-import React from "react";
 
 //  Components
 import ShortEditElement from "../Fields/Short/ShortEditElement";
@@ -34,7 +34,10 @@ const components: {
 const FieldEditWrapper = (props: {
   data: FormFieldType;
   isBeingEdited: boolean;
+  isFirst: boolean;
+  isLast: boolean;
   tagColor: string;
+  moveFieldHandler: (fieldId: string, direction: "up" | "down") => void;
 }) => {
   const fetcher = useFetcher();
   const params = useParams();
@@ -45,9 +48,10 @@ const FieldEditWrapper = (props: {
     `/${params.formId}`
   );
 
-  const moveUpHandler = (): void => {};
+  const moveUpHandler = (): void => props.moveFieldHandler(props.data.id, "up");
 
-  const moveDownHandler = (): void => {};
+  const moveDownHandler = (): void =>
+    props.moveFieldHandler(props.data.id, "down");
 
   const deleteHandler = (): void => {
     fetcher.submit(
@@ -83,7 +87,7 @@ const FieldEditWrapper = (props: {
           "flex h-32 flex-col items-start justify-between overflow-hidden border-b-2 border-dotted px-6 py-4 transition-all duration-500  sm:flex-row sm:items-center sm:py-0 " +
           (props.isBeingEdited
             ? "border-stone-300 sm:h-16 "
-            : "h-0 border-transparent ")
+            : "h-[0px] border-transparent ")
         }
       >
         <label htmlFor="fieldType" className="text-sm text-stone-800">
@@ -150,10 +154,22 @@ const FieldEditWrapper = (props: {
         }
       >
         <div className="flex ">
-          <button className="btn--light" onClick={moveUpHandler}>
+          <button
+            className={`btn--light${
+              props.isFirst ? " opacity-20 hover:opacity-20" : ""
+            }`}
+            onClick={moveUpHandler}
+            {...(props.isFirst && { disabled: true })}
+          >
             <span className="material-symbols-outlined">expand_less</span>
           </button>
-          <button className="btn--light" onClick={moveDownHandler}>
+          <button
+            className={`btn--light${
+              props.isLast ? " opacity-20 hover:opacity-20" : ""
+            }`}
+            onClick={moveDownHandler}
+            {...(props.isLast && { disabled: true })}
+          >
             <span className="material-symbols-outlined ">expand_more</span>
           </button>
         </div>

@@ -2,7 +2,7 @@
 import { get, push, ref, remove, set, update } from "firebase/database";
 import { ActionFunction, useLoaderData, useParams } from "react-router";
 import { useFetcher } from "react-router-dom";
-import { useState } from "react";
+import { useEffect, useState } from "react";
 
 // Types
 import { FormLoaderType } from "../../types/types";
@@ -21,17 +21,59 @@ const FormEdit = (): JSX.Element => {
   const { formDetails, formFields } = useLoaderData() as FormLoaderType;
   const params = useParams<{ [key: string]: string }>();
   const fetcher = useFetcher();
-  const [currentlyEditedField, setCurrentlyEditedField] = useState<string>("");
+
   const [currentColor, setCurrentColor] = useState<string>(
     formDetails.tagColor
   );
 
+  // State for selecting currently edited field
+  const [currentlyEditedField, setCurrentlyEditedField] = useState<string>("");
+  // Adding new field
   const addFieldHandler = (): void => {
     fetcher.submit({}, { method: "POST", action: `/${params.formId}` });
   };
 
+  // Selecting edited field for style change
   const setEditedFieldHandler = (id: string): void => {
     setCurrentlyEditedField(id);
+  };
+
+  // State for controlling fields Order
+  const [fieldsOrder, setFieldsOrder] = useState<string[]>(
+    formDetails.fieldsOrder
+  );
+
+  // Render new field order after updating field order in database
+  useEffect(
+    (): void => setFieldsOrder(formDetails.fieldsOrder),
+    [formDetails.fieldsOrder]
+  );
+
+  // Set new field order on click event
+  const moveFieldHandler = (
+    fieldId: string,
+    direction: "up" | "down"
+  ): void => {
+    const index: number = fieldsOrder.indexOf(fieldId);
+    const newFieldsOrder: string[] = [...fieldsOrder];
+    const positionShift: number = direction === "down" ? 1 : -1;
+
+    [newFieldsOrder[index], newFieldsOrder[index + positionShift]] = [
+      newFieldsOrder[index + positionShift],
+      newFieldsOrder[index],
+    ];
+    setFieldsOrder(newFieldsOrder);
+
+    update(ref(database, `forms/${formDetails.id}`), {
+      fieldsOrder: newFieldsOrder,
+    });
+  };
+
+  const changeColorHandler = (color: string): void => {
+    setCurrentColor(color);
+    update(ref(database, `forms/${formDetails.id}`), {
+      tagColor: color,
+    });
   };
 
   return (
@@ -47,27 +89,31 @@ const FormEdit = (): JSX.Element => {
           description={formDetails.description}
           id={formDetails.id}
           tagColor={currentColor}
-          changeColor={setCurrentColor}
+          changeColor={changeColorHandler}
         />
       </Card>
 
       <ul className="flex flex-col gap-6">
-        {formFields &&
-          Object.values(formFields).map((field) => {
-            return (
-              <li
-                key={field.id}
-                onClick={() => setEditedFieldHandler(field.id)}
-              >
-                <Card>
-                  <FieldEditWrapper
-                    data={field}
-                    tagColor={currentColor}
-                    isBeingEdited={currentlyEditedField === field.id}
-                  />
-                </Card>
-              </li>
-            );
+        {fieldsOrder &&
+          fieldsOrder.map((fieldId) => {
+            if (formFields && formFields[fieldId])
+              return (
+                <li
+                  key={fieldId}
+                  onClick={() => setEditedFieldHandler(fieldId)}
+                >
+                  <Card>
+                    <FieldEditWrapper
+                      data={formFields[fieldId]}
+                      tagColor={currentColor}
+                      isBeingEdited={currentlyEditedField === fieldId}
+                      isFirst={fieldsOrder[0] === fieldId}
+                      isLast={fieldsOrder.at(-1) === fieldId}
+                      moveFieldHandler={moveFieldHandler}
+                    />
+                  </Card>
+                </li>
+              );
           })}
         <button className="btn--light text-base" onClick={addFieldHandler}>
           <span className="material-symbols-outlined ">add_circle</span>
@@ -142,6 +188,11 @@ export const action: ActionFunction = async ({ params, request }) => {
           );
         });
 
+        // Deleting form field
+        remove(
+          ref(database, `formsFields/${params.formId}/${formDataObj.fieldId}`)
+        );
+
         // Deleting field id in fields order array
 
         const fieldsOrderSnapshot = await get(
@@ -155,11 +206,6 @@ export const action: ActionFunction = async ({ params, request }) => {
         update(ref(database), {
           [`forms/${params.formId}/fieldsOrder`]: fieldsOrderArr,
         });
-
-        // Deleting form field
-        remove(
-          ref(database, `formsFields/${params.formId}/${formDataObj.fieldId}`)
-        );
 
         break;
       }

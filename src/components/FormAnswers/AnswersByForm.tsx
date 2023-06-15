@@ -19,7 +19,7 @@ interface PropsTypes {
   };
 }
 
-const AnswersByForm = (props: PropsTypes) => {
+const AnswersByForm = (props: PropsTypes): JSX.Element => {
   return (
     <>
       <h3 className="text-xl">Answers - by form</h3>

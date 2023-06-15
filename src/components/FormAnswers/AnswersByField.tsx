@@ -7,6 +7,7 @@ import { AnswerType, FormFieldType, FormType } from "../../types/types";
 
 // Components
 import Card from "../UI/Card";
+import AnswersSetDisplay from "./AnswersSetDisplay";
 
 // TS Interfaces declaration
 interface PropsTypes {
@@ -37,9 +38,7 @@ const AnswersByField = (props: PropsTypes): JSX.Element => {
                     <h4 className="mb-6  text-stone-800">
                       {props.formFields[fieldId].title}
                     </h4>
-                    {answersList.map((answer) => (
-                      <p>{answer}</p>
-                    ))}
+                    <AnswersSetDisplay answers={answersList} />
                     {answersList.length === 0 && (
                       <span className="text-xs">
                         This question has not yet been answered

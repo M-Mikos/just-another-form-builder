@@ -22,11 +22,9 @@ export type FormType = {
   fieldsOrder: string[];
 };
 
-export type AnswerValueType = string | number | string[];
-
 // Combined type aliases
 // "key" is field id
-export type AnswerType = { [key: string]: AnswerValueType };
+export type AnswerType = { [key: string]: string };
 
 export type FormLoaderType = {
   formDetails: FormType;

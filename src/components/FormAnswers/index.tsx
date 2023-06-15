@@ -9,17 +9,8 @@ import { AnswerType, FormLoaderType } from "../../types/types";
 // Components
 import AnswersByField from "./AnswersByField";
 import AnswersByForm from "./AnswersByForm";
-import ShortAnswerElement from "../Fields/Short/ShortAnswersElement";
-import ParagraphAnswerElement from "../Fields/Paragraph/ParagraphAnswersElement";
 import Card from "../UI/Card";
 import NoiseTexture from "../Decorative/NoiseTexture";
-
-const components: {
-  [key: string]: React.ComponentType<{ answers: AnswerType[] }>;
-} = {
-  ShortAnswerElement,
-  ParagraphAnswerElement,
-};
 
 const FormAnswers = (): JSX.Element => {
   const [answersMode, setAnswersMode] = useState<string>("fields");

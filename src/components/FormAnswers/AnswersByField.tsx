@@ -35,9 +35,12 @@ const AnswersByField = (props: PropsTypes): JSX.Element => {
               <li key={fieldId}>
                 <Card>
                   <div className="p-6">
-                    <h4 className="mb-6  text-stone-800">
+                    <h4 className="mb-2 text-stone-800">
                       {props.formFields[fieldId].title}
                     </h4>
+                    <div className="mb-6 text-[13px] text-stone-500">
+                      {answersList.length} responses
+                    </div>
                     <AnswersSetDisplay answers={answersList} />
                     {answersList.length === 0 && (
                       <span className="text-xs">

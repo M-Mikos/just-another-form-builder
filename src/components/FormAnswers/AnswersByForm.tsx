@@ -24,29 +24,19 @@ const AnswersByForm = (props: PropsTypes): JSX.Element => {
     <>
       <h3 className="text-xl">Answers - by form</h3>
 
-      {Object.values(props.formAnswers).map((answers, i) => {
+      {Object.entries(props.formAnswers).map((answers, i) => {
         return (
-          <Card>
+          <Card key={i}>
             <div className="p-6">
               <h4 className="mb-6  text-stone-800">Form number {i + 1}</h4>
-              <ul className="flex flex-col gap-6">
-                {Object.entries(answers).map((field) => {
-                  // Get current field details (by matching fieldId in answers to fieldId in from details)
-                  const fieldDetails = Object.values(props.formFields).filter(
-                    (fieldDetail) => fieldDetail.id === field[0]
-                  )[0];
 
-                  return (
-                    <li key={fieldDetails.id}>
-                      {renderReactComponentByName(
-                        fieldDetails.fieldType,
-                        "Answer",
-                        props.components,
-                        { answers: [field[1]] }
-                      )}
-                    </li>
-                  );
-                })}
+              <ul className="flex flex-col gap-1">
+                {Object.values(answers[1]).map((answer) => (
+                  <li key={answer} className="rounded bg-stone-50 p-2 text-sm">
+                    <span></span>
+                    {answer}
+                  </li>
+                ))}
               </ul>
             </div>
           </Card>

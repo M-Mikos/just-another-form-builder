@@ -52,11 +52,11 @@ const FormHeader = (props: PropsTypes): JSX.Element => {
       <textarea
         name="formDescription"
         autoComplete="off"
-        className="input-text peer relative -ml-3 h-24 resize-none overflow-x-auto border-b-0 bg-transparent text-white placeholder-stone-200 hover:bg-stone-100/20 focus-visible:bg-stone-100/10"
+        className="input-text peer relative -ml-3 h-20 resize-y  border-b-0 bg-transparent text-white placeholder-stone-200 hover:bg-stone-100/20 focus-visible:bg-stone-100/10"
         placeholder="Type form description here..."
         {...(props.description && { defaultValue: props.description })}
       />
-      <div className="inline-flex justify-end gap-2">
+      <div className="inline-flex w-full justify-end gap-2">
         <div
           className={
             "relative inline-flex items-center gap-2 rounded bg-white px-4 py-3" +

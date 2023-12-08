@@ -38,8 +38,8 @@ const LinearScaleFillElement = (props: PropsTypes): JSX.Element => {
             ).keys(),
           ].map((_, i) => {
             return (
-              <fieldset>
-                <label key={i} className=" flex items-center gap-2 sm:flex-col">
+              <fieldset key={i}>
+                <label className=" flex items-center gap-2 sm:flex-col">
                   <input
                     // name={props.name}
                     type="radio"

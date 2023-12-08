@@ -42,7 +42,6 @@ const Option = (props: PropsTypes): JSX.Element => {
       setIsRepetition(false);
       return;
     }
-
     props.setOptions((state) => {
       const i = props.allOptions.indexOf(option);
       const newState = [...state];

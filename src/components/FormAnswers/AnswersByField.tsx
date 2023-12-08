@@ -39,7 +39,7 @@ const AnswersByField = (props: PropsTypes): JSX.Element => {
                       {props.formFields[fieldId].title}
                     </h4>
                     <div className="mb-6 text-[13px] text-stone-500">
-                      {answersList.length} responses
+                      {answersList.filter(Boolean).length} responses
                     </div>
                     <AnswersSetDisplay answers={answersList} />
                     {answersList.length === 0 && (

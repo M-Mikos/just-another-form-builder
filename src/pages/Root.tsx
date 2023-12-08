@@ -9,7 +9,7 @@ const Root = (): JSX.Element => {
   return (
     <>
       <Header />
-      <div className="flex w-full justify-center p-10 ">
+      <div className="flex w-full justify-center p-2 sm:p-10 ">
         <div className="container max-w-3xl">
           {navigation.state === "idle" && <Outlet />}
           {navigation.state === "loading" && <LoadingIndicator />}

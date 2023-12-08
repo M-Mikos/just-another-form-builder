@@ -20,28 +20,38 @@ interface PropsTypes {
 }
 
 const AnswersByForm = (props: PropsTypes): JSX.Element => {
+  const formatAnswer = (answer: string): string | JSX.Element => {
+    if (!answer || answer === "[]")
+      return <span className="text-stone-400">No answer</span>;
+    if (answer.charAt(0) === "[")
+      return answer.substring(2, answer.length - 2).replace('","', ", ");
+    return answer;
+  };
+
   return (
     <>
       <h3 className="text-xl">Answers - by form</h3>
 
-      {Object.entries(props.formAnswers).map((answers, i) => {
-        return (
-          <Card key={i}>
-            <div className="p-6">
-              <h4 className="mb-6  text-stone-800">Form number {i + 1}</h4>
+      {Object.entries(props.formAnswers).map((answers, i) => (
+        <Card key={i}>
+          <div className="p-6">
+            <h4 className="mb-6  text-stone-800">Form number {i + 1}</h4>
 
-              <ul className="flex flex-col gap-1">
-                {Object.values(answers[1]).map((answer) => (
-                  <li key={answer} className="rounded bg-stone-50 p-2 text-sm">
-                    <span></span>
-                    {answer}
+            <ul className="flex flex-col gap-1">
+              {Object.values(answers[1]).map((answer, i) => {
+                return (
+                  <li key={i} className="rounded bg-stone-50 p-2 text-sm">
+                    <p className="mb-2 text-stone-500">
+                      {Object.entries(props.formFields)[i][1].title}
+                    </p>
+                    {formatAnswer(answer)}
                   </li>
-                ))}
-              </ul>
-            </div>
-          </Card>
-        );
-      })}
+                );
+              })}
+            </ul>
+          </div>
+        </Card>
+      ))}
     </>
   );
 };

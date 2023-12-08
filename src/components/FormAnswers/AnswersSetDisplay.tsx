@@ -8,7 +8,8 @@ const AnswersSetDisplay = (props: { answers: string[] }): JSX.Element => {
 
   const answersList = props.answers
     .map((answer: string) => tryParseData(answer))
-    .flat();
+    .flat()
+    .filter(Boolean);
 
   const countedAnswers: { [key: string]: number } = answersList.reduce(
     (sum: { [key: string]: number }, answer: string) => {
@@ -23,11 +24,14 @@ const AnswersSetDisplay = (props: { answers: string[] }): JSX.Element => {
 
   const answersListElement: JSX.Element = (
     <ul className="flex flex-col gap-1">
-      {Object.keys(countedAnswers).map((answer) => (
-        <li key={answer} className="rounded bg-stone-50 p-2 text-sm">
-          {answer}
-        </li>
-      ))}
+      {Object.keys(countedAnswers).map((answer, i): JSX.Element | undefined => {
+        if (!answer) return;
+        return (
+          <li key={i} className="rounded bg-stone-50 p-2 text-sm">
+            {answer}
+          </li>
+        );
+      })}
     </ul>
   );
 
@@ -81,7 +85,7 @@ const AnswersSetDisplay = (props: { answers: string[] }): JSX.Element => {
             .map((_, i) => (
               <text
                 key={i}
-                font-size="10"
+                fontSize="10"
                 fill="#7dd3fc"
                 x={197 + (i + 1) * 64}
                 y={answersNumber * 50 + 12}
@@ -115,11 +119,11 @@ const AnswersSetDisplay = (props: { answers: string[] }): JSX.Element => {
                 y2={42 + i * 50}
                 stroke="#e0e0e0"
               />
-              <text font-size="10" x="0" y={20 + 12.5 + i * 50}>
+              <text fontSize="10" x="0" y={20 + 12.5 + i * 50}>
                 {answer.length > 30 ? `${answer.slice(0, 30)}...` : answer}
               </text>
               <text
-                font-size="10"
+                fontSize="10"
                 x={210 + (countedAnswers[answer] / maxValue) * 320}
                 y={30 + i * 50}
               >

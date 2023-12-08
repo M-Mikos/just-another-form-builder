@@ -1,5 +1,6 @@
 // Functions & Hooks
 import { ActionFunction, useLoaderData, useParams } from "react-router";
+import { Link, redirect } from "react-router-dom";
 import { push, ref, set } from "firebase/database";
 import generateColorClass from "../../helpers/generateColorClass";
 
@@ -72,8 +73,9 @@ export const action: ActionFunction = async ({ params, request }) => {
       ref(database, `formsAnswers/${params.formId}/${newAnswerKey}`),
       formDataObj
     );
-    console.log("Succes!");
-    return { ok: true };
+    // Redirect to ThankYou Page
+    // return { ok: true };
+    return redirect("thankyou");
   } catch (error) {}
 
   return null;

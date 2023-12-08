@@ -34,7 +34,7 @@ const FormAnswers = (): JSX.Element => {
         }
       >
         <NoiseTexture />
-        <h2 className="relative m-0">Answers</h2>
+        <h2 className="relative">Answers</h2>
         <div className="relative">
           {formAnswers && (
             <div className="flex justify-center gap-4 text-sm ">

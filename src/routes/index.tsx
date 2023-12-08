@@ -14,11 +14,14 @@ import FormRoot from "../pages/FormRoot";
 import Edit from "../pages/Edit";
 import Answers from "../pages/Answers";
 import Fill from "../pages/Fill";
+import ThankYou from "../pages/ThankYou";
+import Error from "../pages/Error";
 
 const router = createBrowserRouter([
   {
     path: "/",
     element: <Root />,
+    errorElement: <Error />,
     children: [
       {
         path: "/",
@@ -48,6 +51,10 @@ const router = createBrowserRouter([
             action: formSubmitAction,
           },
         ],
+      },
+      {
+        path: "/:formId/fill/thankyou",
+        element: <ThankYou />,
       },
     ],
   },

@@ -34,7 +34,6 @@ const ChoiceEditElement = (props: PropsTypes): JSX.Element => {
   };
 
   const toggleAnotherAnswer = (): void => {
-    console.log("another anwer toggled");
     setIsAnotherAnswerEnabled((state) => {
       return !state;
     });

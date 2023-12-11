@@ -20,6 +20,7 @@ export type FormType = {
   description?: string;
   tagColor: string;
   fieldsOrder: string[];
+  authorId: string;
 };
 
 // Combined type aliases

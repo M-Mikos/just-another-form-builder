@@ -1,12 +1,13 @@
 import { initializeApp } from "firebase/app";
 import { getDatabase } from "firebase/database";
+import { getAuth, onAuthStateChanged, signInAnonymously } from "firebase/auth";
 import { firebaseConfig } from "./config";
-import { getAuth } from "firebase/auth";
 
 // Initialize Firebase
 const app = initializeApp(firebaseConfig);
 
-// Export Firestore realtime database
+// Export Firebase realtime database
 export const database = getDatabase(app);
 
-export const auth = getAuth(app);
+// Export Firebase anonymous login
+export const auth = getAuth();

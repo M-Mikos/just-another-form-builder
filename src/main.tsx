@@ -5,25 +5,16 @@ import ReactDOM from "react-dom/client";
 import { RouterProvider } from "react-router-dom";
 
 // Routes
-import routes from "./routes";
+import router from "./routes";
+
+// Auth
+import { AuthProvider } from "./context/AuthContext";
 
 // Styles
 import "./index.css";
 
-// Auth
-import { auth } from "../firebase";
-import { signInAnonymously } from "firebase/auth";
-
-signInAnonymously(auth)
-  .then(() => {
-    console.log("auth");
-  })
-  .catch((error) => {
-    const errorCode = error.code;
-    const errorMessage = error.message;
-    console.log(errorCode, errorMessage);
-  });
-
 ReactDOM.createRoot(document.getElementById("root") as HTMLElement).render(
-  <RouterProvider router={routes} />
+  <AuthProvider>
+    <RouterProvider router={router} />
+  </AuthProvider>
 );

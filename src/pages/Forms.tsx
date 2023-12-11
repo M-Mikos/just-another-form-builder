@@ -1,12 +1,5 @@
-// Functions & hooks
-import { get, ref } from "firebase/database";
-
 // Components
 import FormList from "../components/FormsList";
-
-// Data & config
-import { database } from "../../firebase";
-import { LoaderFunction } from "react-router";
 
 const Forms = (): JSX.Element => {
   return (
@@ -18,8 +11,3 @@ const Forms = (): JSX.Element => {
 };
 
 export default Forms;
-
-export const loader: LoaderFunction = async () => {
-  const forms = await get(ref(database, "forms"));
-  return forms.val();
-};

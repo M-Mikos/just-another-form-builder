@@ -1,8 +1,12 @@
+// Functions and hooks
+import { useAuth } from "../context/AuthContext";
 // Router
 import { NavLink, useParams } from "react-router-dom";
 
 const FormNavigation = (): JSX.Element => {
   const { formId } = useParams() as { formId: string };
+  const { user } = useAuth();
+  const authorId = user.uid;
 
   const navLinkStyles = ({ isActive }: { isActive: boolean }): string => {
     return `px-2 py-2 text-sm text-stone-900 hover:bg-gray-200 opacity-80 ${
@@ -19,7 +23,11 @@ const FormNavigation = (): JSX.Element => {
         <NavLink to={`/${formId}/answers`} className={navLinkStyles} end>
           Answers
         </NavLink>
-        <NavLink to={`/${formId}/fill`} className={navLinkStyles} end>
+        <NavLink
+          to={`/${authorId}/${formId}/fill`}
+          className={navLinkStyles}
+          end
+        >
           Fill
         </NavLink>
       </nav>

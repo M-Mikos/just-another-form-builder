@@ -3,6 +3,7 @@ import { ActionFunction, useLoaderData, useParams } from "react-router";
 import { Link, redirect } from "react-router-dom";
 import { push, ref, set } from "firebase/database";
 import generateColorClass from "../../helpers/generateColorClass";
+import { useAuth } from "../../context/AuthContext";
 
 // Types
 import { FormLoaderType } from "../../types/types";
@@ -35,7 +36,7 @@ const FormToFill = (): JSX.Element => {
         <p className="relative z-20">{formDetails.description}</p>
       </Card>
       {formFields && (
-        <Form method="put" action={`/${params.formId}/fill`}>
+        <Form method="put" action={`/${params.authorId}/${params.formId}/fill`}>
           <ul className="mb-6 flex flex-col gap-6">
             {formDetails.fieldsOrder &&
               formDetails.fieldsOrder.map((fieldId: string) => {
@@ -57,26 +58,3 @@ const FormToFill = (): JSX.Element => {
 };
 
 export default FormToFill;
-
-export const action: ActionFunction = async ({ params, request }) => {
-  try {
-    // Get form data and format to object
-    const formData = await request.formData();
-    const formDataObj = Object.fromEntries(formData);
-
-    // Get key for database entry
-    const newAnswerKey = push(ref(database, "formsAnswers/" + params.formId))
-      .key as string;
-
-    // Set new answer in database
-    set(
-      ref(database, `formsAnswers/${params.formId}/${newAnswerKey}`),
-      formDataObj
-    );
-    // Redirect to ThankYou Page
-    // return { ok: true };
-    return redirect("thankyou");
-  } catch (error) {}
-
-  return null;
-};

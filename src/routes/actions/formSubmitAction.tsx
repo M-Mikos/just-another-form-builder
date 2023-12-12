@@ -4,6 +4,9 @@ import { push, set, ref } from "firebase/database";
 import { database } from "../../../firebase";
 import { redirect } from "react-router";
 
+// Types
+import { ActionFunction } from "react-router";
+
 const formSubmitAction: ActionFunction = async ({ params, request }) => {
   try {
     const uid = params.authorId;

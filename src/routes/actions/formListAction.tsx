@@ -6,6 +6,9 @@ import { redirect } from "react-router";
 import { auth, database } from "../../../firebase";
 import { FORMS_COLORS } from "../../../config";
 
+// Types
+import { ActionFunction } from "react-router";
+
 const formListAction: ActionFunction = async ({ request }) => {
   try {
     // Get current user unique ID

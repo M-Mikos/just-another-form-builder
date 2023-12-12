@@ -5,7 +5,7 @@ import { NavLink, useParams } from "react-router-dom";
 
 const FormNavigation = (): JSX.Element => {
   const { formId } = useParams() as { formId: string };
-  const { user } = useAuth();
+  const { user } = useAuth() as { user: any };
   const authorId = user.uid;
 
   const navLinkStyles = ({ isActive }: { isActive: boolean }): string => {

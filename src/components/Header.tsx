@@ -6,7 +6,7 @@ import { signOut } from "firebase/auth";
 
 const Header = (): JSX.Element => {
   const navigate = useNavigate();
-  const { user } = useAuth();
+  const { user } = useAuth() as { user: any };
   const logOutHandler = () => {
     signOut(auth);
     navigate("/login");

@@ -9,7 +9,7 @@ import { auth } from "../../firebase";
 
 // TS Interfaces declaration
 interface AuthContextProps {
-  user: firebase.User | null;
+  user: any | null;
 }
 interface PropsTypes {
   children: ReactNode;

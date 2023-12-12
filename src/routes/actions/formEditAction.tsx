@@ -4,6 +4,9 @@ import { push, set, update, ref, remove, get } from "firebase/database";
 // Data & config
 import { auth, database } from "../../../firebase";
 
+// Types
+import { ActionFunction } from "react-router";
+
 const formEditAction: ActionFunction = async ({ params, request }) => {
   try {
     // Get current user unique ID

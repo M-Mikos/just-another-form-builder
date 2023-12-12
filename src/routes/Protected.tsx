@@ -1,10 +1,15 @@
 import { useNavigate } from "react-router";
 import { useAuth } from "../context/AuthContext";
-import { useEffect } from "react";
+import { ReactNode, useEffect } from "react";
 
-const Protected = ({ children }) => {
+// TS Interfaces declaration
+interface PropsTypes {
+  children: ReactNode;
+}
+
+const Protected = (props: PropsTypes): JSX.Element => {
   const navigate = useNavigate();
-  const { user } = useAuth();
+  const { user } = useAuth() as { user: any };
 
   useEffect(() => {
     if (!user) {
@@ -12,7 +17,7 @@ const Protected = ({ children }) => {
     }
   }, [user]);
 
-  return children;
+  return <>{props.children}</>;
 };
 
 export default Protected;

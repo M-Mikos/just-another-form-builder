@@ -1,5 +1,5 @@
 // Functions & hooks
-import { useEffect, useState } from "react";
+import { useState } from "react";
 
 // TS Interfaces declaration
 interface PropsTypes {

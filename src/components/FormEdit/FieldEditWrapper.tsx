@@ -22,7 +22,16 @@ import { AVAILABLE_FIELDS_TYPES } from "../../../config";
 import useFormSaveOnChange from "../../hooks/useFormSaveOnChange";
 
 const components: {
-  [key: string]: React.ComponentType;
+  [key: string]: React.ComponentType<{
+    attributes: {
+      options: string[];
+      isAnotherAnswerEnabled: boolean;
+      minValue: string;
+      maxValue: string;
+      minValueLabel: string;
+      maxValueLabel: string;
+    };
+  }>;
 } = {
   ShortEditElement,
   ParagraphEditElement,

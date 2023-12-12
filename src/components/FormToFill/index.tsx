@@ -1,12 +1,6 @@
 // Functions & Hooks
 import { ActionFunction, useLoaderData, useParams } from "react-router";
-import { Link, redirect } from "react-router-dom";
-import { push, ref, set } from "firebase/database";
 import generateColorClass from "../../helpers/generateColorClass";
-import { useAuth } from "../../context/AuthContext";
-
-// Types
-import { FormLoaderType } from "../../types/types";
 
 // Components
 import { Form } from "react-router-dom";
@@ -14,14 +8,12 @@ import Card from "../UI/Card";
 import FieldFillWrapper from "./FieldFillWrapper";
 import NoiseTexture from "../Decorative/NoiseTexture";
 
-// Data
-import { database } from "../../../firebase";
-import { useState } from "react";
+// Types
+import { FormLoaderType } from "../../types/types";
 
 const FormToFill = (): JSX.Element => {
   const { formDetails, formFields } = useLoaderData() as FormLoaderType;
   const params = useParams();
-  const [isFormValid, setIsFormValid] = useState<boolean>(true);
 
   return (
     <>

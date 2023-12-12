@@ -1,6 +1,7 @@
 import { useNavigate } from "react-router";
-import { useAuth } from "../context/AuthContext";
-import { ReactNode, useEffect } from "react";
+import { ReactNode, useEffect, useState } from "react";
+import { auth } from "../../firebase";
+import LoadingIndicator from "../components/UI/LoadingIndicator";
 
 // TS Interfaces declaration
 interface PropsTypes {
@@ -9,15 +10,26 @@ interface PropsTypes {
 
 const Protected = (props: PropsTypes): JSX.Element => {
   const navigate = useNavigate();
-  const { user } = useAuth() as { user: any };
+  const [loading, setLoading] = useState(true);
 
   useEffect(() => {
-    if (!user) {
-      navigate("/login");
-    }
-  }, [user]);
+    const unsubscribe = auth.onAuthStateChanged((user) => {
+      if (!user) {
+        // User is not authenticated, redirect to login
+        navigate("/login");
+      }
+      // Set loading to false after the authentication state is resolved
+      setLoading(false);
+    });
 
-  return <>{props.children}</>;
+    // Cleanup function
+    return () => {
+      unsubscribe();
+    };
+  }, [navigate]);
+
+  // If still loading, you can show a loading indicator or null
+  return <>{loading ? <LoadingIndicator /> : props.children}</>;
 };
 
 export default Protected;

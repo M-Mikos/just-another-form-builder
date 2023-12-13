@@ -1,9 +1,8 @@
 // Functions & Hooks
-import { get, push, ref, remove, set, update } from "firebase/database";
-import { ActionFunction, useLoaderData, useParams } from "react-router";
+import { ref, update } from "firebase/database";
+import { useLoaderData, useParams } from "react-router";
 import { useFetcher } from "react-router-dom";
 import { useEffect, useState } from "react";
-import { useAuth } from "../../context/AuthContext";
 
 // Types
 import { FormLoaderType } from "../../types/types";
@@ -17,11 +16,14 @@ import NoiseTexture from "../Decorative/NoiseTexture";
 // Data
 import { database } from "../../../firebase";
 import generateColorClass from "../../helpers/generateColorClass";
+import { useAuth } from "../../context/AuthContext";
 
 const FormEdit = (): JSX.Element => {
   const { formDetails, formFields } = useLoaderData() as FormLoaderType;
   const params = useParams<{ [key: string]: string }>();
   const fetcher = useFetcher();
+  const { user } = useAuth() as { user: any };
+  const uid = user.uid;
 
   const [currentColor, setCurrentColor] = useState<string>(
     formDetails.tagColor
@@ -29,9 +31,13 @@ const FormEdit = (): JSX.Element => {
 
   // State for selecting currently edited field
   const [currentlyEditedField, setCurrentlyEditedField] = useState<string>("");
+
   // Adding new field
   const addFieldHandler = (): void => {
-    fetcher.submit({}, { method: "POST", action: `/${params.formId}` });
+    fetcher.submit(
+      {},
+      { method: "POST", action: `/users/${uid}/formsFields/${params.formId}` }
+    );
   };
 
   // Selecting edited field for style change
@@ -65,14 +71,14 @@ const FormEdit = (): JSX.Element => {
     ];
     setFieldsOrder(newFieldsOrder);
 
-    update(ref(database, `forms/${formDetails.id}`), {
+    update(ref(database, `/users/${uid}/forms/${formDetails.id}`), {
       fieldsOrder: newFieldsOrder,
     });
   };
 
   const changeColorHandler = (color: string): void => {
     setCurrentColor(color);
-    update(ref(database, `forms/${formDetails.id}`), {
+    update(ref(database, `/users/${uid}/forms/${formDetails.id}`), {
       tagColor: color,
     });
   };
@@ -126,4 +132,3 @@ const FormEdit = (): JSX.Element => {
 };
 
 export default FormEdit;
-

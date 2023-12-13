@@ -20,7 +20,7 @@ interface PropsTypes {
 const FormHeader = (props: PropsTypes): JSX.Element => {
   const fetcher = useFetcher();
   const formElement = useRef() as React.MutableRefObject<HTMLFormElement>;
-  const saveOnChangeHandler = useFormSaveOnChange(formElement, "/");
+  const saveOnChangeHandler = useFormSaveOnChange(formElement, `/`);
   const [isColorOptions, setIsColorOptions] = useState<boolean>(false);
 
   const toggleColorOptions = (): void => {
@@ -70,6 +70,7 @@ const FormHeader = (props: PropsTypes): JSX.Element => {
                 <input
                   className="peer sr-only"
                   type="radio"
+                  name="tagColor"
                   id={option}
                   value={option}
                   {...(props.tagColor === option && { defaultChecked: true })}

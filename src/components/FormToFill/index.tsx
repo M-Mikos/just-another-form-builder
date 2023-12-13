@@ -2,8 +2,8 @@
 import { Params, useLoaderData, useParams } from "react-router";
 import { useAuth } from "../../context/AuthContext";
 import generateColorClass from "../../helpers/generateColorClass";
-
 import { useState } from "react";
+
 // Components
 import { Form } from "react-router-dom";
 import Card from "../UI/Card";

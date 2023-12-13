@@ -1,4 +1,4 @@
-import { useNavigate } from "react-router";
+import { useLoaderData, useNavigate } from "react-router";
 import { ReactNode, useEffect, useState } from "react";
 import { auth } from "../../firebase";
 import LoadingIndicator from "../components/UI/LoadingIndicator";
@@ -9,6 +9,7 @@ interface PropsTypes {
 }
 
 const Protected = (props: PropsTypes): JSX.Element => {
+  const data = useLoaderData();
   const navigate = useNavigate();
   const [loading, setLoading] = useState(true);
 
@@ -18,6 +19,13 @@ const Protected = (props: PropsTypes): JSX.Element => {
         // User is not authenticated, redirect to login
         navigate("/login");
       }
+
+      // Re-call loader function when user is authenticated, but loader returned null
+      if (user && data === null) {
+        navigate(".", { replace: true });
+      }
+
+      // navigate(".", { replace: true });
       // Set loading to false after the authentication state is resolved
       setLoading(false);
     });
@@ -26,7 +34,7 @@ const Protected = (props: PropsTypes): JSX.Element => {
     return () => {
       unsubscribe();
     };
-  }, [navigate]);
+  }, []);
 
   // If still loading, you can show a loading indicator or null
   return <>{loading ? <LoadingIndicator /> : props.children}</>;

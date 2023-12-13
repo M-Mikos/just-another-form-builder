@@ -2,7 +2,7 @@
 import { get, ref } from "firebase/database";
 
 // Data & config
-import { auth, database } from "../../../firebase";
+import { database } from "../../../firebase";
 import { LoaderFunction } from "react-router";
 
 const formFillLoader: LoaderFunction = async ({ params }) => {

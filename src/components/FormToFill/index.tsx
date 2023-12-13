@@ -1,22 +1,52 @@
 // Functions & Hooks
-import { ActionFunction, useLoaderData, useParams } from "react-router";
+import { Params, useLoaderData, useParams } from "react-router";
+import { useAuth } from "../../context/AuthContext";
 import generateColorClass from "../../helpers/generateColorClass";
 
+import { useState } from "react";
 // Components
 import { Form } from "react-router-dom";
 import Card from "../UI/Card";
 import FieldFillWrapper from "./FieldFillWrapper";
 import NoiseTexture from "../Decorative/NoiseTexture";
+import FormNavigation from "../FormNavigation";
 
 // Types
 import { FormLoaderType } from "../../types/types";
 
 const FormToFill = (): JSX.Element => {
   const { formDetails, formFields } = useLoaderData() as FormLoaderType;
-  const params = useParams();
+  const params = useParams() as Params<string>;
+  const { user } = useAuth() as { user: any };
+  const [isShared, setIsShared] = useState<boolean>(false);
+
+  const shareHandler = () => {
+    // Copy URL to clipboard
+    const url = location.href;
+    navigator.clipboard.writeText(url);
+    setIsShared(true);
+    setTimeout(() => setIsShared(false), 3000);
+  };
 
   return (
     <>
+      {user && <FormNavigation />}
+      {user && (
+        <div className="mb-6 flex justify-center" onClick={shareHandler}>
+          {isShared ? (
+            <p className="flex items-center gap-4 text-stone-500">
+              <span className="material-symbols-outlined ">done</span>Link
+              copied!
+            </p>
+          ) : (
+            <p className="flex cursor-pointer items-center gap-4 text-stone-500 hover:text-sky-500">
+              <span className="material-symbols-outlined ">share</span>Share
+              this form to collect responses
+            </p>
+          )}
+        </div>
+      )}
+
       <Card
         className={
           "relative mb-6 p-6 text-white " +

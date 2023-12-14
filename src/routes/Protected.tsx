@@ -20,8 +20,8 @@ const Protected = (props: PropsTypes): JSX.Element => {
         navigate("/login");
       }
 
-      // Re-call loader function when user is authenticated, but loader returned null
-      if (user && data === null) {
+      // Re-call loader function when user is authenticated, but loader returned no user
+      if (user && data === "no user") {
         navigate(".", { replace: true });
       }
 

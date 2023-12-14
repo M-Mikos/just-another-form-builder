@@ -30,7 +30,9 @@ const formSubmitAction: ActionFunction = async ({ params, request }) => {
     // Redirect to ThankYou Page
     // return { ok: true };
     return redirect("thankyou");
-  } catch (error) {}
+  } catch (error) {
+    console.error(error);
+  }
 
   return null;
 };

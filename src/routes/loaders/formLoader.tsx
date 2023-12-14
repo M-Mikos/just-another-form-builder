@@ -9,7 +9,7 @@ const formLoader: LoaderFunction = async ({ params }) => {
   try {
     // Get current user unique ID
     const user = auth.currentUser;
-    console.log(user);
+
     if (user) {
       const uid = user.uid;
       const formDetails = await get(
@@ -23,7 +23,7 @@ const formLoader: LoaderFunction = async ({ params }) => {
         formFields: formFields.val(),
       };
     } else {
-      return null;
+      return "no user";
     }
   } catch (error) {
     console.error(error);

@@ -1,11 +1,13 @@
 // Functions & hooks
-import { useEffect, useState } from "react";
+import { useEffect, useRef, useState } from "react";
 
 // TS Interfaces declaration
 interface PropsTypes {
   name: string;
   inputType: "SingleChoice" | "MultipleChoice";
   attributes: { options: string[]; isAnotherAnswerEnabled: boolean };
+  required: boolean;
+  validate: (isValid: boolean) => void;
 }
 
 const ChoiceFillElement = (props: PropsTypes): JSX.Element => {
@@ -16,6 +18,7 @@ const ChoiceFillElement = (props: PropsTypes): JSX.Element => {
     props.inputType === "SingleChoice" ? "radio" : "checkbox";
 
   const changeHandler = (event: React.ChangeEvent<HTMLInputElement>): void => {
+    console.log("change handler");
     props.inputType === "SingleChoice" && setSelectedAnswers([event.target.id]);
 
     props.inputType === "MultipleChoice" &&
@@ -49,6 +52,7 @@ const ChoiceFillElement = (props: PropsTypes): JSX.Element => {
     } else {
       answersValues = [...selectedAnswers];
     }
+    answersValues.length === 0 ? props.validate(false) : props.validate(true);
     setAnswerValuesArray(answersValues);
   }, [selectedAnswers, anotherAnswerValue]);
 

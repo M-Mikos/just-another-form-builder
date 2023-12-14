@@ -34,10 +34,7 @@ const FormEdit = (): JSX.Element => {
 
   // Adding new field
   const addFieldHandler = (): void => {
-    fetcher.submit(
-      {},
-      { method: "POST", action: `/users/${uid}/formsFields/${params.formId}` }
-    );
+    fetcher.submit({}, { method: "POST", action: `/${params.formId}` });
   };
 
   // Selecting edited field for style change

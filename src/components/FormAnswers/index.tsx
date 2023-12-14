@@ -4,7 +4,7 @@ import { useLoaderData } from "react-router";
 import generateColorClass from "../../helpers/generateColorClass";
 
 // TS Types
-import { AnswerType, FormLoaderType } from "../../types/types";
+import { FormLoaderType } from "../../types/types";
 
 // Components
 import AnswersByField from "./AnswersByField";

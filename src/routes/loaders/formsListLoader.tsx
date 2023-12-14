@@ -15,9 +15,7 @@ const formsListLoader: LoaderFunction = async () => {
       const forms = await get(ref(database, `/users/${uid}/forms`));
       return forms.val();
     } else {
-      // User is not logged in, handle accordingly
-
-      return null;
+      return "no user";
     }
   } catch (error) {
     console.error(error);

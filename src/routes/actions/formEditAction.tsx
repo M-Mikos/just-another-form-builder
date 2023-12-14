@@ -69,6 +69,7 @@ const formEditAction: ActionFunction = async ({ params, request }) => {
         );
 
         answers.forEach((child) => {
+          console.log(child.val());
           const answersSetId: string = child.val().slice(-1)[0];
 
           remove(

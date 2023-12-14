@@ -32,19 +32,21 @@ const FormToFill = (): JSX.Element => {
     <>
       {user && <FormNavigation />}
       {user && (
-        <div className="mb-6 flex justify-center" onClick={shareHandler}>
-          {isShared ? (
-            <p className="flex items-center gap-4 text-stone-500">
-              <span className="material-symbols-outlined ">done</span>Link
-              copied!
-            </p>
-          ) : (
-            <p className="flex cursor-pointer items-center gap-4 text-stone-500 hover:text-sky-500">
-              <span className="material-symbols-outlined ">share</span>Share
-              this form to collect responses
-            </p>
-          )}
-        </div>
+        <Card className="mb-6 p-6">
+          <div className=" flex justify-center" onClick={shareHandler}>
+            {isShared ? (
+              <p className="flex items-center gap-4 text-stone-500">
+                <span className="material-symbols-outlined ">done</span>Link
+                copied!
+              </p>
+            ) : (
+              <p className="flex cursor-pointer items-center gap-4 text-stone-500 hover:text-sky-500">
+                <span className="material-symbols-outlined ">share</span>Share
+                this form to collect responses
+              </p>
+            )}
+          </div>
+        </Card>
       )}
 
       <Card

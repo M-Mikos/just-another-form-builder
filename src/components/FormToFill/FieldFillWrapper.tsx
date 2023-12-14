@@ -23,6 +23,8 @@ const components: {
           minValueLabel: string;
           maxValueLabel: string;
         };
+        required: boolean;
+        validate: (isValid: boolean) => void;
       }>
     | React.ComponentType<{
         name: string;
@@ -50,6 +52,10 @@ const FieldFillWrapper = (props: { data: FormFieldType }): JSX.Element => {
       : setIsError(false);
   };
 
+  const validate = (isValid: boolean): void => {
+    setIsError(!isValid);
+  };
+
   return (
     <Card className={"p-6 pb-1" + (isError ? " border-red-500 " : "")}>
       <h4 className="mb-3 text-lg">
@@ -73,6 +79,7 @@ const FieldFillWrapper = (props: { data: FormFieldType }): JSX.Element => {
           required: true,
           onChange: validateOnEventHandler,
           onBlur: validateOnEventHandler,
+          validate: validate,
         }),
       })}
       <div className="h-9">

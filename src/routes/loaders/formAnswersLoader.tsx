@@ -27,7 +27,7 @@ const formAnswersLoader: LoaderFunction = async ({ params }) => {
         formAnswers: formAnswers.val(),
       };
     } else {
-      return null;
+      return "no user";
     }
   } catch (error) {
     console.error(error);

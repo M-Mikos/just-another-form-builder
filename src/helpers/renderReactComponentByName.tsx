@@ -12,7 +12,7 @@
 
 const renderReactComponentByName = (
   fieldType: string,
-  mode: "Edit" | "Fill" | "Answer",
+  mode: "Edit" | "Fill",
   components: { [key: string]: React.ComponentType<any> },
   componentProps: { [key: string]: any } = {}
 ) => {

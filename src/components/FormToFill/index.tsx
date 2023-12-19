@@ -50,14 +50,13 @@ const FormToFill = (): JSX.Element => {
     else {
       setIsFormValid(false);
       setIsPing(true);
-      console.log("form invalid");
     }
   };
 
   return (
     <>
-      {user && <FormNavigation />}
-      {user && (
+      {user && user.uid === params.authorId && <FormNavigation />}
+      {user && user.uid === params.authorId && (
         <Card className="mb-6 p-6">
           <div className=" flex justify-center" onClick={shareHandler}>
             {isShared ? (

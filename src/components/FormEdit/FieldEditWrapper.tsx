@@ -96,7 +96,7 @@ const FieldEditWrapper = (props: {
           "flex h-32 flex-col items-start justify-between overflow-hidden border-b-2 border-dotted px-6 py-4 transition-all duration-500  sm:flex-row sm:items-center sm:py-0 " +
           (props.isBeingEdited
             ? "border-stone-300 sm:h-16 "
-            : "h-[0px] border-transparent ")
+            : "h-[0px] border-transparent py-0 ")
         }
       >
         <label htmlFor="fieldType" className="text-sm text-stone-800">

@@ -12,7 +12,7 @@ const Header = (): JSX.Element => {
     navigate("/login");
   };
   return (
-    <div className="flex flex-col-reverse items-center justify-between border-b-2 border-stone-300 bg-white p-6 sm:flex-row">
+    <div className="jus flex flex-col-reverse items-center gap-4  border-b-2 border-stone-300 bg-white p-6 sm:flex-row sm:justify-between">
       <Link to="/">
         <h1 className="text-xl font-semibold">Just Another Form Builder</h1>
       </Link>

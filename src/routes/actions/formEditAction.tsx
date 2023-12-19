@@ -68,17 +68,15 @@ const formEditAction: ActionFunction = async ({ params, request }) => {
           ref(database, `/users/${uid}/formsAnswers/${params.formId}`)
         );
 
-        answers.forEach((child) => {
-          console.log(child.val());
-          const answersSetId: string = child.val().slice(-1)[0];
-
-          remove(
-            ref(
-              database,
-              `/users/${uid}/formsAnswers/${params.formId}/${answersSetId}/${formDataObj.fieldId}`
-            )
-          );
-        });
+        answers.val() &&
+          Object.keys(answers.val()).forEach((answersSetId: string) => {
+            remove(
+              ref(
+                database,
+                `/users/${uid}/formsAnswers/${params.formId}/${answersSetId}/${formDataObj.fieldId}`
+              )
+            );
+          });
 
         // Deleting form field
         remove(

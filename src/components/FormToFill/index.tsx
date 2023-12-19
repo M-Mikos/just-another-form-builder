@@ -5,7 +5,7 @@ import generateColorClass from "../../helpers/generateColorClass";
 import { useState } from "react";
 
 // Components
-import { Form } from "react-router-dom";
+import { Form, useSubmit } from "react-router-dom";
 import Card from "../UI/Card";
 import FieldFillWrapper from "./FieldFillWrapper";
 import NoiseTexture from "../Decorative/NoiseTexture";
@@ -16,9 +16,12 @@ import { FormLoaderType } from "../../types/types";
 
 const FormToFill = (): JSX.Element => {
   const { formDetails, formFields } = useLoaderData() as FormLoaderType;
+  const [isFormValid, setIsFormValid] = useState<boolean>(true);
+  const [isPing, setIsPing] = useState<boolean>(false);
+  const [isShared, setIsShared] = useState<boolean>(false);
   const params = useParams() as Params<string>;
   const { user } = useAuth() as { user: any };
-  const [isShared, setIsShared] = useState<boolean>(false);
+  const submit = useSubmit();
 
   const shareHandler = () => {
     // Copy URL to clipboard
@@ -26,6 +29,29 @@ const FormToFill = (): JSX.Element => {
     navigator.clipboard.writeText(url);
     setIsShared(true);
     setTimeout(() => setIsShared(false), 3000);
+  };
+
+  const submitHandler = (event: React.FormEvent<HTMLFormElement>) => {
+    event.preventDefault();
+    let isValid: boolean = true;
+    Object.entries(formFields).forEach((entry) => {
+      const id: string = entry[0];
+      const required: boolean = entry[1].required;
+      // @ts-ignore
+      const value = event.target[id].value;
+      if ((required && value === "") || "[]") isValid = false;
+    });
+
+    if (isValid)
+      submit(event.currentTarget, {
+        method: "put",
+        action: `/${params.authorId}/${params.formId}/fill`,
+      });
+    else {
+      setIsFormValid(false);
+      setIsPing(true);
+      console.log("form invalid");
+    }
   };
 
   return (
@@ -60,7 +86,7 @@ const FormToFill = (): JSX.Element => {
         <p className="relative z-20">{formDetails.description}</p>
       </Card>
       {formFields && (
-        <Form method="put" action={`/${params.authorId}/${params.formId}/fill`}>
+        <Form onSubmit={submitHandler}>
           <ul className="mb-6 flex flex-col gap-6">
             {formDetails.fieldsOrder &&
               formDetails.fieldsOrder.map((fieldId: string) => {
@@ -71,6 +97,25 @@ const FormToFill = (): JSX.Element => {
                 );
               })}
           </ul>
+
+          {!isFormValid && (
+            <Card className="mb-6 border-red-500 p-6 ">
+              <div className="relative flex items-center gap-2 text-sm text-red-500">
+                <span
+                  className={`material-symbols-outlined absolute ${
+                    isPing === true ? "animate-ping-once" : ""
+                  }`}
+                  onAnimationEnd={() => {
+                    setIsPing(false);
+                  }}
+                >
+                  circle
+                </span>
+                <span className="material-symbols-outlined">error</span> Fill
+                required fields before submitting
+              </div>
+            </Card>
+          )}
 
           <button className="btn--strong" type="submit">
             Send

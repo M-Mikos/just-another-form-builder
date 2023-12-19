@@ -12,24 +12,29 @@ import MultipleChoiceFillElement from "../Fields/Choice/MultipleChoice/MultipleC
 import Card from "../UI/Card";
 
 const components: {
-  [key: string]:
-    | React.ComponentType<{
-        name: string;
-        attributes: {
-          options: string[];
-          isAnotherAnswerEnabled: boolean;
-          minValue: string;
-          maxValue: string;
-          minValueLabel: string;
-          maxValueLabel: string;
-        };
-        required: boolean;
-        validate: (isValid: boolean) => void;
-      }>
-    | React.ComponentType<{
-        name: string;
-        attributes: string;
-      }>;
+  [key: string]: React.ComponentType<{
+    name: string;
+    attributes: {
+      options: string[];
+      isAnotherAnswerEnabled: boolean;
+      minValue: string;
+      maxValue: string;
+      minValueLabel: string;
+      maxValueLabel: string;
+    };
+    required: boolean;
+    validate: (isValid: boolean) => void;
+    onChange: (
+      event: React.ChangeEvent<
+        HTMLInputElement | HTMLTextAreaElement | HTMLSelectElement
+      >
+    ) => void;
+    onBlur: (
+      event: React.ChangeEvent<
+        HTMLInputElement | HTMLTextAreaElement | HTMLSelectElement
+      >
+    ) => void;
+  }>;
 } = {
   ShortFillElement,
   ParagraphFillElement,

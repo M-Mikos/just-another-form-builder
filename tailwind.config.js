@@ -5,6 +5,9 @@ export default {
     fontFamily: {
       sans: ["Rubik", "sans-serif"],
     },
+    animation: {
+      "ping-once": "ping 0.5s linear",
+    },
   },
   plugins: [],
 };

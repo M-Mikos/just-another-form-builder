@@ -17,8 +17,10 @@ const ChoiceFillElement = (props: PropsTypes): JSX.Element => {
   const inputElementType =
     props.inputType === "SingleChoice" ? "radio" : "checkbox";
 
+  // Ref to block validation on initial render
+  const hasPageBeenRendered = useRef(false);
+
   const changeHandler = (event: React.ChangeEvent<HTMLInputElement>): void => {
-    console.log("change handler");
     props.inputType === "SingleChoice" && setSelectedAnswers([event.target.id]);
 
     props.inputType === "MultipleChoice" &&
@@ -52,8 +54,14 @@ const ChoiceFillElement = (props: PropsTypes): JSX.Element => {
     } else {
       answersValues = [...selectedAnswers];
     }
-    answersValues.length === 0 ? props.validate(false) : props.validate(true);
+
+    props.required &&
+      hasPageBeenRendered.current &&
+      (answersValues.length === 0
+        ? props.validate(false)
+        : props.validate(true));
     setAnswerValuesArray(answersValues);
+    hasPageBeenRendered.current = true;
   }, [selectedAnswers, anotherAnswerValue]);
 
   return (

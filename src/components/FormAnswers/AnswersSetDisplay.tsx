@@ -1,7 +1,6 @@
 const AnswersSetDisplay = (props: { answers: string[] }): JSX.Element => {
-  console.log(props.answers);
   const tryParseData = (answer: string): string[] | string => {
-    if (answer.charAt(0) === "[") {
+    if (answer?.charAt(0) === "[") {
       return JSON.parse(answer);
     }
     return answer;

@@ -1,5 +1,5 @@
 // Functions & hooks
-import { useState } from "react";
+import { useEffect, useRef, useState } from "react";
 
 // TS Interfaces declaration
 interface PropsTypes {
@@ -10,14 +10,28 @@ interface PropsTypes {
     minValueLabel: string;
     maxValueLabel: string;
   };
+  required: boolean;
+  validate: (isValid: boolean) => void;
 }
 
 const LinearScaleFillElement = (props: PropsTypes): JSX.Element => {
   const [selectedAnswer, setSelectedAnswer] = useState("");
 
+  // Ref to block validation on initial render
+  const hasPageBeenRendered = useRef(false);
+
   const changeHandler = (event: React.ChangeEvent<HTMLInputElement>): void => {
     setSelectedAnswer(event.target.value);
   };
+
+  useEffect((): void => {
+    props.required &&
+      hasPageBeenRendered.current &&
+      (selectedAnswer.length === 0
+        ? props.validate(false)
+        : props.validate(true));
+    hasPageBeenRendered.current = true;
+  }, [selectedAnswer]);
 
   return (
     <>
@@ -41,7 +55,6 @@ const LinearScaleFillElement = (props: PropsTypes): JSX.Element => {
               <fieldset key={i}>
                 <label className=" flex items-center gap-2 sm:flex-col">
                   <input
-                    // name={props.name}
                     type="radio"
                     onChange={changeHandler}
                     className="h-4 w-4 border-2"

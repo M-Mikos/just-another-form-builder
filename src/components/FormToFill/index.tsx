@@ -39,7 +39,8 @@ const FormToFill = (): JSX.Element => {
       const required: boolean = entry[1].required;
       // @ts-ignore
       const value = event.target[id].value;
-      if ((required && value === "") || "[]") isValid = false;
+      if (required && (value === "" || "[]")) isValid = false;
+      console.log(id, required, value, entry, isValid);
     });
 
     if (isValid)

@@ -115,7 +115,7 @@ const FieldEditWrapper = (props: {
           </select>
         </label>
 
-        <label className="relative inline-flex cursor-pointer items-center ">
+        {/* <label className="relative inline-flex cursor-pointer items-center ">
           <input
             name="required"
             type="checkbox"
@@ -125,7 +125,7 @@ const FieldEditWrapper = (props: {
           />
           <div className="h-6 w-9 rounded-full bg-stone-300 after:absolute after:left-1 after:top-1 after:h-4 after:w-4 after:rounded-full after:border after:bg-white after:transition-all after:content-[''] peer-checked:bg-sky-600 peer-checked:after:translate-x-3 peer-focus:ring-2 peer-focus:ring-sky-200"></div>
           <span className="ml-2 text-sm text-stone-800">Required?</span>
-        </label>
+        </label> */}
       </div>
       <div
         className={

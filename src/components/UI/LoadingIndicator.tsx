@@ -21,11 +21,6 @@ const LoadingIndicator = (): JSX.Element => {
           d="M20,0 a20,20 0 1,0 20,20"
         />
       </svg>
-      {/* <div className="loader-pulse flex gap-1">
-        <div className="loader-pulse h-2 w-2 animate-loader-pulse rounded-full bg-sky-500" />
-        <div className="animation-delay-200 h-2 w-2 animate-loader-pulse rounded-full bg-sky-500" />
-        <div className="animation-delay-400 h-2 w-2 animate-loader-pulse rounded-full bg-sky-500" />
-      </div> */}
     </div>
   );
 };

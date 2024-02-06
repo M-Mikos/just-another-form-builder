@@ -80,10 +80,9 @@ localhost:5173/
 - Add "another option" field to choice fields
 - Cofigure min and max value on linear scale, set number of steps
 - Set field question
-- Mark field as required or optional
 - Change fields order
 - Delete field
-- Fill form (forms to fill out are public, so everyone with a link can submit answer to it)
+- Fill form (forms to fill out are public, so everyone with a link can submit unlimited answers to it)
 - View form answers sorted by field type
 - View form answers sorted by form
 - Display thank you page after form submission
